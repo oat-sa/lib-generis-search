@@ -10,7 +10,7 @@ It Will return an iterator.
 see API Documentation at http://forge.taotesting.com/projects/tao/wiki/use-complex-search-API
 
 ## usage example
-
+```php
 /* @var $search \oat\oatbox\search\ComplexeSearchService */
 $search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexeSearchService::SERVICE_ID);
 /* @var $queryBuilder \oat\taoSearch\model\searchImp\QueryBuilder */
@@ -31,3 +31,4 @@ foreach ($result as $row) {
     var_dump($row->getLabel());
     echo '<br>';
 }
+```
