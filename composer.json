@@ -1,5 +1,5 @@
 {
-    "name" : "crocophp/abstractsearch",
+    "name" : "oat-sa/lib-generis-search",
     "require" : {
         "zendframework/zend-servicemanager" : "~2.5.0"
     },
