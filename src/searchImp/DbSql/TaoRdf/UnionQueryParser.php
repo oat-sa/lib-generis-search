@@ -74,6 +74,7 @@ class UnionQueryParser extends AbstractSqlQueryParser {
                  SupportedOperatorHelper::IN                 => 'In',
                  SupportedOperatorHelper::BETWEEN            => 'Between',
                  SupportedOperatorHelper::BEGIN_BY           => 'LikeBegin',
+                 SupportedOperatorHelper::DIFFERENT          => 'NotEqual',
              ];
     
      /**
