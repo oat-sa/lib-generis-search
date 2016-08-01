@@ -23,7 +23,7 @@
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
+class QueryParserTest extends oat\search\test\UnitTestHelper {
     
     public function setUp() {
         $this->instance = new \oat\search\DbSql\TaoRdf\QueryParser();

@@ -22,7 +22,7 @@
 namespace oat\search;
 
 use oat\search\base\QueryParamInterface;
-use oat\search\base\UsableTrait\ParentFluateTrait;
+use oat\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**

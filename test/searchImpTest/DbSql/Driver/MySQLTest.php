@@ -26,7 +26,7 @@ use oat\search\DbSql\Driver\MySQL;
  *
  * @author christophe
  */
-class MySQLTest extends \oat\taoSearch\test\UnitTestHelper  {
+class MySQLTest extends \oat\search\test\UnitTestHelper  {
     
     /**
      * @var EscaperAbstract

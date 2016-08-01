@@ -18,9 +18,9 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest\DbSql\TaoRdf\Command;
+namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 /**
  * test for LikeBegin
  *

@@ -18,7 +18,7 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test;
+namespace oat\search\test;
 
 /**
  * Description of UnitTestHelper

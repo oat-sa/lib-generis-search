@@ -6,21 +6,21 @@
  * and open the template in the editor.
  */
 
-namespace oat\taoSearch\test\searchTest\UsableTrait;
+namespace oat\search\test\searchTest\UsableTrait;
 
 /**
  * Description of LimitableTraitTest
  *
  * @author christophe
  */
-class LimitableTraitTest extends \oat\taoSearch\test\UnitTestHelper 
+class LimitableTraitTest extends \oat\search\test\UnitTestHelper 
 {
     
     protected $instance;
     
     public function setup() {
         
-        $this->instance = $this->getMockForTrait('\\oat\\taoSearch\\model\\search\\UsableTrait\\LimitableTrait');
+        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\LimitableTrait');
         
     }
     /**

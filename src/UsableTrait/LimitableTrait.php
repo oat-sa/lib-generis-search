@@ -18,39 +18,54 @@
  *               
  * 
  */
-namespace oat\search\base\UsableTrait;
+
+namespace oat\search\UsableTrait;
 
 /**
- * use with sortableInterface
+ * use with LimitableInterface
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-trait SortableTrait {
+trait LimitableTrait {
     /**
-     * array of sort criterias
-     * @var array
+     * number of result
+     * @var int
      */
-    protected $sort = [];
-
+    protected $limit;
     /**
-     * return sort criterias
-     * @return array
-     * @see \oat\search\base\SortableInterface::getSort
+     * start offset
+     * @var int
      */
-    public function getSort() {
-        return $this->sort;
+    protected $offset;
+    
+    /**
+     * return offest
+     * @see \oat\search\base\LimitableInterface::getOffset
+     * @return integer
+     */
+    public function getOffset() {
+        return $this->offset;
     }
+    
     /**
-     * set up sort criteria
-     * as ['name' => 'desc' , 'age' => 'asc']
-     *
-     * @param array $sortCriteria
-     * @return $this
-     *
-     * @see \oat\search\base\SortableInterface::sort
+     * return limit 
+     * @see \oat\search\base\LimitableInterface::getLimit
+     * @return integer
      */
-    public function sort(array $sortCriteria) {
-        $this->sort = $sortCriteria;
+    public function getLimit() {
+        return $this->limit;
+    }
+    
+    /**
+     * set limit and offset
+     * @see \oat\search\base\LimitableInterface::setOffset
+     * @param integer $limit
+     * @param integer $offset
+     * @return $this
+     */
+    public function setOffset($limit, $offset = null) {
+        $this->limit = $limit;
+        $this->offset = $offset;
         return $this;
     }
     

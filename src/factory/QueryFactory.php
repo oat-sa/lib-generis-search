@@ -32,7 +32,7 @@ class QueryFactory extends FactoryAbstract {
      * supported interface 
      * @var string
      */
-    protected $validInterface = 'oat\\taoSearch\\model\\search\\QueryInterface';
+    protected $validInterface = 'oat\\search\\base\\QueryInterface';
 
 
     /**

@@ -24,8 +24,8 @@ namespace oat\search;
 use oat\search\factory\FactoryAbstract;
 use oat\search\factory\QueryParamFactory;
 use oat\search\base\QueryInterface;
-use oat\search\base\UsableTrait\OptionsTrait;
-use oat\search\base\UsableTrait\ParentFluateTrait;
+use oat\search\UsableTrait\OptionsTrait;
+use oat\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**

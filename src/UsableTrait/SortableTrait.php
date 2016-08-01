@@ -18,40 +18,40 @@
  *               
  * 
  */
-
-namespace oat\search\base\UsableTrait;
-
-use oat\search\base\Query\EscaperInterface;
+namespace oat\search\UsableTrait;
 
 /**
- * trait to use for classes implements DriverSensitive interface
+ * use with sortableInterface
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-trait DriverSensitiveTrait {
-   
+trait SortableTrait {
     /**
-     * setted driver
-     * @var \oat\search\base\Query\EscaperInterface 
+     * array of sort criterias
+     * @var array
      */
-    protected $driverEscaper;
-    
+    protected $sort = [];
+
     /**
-     * set up database driver escaper
-     * @param \oat\search\base\Query\EscaperInterface  $escaper 
-     * @return $this
+     * return sort criterias
+     * @return array
+     * @see \oat\search\base\SortableInterface::getSort
      */
-    public function setDriverEscaper(EscaperInterface $escaper) {
-        $this->driverEscaper = $escaper;
-        return $this;
+    public function getSort() {
+        return $this->sort;
     }
-    
     /**
-     * return database driver  escaper
-     * @return \oat\search\base\Query\EscaperInterface $escaper
+     * set up sort criteria
+     * as ['name' => 'desc' , 'age' => 'asc']
+     *
+     * @param array $sortCriteria
+     * @return $this
+     *
+     * @see \oat\search\base\SortableInterface::sort
      */
-    public function getDriverEscaper() {
-        return $this->driverEscaper;
+    public function sort(array $sortCriteria) {
+        $this->sort = $sortCriteria;
+        return $this;
     }
     
 }

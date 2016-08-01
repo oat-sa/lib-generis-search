@@ -18,9 +18,9 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 
 /**
  * test AbstractQueryParserTest

@@ -23,7 +23,7 @@
 namespace oat\search\Command;
 
 use \oat\search\base\command\OperatorConverterInterface;
-use \oat\search\base\UsableTrait\DriverSensitiveTrait;
+use \oat\search\UsableTrait\DriverSensitiveTrait;
 
 /**
  * Description of AbstractOperatorCommand

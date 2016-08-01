@@ -31,7 +31,7 @@ class QueryParamFactory extends FactoryAbstract {
      * supported interface 
      * @var string
      */
-    protected $validInterface = 'oat\\taoSearch\\model\\search\\QueryParamInterface';
+    protected $validInterface = 'oat\\search\\base\\QueryParamInterface';
     /**
      * return a new Query param
      * @param string $className

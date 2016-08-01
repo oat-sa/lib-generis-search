@@ -24,9 +24,9 @@ namespace oat\search;
 use oat\search\factory\FactoryAbstract;
 use oat\search\factory\QueryFactory;
 use oat\search\base\QueryBuilderInterface;
-use oat\search\base\UsableTrait\LimitableTrait;
-use oat\search\base\UsableTrait\OptionsTrait;
-use oat\search\base\UsableTrait\SortableTrait;
+use oat\search\UsableTrait\LimitableTrait;
+use oat\search\UsableTrait\OptionsTrait;
+use oat\search\UsableTrait\SortableTrait;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * implemented generic query builder

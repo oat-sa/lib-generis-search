@@ -23,10 +23,10 @@ namespace oat\taoSearch\factoryTest;
 /**
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParamfactoryTest extends \oat\taoSearch\test\UnitTestHelper {
+class QueryParamfactoryTest extends \oat\search\test\UnitTestHelper {
     
     public function setup() {
-        $this->instance = $this->getMock('\\oat\\taoSearch\\model\\factory\\QueryParamFactory', ['isValidClass' , 'getServiceLocator']);
+        $this->instance = $this->getMock('\\oat\\search\\factory\\QueryParamFactory', ['isValidClass' , 'getServiceLocator']);
     }
     
     public function testInvokeFactory() {
@@ -38,7 +38,7 @@ class QueryParamfactoryTest extends \oat\taoSearch\test\UnitTestHelper {
             false
         ];
         
-        $testClassName  = '\\oat\\taoSearch\\model\\searchImp\\QueryParam';
+        $testClassName  = '\\oat\\search\\QueryParam';
         
         $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
         

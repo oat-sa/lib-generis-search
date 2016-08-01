@@ -18,14 +18,14 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
 /**
  * Description of QueryParamTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParamTest extends \oat\taoSearch\test\UnitTestHelper {
+class QueryParamTest extends \oat\search\test\UnitTestHelper {
     
     /**
      *

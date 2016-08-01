@@ -6,16 +6,16 @@
  * and open the template in the editor.
  */
 
-namespace oat\taoSearch\test\searchTest\UsableTrait;
+namespace oat\search\test\searchTest\UsableTrait;
 
-class SortableTraitTest extends \oat\taoSearch\test\UnitTestHelper 
+class SortableTraitTest extends \oat\search\test\UnitTestHelper 
 {
     
     protected $instance;
     
     public function setup() {
         
-        $this->instance = $this->getMockForTrait('\\oat\\taoSearch\\model\\search\\UsableTrait\\SortableTrait');
+        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\SortableTrait');
         
     }
     /**

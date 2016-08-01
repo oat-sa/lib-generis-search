@@ -25,7 +25,7 @@ use oat\search\DbSql\Driver\PostgreSQL;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class PostgreSQLTest extends \oat\taoSearch\test\UnitTestHelper  {
+class PostgreSQLTest extends \oat\search\test\UnitTestHelper  {
     
     /**
      * @var EscaperAbstract

@@ -32,7 +32,7 @@ class QueryBuilderFactory extends FactoryAbstract
      * supported interface 
      * @var string
      */
-    protected $validInterface = 'oat\\taoSearch\\model\\search\\QueryBuilderInterface';
+    protected $validInterface = 'oat\\search\\base\\QueryBuilderInterface';
     /**
      * return a new Query builder
      * @param string $className

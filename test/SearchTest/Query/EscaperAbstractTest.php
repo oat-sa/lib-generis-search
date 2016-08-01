@@ -18,14 +18,14 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\SearchTest\Query;
+namespace oat\search\test\SearchTest\Query;
 
 /**
  * Description of EscaperAbstractTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class EscaperAbstractTest extends \oat\taoSearch\test\UnitTestHelper 
+class EscaperAbstractTest extends \oat\search\test\UnitTestHelper 
 {
     /**
      * @var \oat\search\base\Query\EscaperAbstract 

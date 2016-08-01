@@ -18,14 +18,14 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
 /**
  * TaoSearchGateWay Test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
+class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     
     public function setUp() {
         $this->instance = new \oat\search\TaoSearchGateWay();

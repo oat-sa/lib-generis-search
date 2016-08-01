@@ -19,54 +19,39 @@
  * 
  */
 
-namespace oat\search\base\UsableTrait;
+namespace oat\search\UsableTrait;
+
+use oat\search\base\Query\EscaperInterface;
 
 /**
- * use with LimitableInterface
+ * trait to use for classes implements DriverSensitive interface
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-trait LimitableTrait {
+trait DriverSensitiveTrait {
+   
     /**
-     * number of result
-     * @var int
+     * setted driver
+     * @var \oat\search\base\Query\EscaperInterface 
      */
-    protected $limit;
-    /**
-     * start offset
-     * @var int
-     */
-    protected $offset;
+    protected $driverEscaper;
     
     /**
-     * return offest
-     * @see \oat\search\base\LimitableInterface::getOffset
-     * @return integer
-     */
-    public function getOffset() {
-        return $this->offset;
-    }
-    
-    /**
-     * return limit 
-     * @see \oat\search\base\LimitableInterface::getLimit
-     * @return integer
-     */
-    public function getLimit() {
-        return $this->limit;
-    }
-    
-    /**
-     * set limit and offset
-     * @see \oat\search\base\LimitableInterface::setOffset
-     * @param integer $limit
-     * @param integer $offset
+     * set up database driver escaper
+     * @param \oat\search\base\Query\EscaperInterface  $escaper 
      * @return $this
      */
-    public function setOffset($limit, $offset = null) {
-        $this->limit = $limit;
-        $this->offset = $offset;
+    public function setDriverEscaper(EscaperInterface $escaper) {
+        $this->driverEscaper = $escaper;
         return $this;
+    }
+    
+    /**
+     * return database driver  escaper
+     * @return \oat\search\base\Query\EscaperInterface $escaper
+     */
+    public function getDriverEscaper() {
+        return $this->driverEscaper;
     }
     
 }

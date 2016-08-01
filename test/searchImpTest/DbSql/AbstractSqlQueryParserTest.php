@@ -17,7 +17,7 @@
  * 
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 /**
  * tests for AbstractSqlQueryParser
  *

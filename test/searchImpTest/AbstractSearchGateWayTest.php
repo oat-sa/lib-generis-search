@@ -18,14 +18,14 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
 /**
  *  AbstractSearchGateWay Test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
+class AbstractSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     
     /**
      * test init

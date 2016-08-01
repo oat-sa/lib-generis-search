@@ -18,7 +18,7 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\search\base\UsableTrait;
+namespace oat\search\UsableTrait;
 
 /**
  * use it if you need to back on parent object and keep fluate interface

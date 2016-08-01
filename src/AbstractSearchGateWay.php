@@ -22,8 +22,8 @@ namespace oat\search;
 use oat\search\base\QueryBuilderInterface;
 use oat\search\base\QueryParserInterface;
 use oat\search\base\SearchGateWayInterface;
-use oat\search\base\UsableTrait\DriverSensitiveTrait;
-use oat\search\base\UsableTrait\OptionsTrait;
+use oat\search\UsableTrait\DriverSensitiveTrait;
+use oat\search\UsableTrait\OptionsTrait;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Abstract base for search gateway

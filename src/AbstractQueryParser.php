@@ -20,15 +20,15 @@
  * 
  */
 
-namespace oat\search\search;
+namespace oat\search;
 
 use \oat\search\base\QueryParserInterface;
 use \oat\search\base\QueryBuilderInterface;
 use \oat\search\base\QueryInterface;
 use oat\search\base\QueryParamInterface;
 use \oat\search\base\exception\QueryParsingException;
-use \oat\search\base\UsableTrait\DriverSensitiveTrait;
-use oat\search\base\UsableTrait\OptionsTrait;
+use \oat\search\UsableTrait\DriverSensitiveTrait;
+use oat\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Query parser are use to transform 
@@ -167,10 +167,10 @@ abstract class AbstractQueryParser implements QueryParserInterface {
      */
     protected function getOperationValue($value) {
         
-        if(is_a($value, '\\oat\\taoSearch\\model\\search\\QueryBuilderInterface')) {
+        if(is_a($value, '\\oat\\search\\base\\QueryBuilderInterface')) {
             $parser = clone $this;
             $value = $parser->setCriteriaList($value)->parse();
-        } else if(is_a($value, '\\oat\\taoSearch\\model\\search\\QueryInterface')) {
+        } else if(is_a($value, '\\oat\\search\\base\\QueryInterface')) {
             $value = $this->parseQuery($value);
         }
         return $value;

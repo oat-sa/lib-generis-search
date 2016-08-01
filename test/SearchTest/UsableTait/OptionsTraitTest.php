@@ -18,20 +18,20 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchTest\UsableTrait;
+namespace oat\search\test\searchTest\UsableTrait;
 
 /**
  * Description of OptionsTraitTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class OptionsTraitTest  extends \oat\taoSearch\test\UnitTestHelper {
+class OptionsTraitTest  extends \oat\search\test\UnitTestHelper {
     
     protected $instance;
     
     public function setup() {
         
-        $this->instance = $this->getMockForTrait('\\oat\\taoSearch\\model\\search\\UsableTrait\\OptionsTrait');
+        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\OptionsTrait');
         
     }
     /**
