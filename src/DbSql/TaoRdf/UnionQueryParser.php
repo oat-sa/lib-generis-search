@@ -36,7 +36,7 @@ class UnionQueryParser extends AbstractSqlQueryParser {
      * namespace for operator converter class
      * @var string 
      */
-     protected $operatorNameSpace = '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\Command';
+     protected $operatorNameSpace = '\\oat\\search\\DbSql\\TaoRdf\\Command';
      /**
       * user language query part
       * @var string

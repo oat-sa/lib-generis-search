@@ -36,7 +36,7 @@ class QueryParser extends AbstractSqlQueryParser {
      * namespace for operator converter class
      * @var string 
      */
-     protected $operatorNameSpace = '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\Command';
+     protected $operatorNameSpace = '\\oat\\search\\DbSql\\TaoRdf\\Command';
      /**
       * language query part
       * @var string
