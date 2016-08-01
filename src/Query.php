@@ -82,7 +82,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
       * @param boolean $andSeparator
       * @return \oat\search\base\QueryParamInterface
       */
-    public function addOperation($name, $operator, $value, $andSeparator = true) {
+    public function addCriterium($name, $operator, $value, $andSeparator = true) {
         $param = $this->factory
                 ->setServiceLocator($this->serviceLocator)
                 ->get($this->queryParamClassName , [$name, $operator, $value, $andSeparator])
@@ -97,7 +97,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * @return \oat\search\base\QueryParamInterface
      */
     public function add($property) {
-        return $this->addOperation($property, null, null);
+        return $this->addCriterium($property, null, null);
     }
 
         /**

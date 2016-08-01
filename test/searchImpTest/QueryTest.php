@@ -86,7 +86,7 @@ class QueryTest extends UnitTestHelper {
         $this->assertEmpty($storedQueries);
     }
     
-    public function testAddOperation() {
+    public function testAddCriterium() {
         $fixtureName      = 'text';
         $fixtureOperator  = 'equal';
         $fixtureValue     = 'test';
@@ -111,7 +111,7 @@ class QueryTest extends UnitTestHelper {
         $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
         $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
-        $this->assertSame($mockQuery , $this->instance->addOperation($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
+        $this->assertSame($mockQuery , $this->instance->addCriterium($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
         $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryParams')));
         
     }

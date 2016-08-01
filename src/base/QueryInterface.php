@@ -54,7 +54,7 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
      * @param bool $andSeparator true for and , false for or
      * @return QueryParamInterface
      */
-    public function addOperation($name , $operator , $value , $andSeparator = true);
+    public function addCriterium($name , $operator , $value , $andSeparator = true);
     
     /**
      * return all query params object stored
