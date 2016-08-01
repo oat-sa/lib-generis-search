@@ -12,7 +12,7 @@
     "minimum-stability" : "dev",
 	"autoload" : {
 		"psr-4" : {
-                        "oat\\search\\test" : "test",
+                        "oat\\search\\test\\" : "test",
 			"oat\\search\\" : "src"
 		}
 	}
