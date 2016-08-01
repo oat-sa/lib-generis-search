@@ -13,7 +13,7 @@ see API Documentation at http://forge.taotesting.com/projects/tao/wiki/use-compl
 ```php
 /* @var $search \oat\oatbox\search\ComplexeSearchService */
 $search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexeSearchService::SERVICE_ID);
-/* @var $queryBuilder \oat\taoSearch\model\searchImp\QueryBuilder */
+/* @var $queryBuilder \oat\search\QueryBuilder */
 /* search for all test takers */
 $queryBuilder = $search
        ->searchType('http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject' , true);

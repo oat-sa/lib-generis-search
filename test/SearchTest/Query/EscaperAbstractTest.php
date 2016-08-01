@@ -28,12 +28,12 @@ namespace oat\taoSearch\test\SearchTest\Query;
 class EscaperAbstractTest extends \oat\taoSearch\test\UnitTestHelper 
 {
     /**
-     * @var \oat\taoSearch\model\search\Query\EscaperAbstract 
+     * @var \oat\search\base\Query\EscaperAbstract 
      */
     protected $instance;
 
     public function setUp() {
-        $this->instance = $this->getMockForAbstractClass('oat\taoSearch\model\search\Query\EscaperAbstract');
+        $this->instance = $this->getMockForAbstractClass('oat\search\base\Query\EscaperAbstract');
     }
     
     public function testQuote() {

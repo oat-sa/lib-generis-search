@@ -33,12 +33,12 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $expectedQuery = 'SELECT * FROM `test` WHERE ';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['getOptions' , 'validateOptions' , 'setFieldList' , 'getDriverEscaper']
                 );
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
 
         $DriverProphecy->dbCommand('SELECT')->willReturn('SELECT')->shouldBeCalledTimes(1);
         $DriverProphecy->dbCommand('FROM')->willReturn('FROM')->shouldBeCalledTimes(1);
@@ -60,7 +60,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     public function testPrepareOperator() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQueryParser'
                );
         
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
@@ -74,7 +74,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     
     public function testAddOperator() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQueryParser'
                );
         
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
@@ -99,7 +99,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
      */
     public function testAddSeparator($operator , $expectedString , $calls) {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -107,7 +107,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
         $expression   = '`text` like "test"';
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->dbCommand('OR')->willReturn('OR')->shouldBeCalledTimes(1);
         
         if($calls > 1) {
@@ -135,11 +135,11 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     public function testValidateOptions(array $options , $expected, $exception) {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQueryParser'
                 );
         
         if($exception) {
-            $this->setExpectedException('oat\taoSearch\model\search\exception\QueryParsingException' , 'table option is mandatory');
+            $this->setExpectedException('oat\search\base\exception\QueryParsingException' , 'table option is mandatory');
         }
         $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'validateOptions' , [$options]));
     }
@@ -163,7 +163,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         
         $options = [];
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->getAllFields()->willReturn($allFields)->shouldBeCalledTimes(1);
         
         if(count($list) > 0) {
@@ -177,7 +177,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         }
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -203,7 +203,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
      * @param type $expected
      */
     public function testAddLimit($limit , $offset , $expected) {
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         if($limit > 0) {
             $DriverProphecy->dbCommand('LIMIT')->willReturn('LIMIT')->shouldBeCalledTimes(1);
@@ -212,7 +212,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
             $DriverProphecy->dbCommand('OFFSET')->willReturn('OFFSET')->shouldBeCalledTimes(1);
         }
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -244,10 +244,10 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     public function testAddSort(array $sortCriteria , $expected, $exception) {
         
         if($exception) {
-            $this->setExpectedException('\oat\taoSearch\model\search\exception\QueryParsingException');
+            $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
         }
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->dbCommand('ASC')->willReturn('ASC')->shouldBeCalledTimes(1);
         $DriverProphecy->dbCommand('DESC')->willReturn('DESC')->shouldBeCalledTimes(1);
@@ -266,7 +266,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         }
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -292,12 +292,12 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $expected = $fixtureQuery . $fixtureSort . ' ' . $fixtureLimitOffset . "\n";
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQueryParser',
                 [], '',  true, true, true, 
                 ['addSort' , 'addLimit']
                 );
                 
-        $BuilderProphecy = $this->prophesize('oat\taoSearch\model\search\QueryBuilderInterface');
+        $BuilderProphecy = $this->prophesize('oat\search\base\QueryBuilderInterface');
         
         $BuilderProphecy->getSort()->willReturn($fixtureSortCriteria)->shouldBeCalledTimes(1);
         $BuilderProphecy->getLimit()->willReturn($fixtureLimit)->shouldBeCalledTimes(1);

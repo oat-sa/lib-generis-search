@@ -19,7 +19,7 @@
  * 
  */
 
-namespace oat\taoSearch\model\factory;
+namespace oat\search\factory;
 
 /**
  * Description of QueryParamFactory
@@ -36,7 +36,7 @@ class QueryParamFactory extends FactoryAbstract {
      * return a new Query param
      * @param string $className
      * @param array $options
-     * @return \oat\taoSearch\model\factory\QueryParamInterface
+     * @return \oat\search\factory\QueryParamInterface
      * @throws \InvalidArgumentException
      */
     public function get($className,array $options = array()) {

@@ -26,7 +26,7 @@
 class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
     
     public function setUp() {
-        $this->instance = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
+        $this->instance = new \oat\search\DbSql\TaoRdf\QueryParser();
     }
     
     public function testPrefixQuery() {
@@ -41,7 +41,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
         
         $instance = $this->getMock(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser',
+                'oat\search\DbSql\TaoRdf\QueryParser',
                 ['getOptions' , 'validateOptions' , 'setFieldList' , 'getDriverEscaper' , 'initQuery' , 'setLanguageCondition']
                 );
         
@@ -70,7 +70,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         
         $expectedQuery = 'SELECT DISTINCT(`subject`)  FROM `test`  WHERE `subject` IN (SELECT `subject` FROM  (SELECT DISTINCT(`subject`)  FROM `test` WHERE ';
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->dbCommand('SELECT') ->willReturn('SELECT')->shouldBeCalledTimes(3);  
         $DriverProphecy->dbCommand('FROM')->willReturn('FROM')->shouldBeCalledTimes(3);    
@@ -103,7 +103,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
      * @param string $expected
      */
     public function testSetLanguageCondition($language , $emptyAvailable , $expected) {
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->reserved('l_language')->willreturn('`l_language`')->shouldBeCalledTimes(1);
         $DriverProphecy->escape($language)->willreturn($language)->shouldBeCalledTimes(1);
@@ -130,7 +130,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $language = '(`l_language` = fr-FR OR `l_language` = "") AND ';
         $expected = $prefix . "\n" . $language . "\n" . $fixtureExpression . '))';
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->reserved('subject')->willReturn('`subject`')->shouldBeCalledTimes(2);
         $DriverProphecy->reserved('statements')->willReturn('`statements`')->shouldBeCalledTimes(1);
@@ -185,7 +185,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
      * @param string $expected
      */
     public function testMergeCondition($command , $condition, $separator , $expected) {
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         if(!is_null($separator)) {
             $DriverProphecy->dbCommand($separator)->willReturn(strtoupper($separator))->shouldBeCalledTimes(1);
         }
@@ -213,16 +213,16 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
                          'ORDER BY `date` ASC';
         
         $this->instance = $this->getMock(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser',
+                'oat\search\DbSql\TaoRdf\QueryParser',
                 ['addLimit' , 'addSort' , 'getDriverEscaper']
                 );
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
 
         $DriverProphecy->dbCommand('AS')->willReturn(strtoupper('AS'))->shouldBeCalledTimes(1);
         
         $DriverMock = $DriverProphecy->reveal();
         
-        $BuilderProphecy = $this->prophesize('oat\taoSearch\model\search\QueryBuilderInterface');
+        $BuilderProphecy = $this->prophesize('oat\search\base\QueryBuilderInterface');
         
         $BuilderProphecy->getLimit()->willReturn($fixtureLimit)->shouldBeCalledTimes(1);
         $BuilderProphecy->getOffset()->willReturn($fixtureOffset)->shouldBeCalledTimes(1);

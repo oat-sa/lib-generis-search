@@ -35,9 +35,9 @@ class InTest extends UnitTestHelper {
         
         $expected = '("0" , "5" , "10")';
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\In' , ['getDriverEscaper'] );
+        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\In' , ['getDriverEscaper'] );
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
         $DriverProphecy->escape(5)->willReturn(5)->shouldBeCalledTimes(1);
         $DriverProphecy->escape(10)->willReturn(10)->shouldBeCalledTimes(1);
@@ -88,16 +88,16 @@ class InTest extends UnitTestHelper {
         
         $fixtureOperator  = 'IN';
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\Between' , 
+        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , 
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $QueryParamProphecy = $this->prophesize('\oat\search\base\QueryParamInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $QueryParamProphecy->getValue()->willReturn($value);
         
         if($exception) {
-          $this->setExpectedException('\oat\taoSearch\model\search\exception\QueryParsingException');  
+          $this->setExpectedException('\oat\search\base\exception\QueryParsingException');  
         } else {
             
             $QueryParamProphecy->getName()->willReturn($predicate);

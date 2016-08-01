@@ -34,7 +34,7 @@ class QueryParamTest extends \oat\taoSearch\test\UnitTestHelper {
     protected $instance;
     
     public function setUp() {
-        $this->instance = new \oat\taoSearch\model\searchImp\QueryParam;
+        $this->instance = new \oat\search\QueryParam;
     }
     
     public function testSetGetName() {

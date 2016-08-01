@@ -34,12 +34,12 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $operator = '=';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->dbCommand($operator)->willReturn($operator)->shouldBeCalledTimes(1);
         
         $DriverMock     = $DriverProphecy->reveal();
@@ -55,14 +55,14 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $fixtureName = 'http://www.w3.org/2000/01/rdf-schema#label';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
         
         $expected = '`predicate` = "' . $fixtureName . '" AND ( ';
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape($fixtureName)->willReturn($fixtureName)->shouldBeCalledTimes(1);
         $DriverProphecy->quote($fixtureName)->willReturn('"' . $fixtureName . '"')->shouldBeCalledTimes(1);
         
@@ -85,20 +85,20 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
         
         $this->instance = $this->getMock(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
         );
         
         $expected = '' . $fixtureProperty . ' `object` = "test"';
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
+        $QueryParamProphecy = $this->prophesize('\oat\search\base\QueryParamInterface');
         
         $QueryParamProphecy->getValue()->willReturn($fixtureValue);
         $QueryParamProphecy->getName()->willReturn($fixturePredicate);
         
         $QueryParamMock = $QueryParamProphecy->reveal();
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->escape($fixtureValue)->willReturn($fixtureValue)->shouldBeCalledTimes(1);
         $DriverProphecy->quote($fixtureValue)->willReturn('"' . $fixtureValue . '"')->shouldBeCalledTimes(1);

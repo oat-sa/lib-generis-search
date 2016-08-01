@@ -28,7 +28,7 @@ namespace oat\taoSearch\test\searchImpTest;
 class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     
     public function setUp() {
-        $this->instance = new \oat\taoSearch\model\searchImp\TaoSearchGateWay();
+        $this->instance = new \oat\search\TaoSearchGateWay();
     }
     /**
      * try connection
@@ -52,8 +52,8 @@ class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     
     public function testSearch() {
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\TaoSearchGateWay' , ['parse']);
-        $builderMock = $this->prophesize('oat\taoSearch\model\search\QueryBuilderInterface')->reveal();
+        $this->instance = $this->getMock('\oat\search\TaoSearchGateWay' , ['parse']);
+        $builderMock = $this->prophesize('oat\search\base\QueryBuilderInterface')->reveal();
         
         $fixtureQuery = 'select * from toto where id = 2';
         

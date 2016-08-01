@@ -34,9 +34,9 @@ class AbstractQueryParserTest extends UnitTestHelper {
 
     public function testSetCriteriaList() {
         
-        $instance = $this->getMockForAbstractClass('oat\taoSearch\model\searchImp\AbstractQueryParser');
+        $instance = $this->getMockForAbstractClass('oat\search\AbstractQueryParser');
         
-        $builderProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryBuilder');
+        $builderProphecy = $this->prophesize('oat\search\QueryBuilder');
         $builder         = $builderProphecy->reveal();
         
         $this->assertSame($instance, $instance->setCriteriaList($builder));
@@ -46,18 +46,18 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testParse() {
         
         $instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['parseQuery' , 'finishQuery']
                 );
         
         $fixturePrefix = 'SELECT FROM .....';
         
-        $QueryProphecy = $this->prophesize('oat\taoSearch\model\searchImp\Query');
+        $QueryProphecy = $this->prophesize('oat\search\Query');
         
         $MockQuery = $QueryProphecy->reveal();
         
-        $builderProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryBuilder');
+        $builderProphecy = $this->prophesize('oat\search\QueryBuilder');
         
         $storedQueries = [$MockQuery];
         
@@ -80,16 +80,16 @@ class AbstractQueryParserTest extends UnitTestHelper {
     
     public function testParseQuery() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['parseOperation']
                 );
         
-        $ParamProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
         $mockParam     = $ParamProphecy->reveal();
         $storedParams = [$mockParam];
         
-        $QueryProphecy = $this->prophesize('oat\taoSearch\model\searchImp\Query');
+        $QueryProphecy = $this->prophesize('oat\search\Query');
         
         $QueryProphecy->getStoredQueryParams()->willReturn($storedParams)->shouldBeCalledTimes(1);
         $MockQuery = $QueryProphecy->reveal();
@@ -105,7 +105,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $fixtureOr  = false;
         
          $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['addSeparator']
                 );
@@ -121,7 +121,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testSetConditions() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['getOperator' , 'mergeCondition']
                 );
@@ -130,12 +130,12 @@ class AbstractQueryParserTest extends UnitTestHelper {
         
         $convertOperation = 'test = "toto"';
         
-        $ParamProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
         
         $ParamProphecy->getOperator()->willReturn($operator)->shouldBeCalledTimes(1);
         $mockParam     = $ParamProphecy->reveal();
         
-        $OperatorProphecy = $this->prophesize('oat\taoSearch\model\search\command\OperatorConverterInterface');
+        $OperatorProphecy = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
         
         $OperatorProphecy->convert($mockParam)->willReturn($convertOperation)->shouldBeCalledTimes(1);
         
@@ -160,7 +160,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperator() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['getServiceLocator' , 'getDriverEscaper']
                 );
@@ -172,10 +172,10 @@ class AbstractQueryParserTest extends UnitTestHelper {
             $fixtureOperator =>  $fixtureClass
         ];
         
-        $driverEscaperProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $driverEscaperProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $mockDriverEscaper = $driverEscaperProphecy->reveal();
         
-        $OperatorProphecy  = $this->prophesize('oat\taoSearch\model\search\command\OperatorConverterInterface');
+        $OperatorProphecy  = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
         $OperatorProphecy->setDriverEscaper($mockDriverEscaper)->willReturn($OperatorProphecy)->shouldBeCalledTimes(1);
         
         $mockOperator = $OperatorProphecy->reveal();
@@ -196,11 +196,11 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperatorFailed() {
     
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser'
+                'oat\search\AbstractQueryParser'
                 );
         
         $fixtureOperator  = 'contain';
-        $this->setExpectedException('\oat\taoSearch\model\search\exception\QueryParsingException');
+        $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
         $this->setInaccessibleProperty($this->instance, 'supportedOperators', []);
         $this->invokeProtectedMethod($this->instance,'getOperator' , [$fixtureOperator]);
     }
@@ -212,12 +212,12 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $fixtureValue     = '666';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['getOperator' , 'setNextSeparator' , 'prepareOperator' , 'setConditions' , 'getOperationValue']
                 );
         
-        $ParamProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
         $ParamProphecy->getValue()->willReturn($fixtureValue)->shouldBeCalledTimes(1);
         $ParamProphecy->setValue($fixtureValue)->willReturn($ParamProphecy)->shouldBeCalledTimes(1);
         $ParamProphecy->getSeparator()->willReturn(true)->shouldBeCalledTimes(1);
@@ -227,7 +227,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         
         $mockParam = $ParamProphecy->reveal();
         
-        $OperatorProphecy = $this->prophesize('oat\taoSearch\model\search\command\OperatorConverterInterface');
+        $OperatorProphecy = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
         $OperatorProphecy->convert($mockParam)->willReturn($convertOperation)->shouldBeCalledTimes(1); 
         $OperatorMock = $OperatorProphecy->reveal();
         
@@ -250,13 +250,13 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueQuery() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['parseQuery' ]
                 );
         $fixtureValue = 'select * from `test`';
         
-        $QueryProphecy = $this->prophesize('oat\taoSearch\model\searchImp\Query');
+        $QueryProphecy = $this->prophesize('oat\search\Query');
         
         $MockQuery = $QueryProphecy->reveal();
         
@@ -267,13 +267,13 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueBuilder() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser',
+                'oat\search\AbstractQueryParser',
                 [], '',  true, true, true, 
                 ['setCriteriaList' , 'parse' , ]
                 );
         $fixtureValue = 'select * from `test`';
         
-        $BuilderProphecy = $this->prophesize('oat\taoSearch\model\searchImp\QueryBuilder');
+        $BuilderProphecy = $this->prophesize('oat\search\QueryBuilder');
         
         $MockBuilder = $BuilderProphecy->reveal();
         
@@ -286,7 +286,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueString() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractQueryParser'
+                'oat\search\AbstractQueryParser'
                 );
         $fixtureValue = 'toto';
         

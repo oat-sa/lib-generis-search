@@ -21,7 +21,7 @@ class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
 
     public function setUp() {
         
-        $this->instance = $this->getMockForAbstractClass('oat\taoSearch\model\factory\FactoryAbstract');
+        $this->instance = $this->getMockForAbstractClass('oat\search\factory\FactoryAbstract');
         
     }
     

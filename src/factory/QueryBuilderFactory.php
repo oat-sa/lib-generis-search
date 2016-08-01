@@ -19,7 +19,7 @@
  * 
  */
 
-namespace oat\taoSearch\model\factory;
+namespace oat\search\factory;
 
 /**
  * Description of QueryBuilderFactory
@@ -37,7 +37,7 @@ class QueryBuilderFactory extends FactoryAbstract
      * return a new Query builder
      * @param string $className
      * @param array $options
-     * @return \oat\taoSearch\model\factory\QueryInterface
+     * @return \oat\search\factory\QueryInterface
      * @throws \InvalidArgumentException
      */
     public function get($className , array $options = array())  {

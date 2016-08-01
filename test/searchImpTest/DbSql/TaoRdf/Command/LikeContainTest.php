@@ -37,20 +37,20 @@ class LikeContainTest extends UnitTestHelper {
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
         
         $this->instance = $this->getMock(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\LikeContain',
+                'oat\search\DbSql\TaoRdf\Command\LikeContain',
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
         );
         
         $expected = '' . $fixtureProperty . ' `object` LIKE "%test%"';
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
+        $QueryParamProphecy = $this->prophesize('\oat\search\base\QueryParamInterface');
         
         $QueryParamProphecy->getValue()->willReturn($fixtureValue);
         $QueryParamProphecy->getName()->willReturn($fixturePredicate);
         
         $QueryParamMock = $QueryParamProphecy->reveal();
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->escape('%' . $fixtureValue . '%')->willReturn('%' .$fixtureValue . '%')->shouldBeCalledTimes(1);
         $DriverProphecy->quote('%' .$fixtureValue . '%')->willReturn('"%' . $fixtureValue . '%"')->shouldBeCalledTimes(1);

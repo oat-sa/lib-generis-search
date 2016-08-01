@@ -20,9 +20,9 @@
 
 namespace oat\taoSearch\test\searchImpTest;
 
-use oat\taoSearch\model\factory\QueryFactory;
-use oat\taoSearch\model\searchImp\Query;
-use oat\taoSearch\model\searchImp\QueryBuilder;
+use oat\search\factory\QueryFactory;
+use oat\search\Query;
+use oat\search\QueryBuilder;
 use oat\taoSearch\test\UnitTestHelper;
 
 /**
@@ -80,11 +80,11 @@ class QueryBuilderTest extends UnitTestHelper {
         $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager = $ServiceManager->reveal();
  
-        $mockQuery = $this->prophesize('\oat\taoSearch\model\searchImp\Query');
+        $mockQuery = $this->prophesize('\oat\search\Query');
         $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
         
-        $mockFactoryProphecy = $this->prophesize('\oat\taoSearch\model\factory\FactoryInterface');
+        $mockFactoryProphecy = $this->prophesize('\oat\search\factory\FactoryInterface');
         $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
         $mockFactoryProphecy->get($fixtureQueryClass)->willReturn($mockQuery)->shouldBeCalledTimes(1);
         

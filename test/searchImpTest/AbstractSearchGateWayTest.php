@@ -40,7 +40,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
             'taoRdf' => 'search.driver.mysql'
         ];
         
-        $DriverProphecy    = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy    = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverMock        = $DriverProphecy->reveal();
         
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
@@ -49,7 +49,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManagerMock = $ServiceManager->reveal();
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator' , 'setOptions' , 'setDriverEscaper']
                 );
@@ -71,10 +71,10 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         
         $fixtureQuery = 'select * from toto where id = 2';
         
-        $builder        = $this->prophesize('\oat\taoSearch\model\search\QueryBuilderInterface');
+        $builder        = $this->prophesize('\oat\search\base\QueryBuilderInterface');
         $BuilderMock    = $builder->reveal();
         
-        $ParserProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParserInterface');
+        $ParserProphecy = $this->prophesize('\oat\search\base\QueryParserInterface');
         
         $ParserProphecy->setCriteriaList($BuilderMock)->willReturn($ParserProphecy);
         $ParserProphecy->parse()->willReturn($fixtureQuery);
@@ -82,7 +82,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ParserMock     = $ParserProphecy->reveal();
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getParser']
             );
@@ -99,7 +99,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testGetDriverName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureDriverName = 'mysql';
@@ -113,7 +113,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
      */
     public function testSetGetConnector() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $connectorMock = $this->prophesize('\PDO')->reveal();
@@ -136,12 +136,12 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
             'taoRdf' => 'search.tao.parser'
         ];
         
-        $DriverMock     = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface')->reveal();
+        $DriverMock     = $this->prophesize('oat\search\base\Query\EscaperInterface')->reveal();
         
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $ServiceManagerMock = $ServiceManager->reveal();
         
-        $ParserProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParserInterface');
+        $ParserProphecy = $this->prophesize('\oat\search\base\QueryParserInterface');
         $ParserProphecy->setServiceLocator($ServiceManagerMock)->willReturn($ParserProphecy);
         $ParserProphecy->setDriverEscaper($DriverMock)->willReturn($ParserProphecy);
         $ParserProphecy->setOptions($fixtureOptions)->willReturn($ParserProphecy);
@@ -152,7 +152,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManagerMock = $ServiceManager->reveal();  
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator']
                 );
@@ -173,7 +173,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testSetGetResultSetClassName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureResultSetName = 'search.result.tao';
@@ -187,7 +187,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testSetGetBuilderClassName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureResultSetName = 'search.query.builder.test';
@@ -210,7 +210,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $ServiceManagerMock = $ServiceManager->reveal();
         
-        $QueryProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryBuilderInterface');
+        $QueryProphecy = $this->prophesize('\oat\search\base\QueryBuilderInterface');
         $QueryProphecy->setServiceLocator($ServiceManagerMock)->willReturn($QueryProphecy);
         $QueryProphecy->setOptions($fixtureOptions)->willReturn($QueryProphecy);
 
@@ -220,7 +220,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManagerMock = $ServiceManager->reveal();  
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator']
                 );

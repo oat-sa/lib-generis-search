@@ -29,7 +29,7 @@ class DriverSensitiveTraitTest extends \oat\taoSearch\test\UnitTestHelper
 {
     /**
      *
-     * @var oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait 
+     * @var oat\search\base\UsableTrait\DriverSensitiveTrait 
      */
     protected $instance;
     
@@ -41,7 +41,7 @@ class DriverSensitiveTraitTest extends \oat\taoSearch\test\UnitTestHelper
     
     public function testsSetGetDriverEscaper() {
         
-        $mock = $this->getMock('oat\taoSearch\model\search\Query\EscaperInterface');
+        $mock = $this->getMock('oat\search\base\Query\EscaperInterface');
         
         $this->assertSame($this->instance, $this->instance->setDriverEscaper($mock));
         $this->assertSame($mock, $this->instance->getDriverEscaper());
