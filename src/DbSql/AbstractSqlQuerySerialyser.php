@@ -22,16 +22,16 @@
 namespace oat\search\DbSql;
 
 use oat\search\base\exception\QueryParsingException;
-use \oat\search\AbstractQueryParser;
+use \oat\search\AbstractQuerySerialyser;
 /**
  * transform QueryBuilder criteria to an exploitable query
  * for database system driver
  * 
- * Abstract base for SQL Query Parser
+ * Abstract base for SQL Query Serialyser
  * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-abstract class AbstractSqlQueryParser extends AbstractQueryParser {
+abstract class AbstractSqlQuerySerialyser extends AbstractQuerySerialyser {
     
     /**
      * create base query for SQL single table query

@@ -20,7 +20,7 @@
 namespace oat\search;
 
 use oat\search\base\QueryBuilderInterface;
-use oat\search\base\QueryParserInterface;
+use oat\search\base\QuerySerialyserInterface;
 use oat\search\base\SearchGateWayInterface;
 use oat\search\UsableTrait\DriverSensitiveTrait;
 use oat\search\UsableTrait\OptionsTrait;
@@ -28,7 +28,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Abstract base for search gateway
  * use to manage connection to database system
- * must provide right parser, builder and ResultSet
+ * must provide right serialyser, builder and ResultSet
  * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
@@ -39,11 +39,11 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     use DriverSensitiveTrait;
     
     /**
-     * parser service or className
+     * serialyser service or className
      * @var string 
      */
-    protected $parserList = [
-        'taoRdf' => 'search.tao.parser'
+    protected $serialyserList = [
+        'taoRdf' => 'search.tao.serialyser'
     ];
     /**
      * driver escaper list
@@ -99,7 +99,7 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
      * @return $this
      */
     public function parse(QueryBuilderInterface $Builder) {
-        $this->parsedQuery = $this->getParser()->setCriteriaList($Builder)->parse();
+        $this->parsedQuery = $this->getSerialyser()->setCriteriaList($Builder)->parse();
         return $this;
     }
 
@@ -129,13 +129,13 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     
     /**
-     * query parser factory
-     * @return QueryParserInterface
+     * query serialyser factory
+     * @return QuerySerialyserInterface
      */
-    public function getParser() {
-       $parser = $this->getServiceLocator()->get($this->parserList[$this->driverName]);
-       $parser->setServiceLocator($this->serviceLocator)->setDriverEscaper($this->driverEscaper)->setOptions($this->options)->prefixQuery();
-       return $parser;
+    public function getSerialyser() {
+       $serialyser = $this->getServiceLocator()->get($this->serialyserList[$this->driverName]);
+       $serialyser->setServiceLocator($this->serviceLocator)->setDriverEscaper($this->driverEscaper)->setOptions($this->options)->prefixQuery();
+       return $serialyser;
     }
     
     /**

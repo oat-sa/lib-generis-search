@@ -23,18 +23,18 @@ namespace oat\search\test\searchImpTest;
 use oat\search\test\UnitTestHelper;
 
 /**
- * test AbstractQueryParserTest
+ * test AbstractQuerySerialyserTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class AbstractQueryParserTest extends UnitTestHelper {
+class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     protected $instance;
 
 
     public function testSetCriteriaList() {
         
-        $instance = $this->getMockForAbstractClass('oat\search\AbstractQueryParser');
+        $instance = $this->getMockForAbstractClass('oat\search\AbstractQuerySerialyser');
         
         $builderProphecy = $this->prophesize('oat\search\QueryBuilder');
         $builder         = $builderProphecy->reveal();
@@ -46,7 +46,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testParse() {
         
         $instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['parseQuery' , 'finishQuery']
                 );
@@ -80,7 +80,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     
     public function testParseQuery() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['parseOperation']
                 );
@@ -105,7 +105,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $fixtureOr  = false;
         
          $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['addSeparator']
                 );
@@ -121,7 +121,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testSetConditions() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getOperator' , 'mergeCondition']
                 );
@@ -160,7 +160,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperator() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getServiceLocator' , 'getDriverEscaper']
                 );
@@ -196,7 +196,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperatorFailed() {
     
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser'
+                'oat\search\AbstractQuerySerialyser'
                 );
         
         $fixtureOperator  = 'contain';
@@ -212,7 +212,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $fixtureValue     = '666';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getOperator' , 'setNextSeparator' , 'prepareOperator' , 'setConditions' , 'getOperationValue']
                 );
@@ -250,7 +250,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueQuery() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['parseQuery' ]
                 );
@@ -267,7 +267,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueBuilder() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser',
+                'oat\search\AbstractQuerySerialyser',
                 [], '',  true, true, true, 
                 ['setCriteriaList' , 'parse' , ]
                 );
@@ -286,7 +286,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
     public function testGetOperationValueString() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQueryParser'
+                'oat\search\AbstractQuerySerialyser'
                 );
         $fixtureValue = 'toto';
         

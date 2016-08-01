@@ -21,17 +21,17 @@
 
 namespace oat\search\DbSql\TaoRdf;
 
-use \oat\search\DbSql\AbstractSqlQueryParser;
+use \oat\search\DbSql\AbstractSqlQuerySerialyser;
 use \oat\search\base\helper\SupportedOperatorHelper;
 /**
- * Tao RDF Onthology parser
+ * Tao RDF Onthology serialyser
  * 
  * transform QueryBuilder criteria to an exploitable query
  * for database system driver
  * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParser extends AbstractSqlQueryParser {
+class QuerySerialyser extends AbstractSqlQuerySerialyser {
     /**
      * namespace for operator converter class
      * @var string 

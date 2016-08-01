@@ -21,7 +21,7 @@
 
 namespace oat\search\base\exception;
 /**
- * thown when QueryParser encounter a problem
+ * thown when QuerySerialyser encounter a problem
  */
 class QueryParsingException extends \InvalidArgumentException
 {

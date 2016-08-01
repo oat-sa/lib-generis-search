@@ -19,11 +19,11 @@
  */
 use oat\search\test\UnitTestHelper;
 /**
- * tests for AbstractSqlQueryParser
+ * tests for AbstractSqlQuerySerialyser
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class AbstractSqlQueryParserTest extends UnitTestHelper {
+class AbstractSqlQuerySerialyserTest extends UnitTestHelper {
     
     public function testPrefixQuery() {
         
@@ -33,7 +33,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $expectedQuery = 'SELECT * FROM `test` WHERE ';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getOptions' , 'validateOptions' , 'setFieldList' , 'getDriverEscaper']
                 );
@@ -60,7 +60,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     public function testPrepareOperator() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQuerySerialyser'
                );
         
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
@@ -74,7 +74,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     
     public function testAddOperator() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQuerySerialyser'
                );
         
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
@@ -99,7 +99,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
      */
     public function testAddSeparator($operator , $expectedString , $calls) {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -135,7 +135,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
     public function testValidateOptions(array $options , $expected, $exception) {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser'
+                'oat\search\DbSql\AbstractSqlQuerySerialyser'
                 );
         
         if($exception) {
@@ -177,7 +177,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         }
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -212,7 +212,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
             $DriverProphecy->dbCommand('OFFSET')->willReturn('OFFSET')->shouldBeCalledTimes(1);
         }
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -266,7 +266,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         }
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
@@ -292,7 +292,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $expected = $fixtureQuery . $fixtureSort . ' ' . $fixtureLimitOffset . "\n";
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\AbstractSqlQueryParser',
+                'oat\search\DbSql\AbstractSqlQuerySerialyser',
                 [], '',  true, true, true, 
                 ['addSort' , 'addLimit']
                 );

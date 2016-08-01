@@ -19,14 +19,14 @@
  */
 
 /**
- * Description of QueryParserTest
+ * Description of QuerySerialyserTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParserTest extends oat\search\test\UnitTestHelper {
+class QuerySerialyserTest extends oat\search\test\UnitTestHelper {
     
     public function setUp() {
-        $this->instance = new \oat\search\DbSql\TaoRdf\QueryParser();
+        $this->instance = new \oat\search\DbSql\TaoRdf\QuerySerialyser();
     }
     
     public function testPrefixQuery() {
@@ -41,7 +41,7 @@ class QueryParserTest extends oat\search\test\UnitTestHelper {
         $fixtureQuery = 'SELECT * FROM `test` WHERE ';
         
         $instance = $this->getMock(
-                'oat\search\DbSql\TaoRdf\QueryParser',
+                'oat\search\DbSql\TaoRdf\QuerySerialyser',
                 ['getOptions' , 'validateOptions' , 'setFieldList' , 'getDriverEscaper' , 'initQuery' , 'setLanguageCondition']
                 );
         
@@ -213,7 +213,7 @@ class QueryParserTest extends oat\search\test\UnitTestHelper {
                          'ORDER BY `date` ASC';
         
         $this->instance = $this->getMock(
-                'oat\search\DbSql\TaoRdf\QueryParser',
+                'oat\search\DbSql\TaoRdf\QuerySerialyser',
                 ['addLimit' , 'addSort' , 'getDriverEscaper']
                 );
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');

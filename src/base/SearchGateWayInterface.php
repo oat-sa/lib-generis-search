@@ -29,7 +29,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  * Interface SearchGateWayInterface
  *
  * use to manage connection to database system
- * must provide right parser, builder and ResultSet
+ * must provide right serialyser, builder and ResultSet
  * 
  * @package oat\search\base
  */
@@ -91,10 +91,10 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
     public function parse(QueryBuilderInterface $Builder);
 
         /**
-     * set up a new parser
-     * @return QueryParserInterface
+     * set up a new serialyser
+     * @return QuerySerialyserInterface
      */
-    public function getParser();
+    public function getSerialyser();
 
      /**
       * return GateWay DriverName

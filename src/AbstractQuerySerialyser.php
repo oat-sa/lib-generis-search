@@ -22,7 +22,7 @@
 
 namespace oat\search;
 
-use \oat\search\base\QueryParserInterface;
+use \oat\search\base\QuerySerialyserInterface;
 use \oat\search\base\QueryBuilderInterface;
 use \oat\search\base\QueryInterface;
 use oat\search\base\QueryParamInterface;
@@ -31,11 +31,11 @@ use \oat\search\UsableTrait\DriverSensitiveTrait;
 use oat\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
- * Query parser are use to transform 
+ * Query serialyser are use to transform 
  * QueryBuilder to an exploitable query ofr database driver
  * @author christophe GARCIA
  */
-abstract class AbstractQueryParser implements QueryParserInterface {
+abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
     
     use DriverSensitiveTrait;
     use OptionsTrait;
@@ -168,8 +168,8 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     protected function getOperationValue($value) {
         
         if(is_a($value, '\\oat\\search\\base\\QueryBuilderInterface')) {
-            $parser = clone $this;
-            $value = $parser->setCriteriaList($value)->parse();
+            $serialyser = clone $this;
+            $value = $serialyser->setCriteriaList($value)->parse();
         } else if(is_a($value, '\\oat\\search\\base\\QueryInterface')) {
             $value = $this->parseQuery($value);
         }

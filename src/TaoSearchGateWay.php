@@ -59,7 +59,7 @@ class TaoSearchGateWay extends AbstractSearchGateWay
     }
 
     public function count(QueryBuilderInterface $Builder) {
-         return $this->getParser()->setCriteriaList($Builder)->count(true)->parse(); 
+         return $this->getSerialyser()->setCriteriaList($Builder)->count(true)->parse(); 
     }
 
 }

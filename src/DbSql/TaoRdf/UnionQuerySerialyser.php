@@ -22,16 +22,16 @@ namespace oat\search\DbSql\TaoRdf;
 
 use oat\search\base\exception\QueryParsingException;
 use oat\search\base\helper\SupportedOperatorHelper;
-use oat\search\DbSql\AbstractSqlQueryParser;
+use oat\search\DbSql\AbstractSqlQuerySerialyser;
 /**
- * Tao RDF Onthology parser
+ * Tao RDF Onthology serialyser
  * 
  * transform QueryBuilder criteria to an exploitable query
  * for database system driver
  * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class UnionQueryParser extends AbstractSqlQueryParser {
+class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
     /**
      * namespace for operator converter class
      * @var string 
@@ -103,7 +103,7 @@ class UnionQueryParser extends AbstractSqlQueryParser {
     /**
      * set count
      * @param boolean $count
-     * @return \oat\search\DbSql\TaoRdf\UnionQueryParser
+     * @return \oat\search\DbSql\TaoRdf\UnionQuerySerialyser
      */
     public function count($count = true) {
         $this->count = $count;

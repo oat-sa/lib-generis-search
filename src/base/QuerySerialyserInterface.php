@@ -25,14 +25,14 @@ use oat\search\base\Query\DriverSensitiveInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
- * Interface QueryParserInterface
+ * Interface QuerySerialyserInterface
  *
  * transform QueryBuilder criteria to an exploitable query
  * for database system driver
  *
  * @package oat\search\base
  */
-interface QueryParserInterface extends DriverSensitiveInterface, OptionsInterface, ServiceLocatorAwareInterface {
+interface QuerySerialyserInterface extends DriverSensitiveInterface, OptionsInterface, ServiceLocatorAwareInterface {
 
      /**
      * create query base

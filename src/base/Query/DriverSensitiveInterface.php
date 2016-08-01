@@ -24,7 +24,7 @@ namespace oat\search\base\Query;
 
 /**
  * use for Driver sensitive classes
- * usefull for QueryParser
+ * usefull for QuerySerialyser
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
