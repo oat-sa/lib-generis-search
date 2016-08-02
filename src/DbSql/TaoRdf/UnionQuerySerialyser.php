@@ -228,7 +228,6 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         $sortFields = [];
         
         $result = $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . 
-            $result = $this->getDriverEscaper()->dbCommand('DISTINCT') . ' ' . 
             $this->getDriverEscaper()->reserved('subject') . ' ' . 
             $this->getDriverEscaper()->dbCommand('FROM') . 
             $this->operationSeparator . '(' .
