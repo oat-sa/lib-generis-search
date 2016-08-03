@@ -124,10 +124,11 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     public function addCriterion($property , $operator , $value)
     {
         $factory = $this->factory;
-        $criterion = $factory->get($this->queryCriterionClassName , [$property , $operator , $value]);
-        $this->storedQueryCriteria[] = $criterion;
-        return $criterion;
-        return $criterion;
+        $factory->setServiceLocator($this->serviceLocator);
+        return $factory->get(
+            $this->queryCriterionClassName,
+            [$property , $operator , $value]
+        )->setParent($this);
     }
 
 }

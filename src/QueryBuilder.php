@@ -21,6 +21,7 @@
 
 namespace oat\search;
 
+use oat\search\base\QueryInterface;
 use oat\search\factory\FactoryAbstract;
 use oat\search\factory\QueryFactory;
 use oat\search\base\QueryBuilderInterface;

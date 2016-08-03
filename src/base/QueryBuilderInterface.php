@@ -61,6 +61,6 @@ interface QueryBuilderInterface extends LimitableInterface, SortableInterface, O
      * create a new query and store it
      * @return QueryInterface
      */
-    public function criteria();
+    public function addOr();
     
 }
