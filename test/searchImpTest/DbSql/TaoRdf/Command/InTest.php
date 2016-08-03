@@ -91,16 +91,16 @@ class InTest extends UnitTestHelper {
         $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , 
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
         
-        $QueryParamProphecy = $this->prophesize('\oat\search\base\QueryParamInterface');
+        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
-        $QueryParamProphecy->getValue()->willReturn($value);
+        $QueryCriterionProphecy->getValue()->willReturn($value);
         
         if($exception) {
           $this->setExpectedException('\oat\search\base\exception\QueryParsingException');  
         } else {
             
-            $QueryParamProphecy->getName()->willReturn($predicate);
+            $QueryCriterionProphecy->getName()->willReturn($predicate);
 
             $DriverProphecy->reserved('object')->willReturn('`object`')->shouldBeCalledTimes(1);
 
@@ -113,8 +113,8 @@ class InTest extends UnitTestHelper {
             
         }
         
-        $QueryParamMock = $QueryParamProphecy->reveal();
-        $query = $this->instance->convert($QueryParamMock);
+        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
+        $query = $this->instance->convert($QueryCriterionMock);
         $this->assertSame($expected, $query);
     }
 }

@@ -21,20 +21,20 @@
 namespace oat\search\test\searchImpTest;
 
 /**
- * Description of QueryParamTest
+ * Description of QueryCriterionTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParamTest extends \oat\search\test\UnitTestHelper {
+class QueryCriterionTest extends \oat\search\test\UnitTestHelper {
     
     /**
      *
-     * @var QueryParam
+     * @var QueryCriterion
      */
     protected $instance;
     
     public function setUp() {
-        $this->instance = new \oat\search\QueryParam;
+        $this->instance = new \oat\search\QueryCriterion;
     }
     
     public function testSetGetName() {

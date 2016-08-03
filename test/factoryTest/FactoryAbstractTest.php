@@ -28,7 +28,7 @@ class FactoryAbstractTest extends \oat\search\test\UnitTestHelper
     public function isValidClassProvide() {
         
         return [
-            ['\\oat\\search\\QueryParam' , true  , false],
+            ['\\oat\\search\\QueryCriterion' , true  , false],
             ['\\oat\\search\\Query'      , null , true ]
         ];
         
@@ -47,7 +47,7 @@ class FactoryAbstractTest extends \oat\search\test\UnitTestHelper
             $this->setExpectedException('\InvalidArgumentException');
         } 
         
-        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\search\\base\\QueryParamInterface');
+        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\search\\base\\QueryCriterionInterface');
         
         $class = new $class();
         

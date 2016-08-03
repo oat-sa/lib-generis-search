@@ -20,7 +20,7 @@
  */
 namespace oat\search\DbSql\TaoRdf\Command;
 
-use \oat\search\base\QueryParamInterface;
+use \oat\search\base\QueryCriterionInterface;
 /**
  * create a condition to search if object contain value
  *
@@ -34,10 +34,10 @@ class LikeContain extends AbstractRdfOperator {
     protected $operator = 'LIKE';
     /**
      * convert Query Param to mysql query string
-     * @param QueryParamInterface $query
+     * @param QueryCriterionInterface $query
      * @return string
      */
-    public function convert(QueryParamInterface $query) {
+    public function convert(QueryCriterionInterface $query) {
         $value = $this->getDriverEscaper()->quote($this->getDriverEscaper()->escape('%' . $query->getValue() . '%'));
         return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . '';
     }

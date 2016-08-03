@@ -37,35 +37,34 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
      * @param string $queryParamsClassName
      * @return $this
      */
-    public function setQueryParamClassName($queryParamsClassName);
+    public function setQueryCriterionClassName($queryParamsClassName);
 
     /**
      * change default query param factory
-     * @param callable $factory
+     * @param FactoryAbstract $factory
      * @return $this
      */
-    public function setQueryParamFactory(FactoryAbstract $factory);
-    
-     /**
-     * create and store a new QueryParamInterface
-     * @param string $name
-     * @param string $operator
-     * @param mixed $value
-     * @param bool $andSeparator true for and , false for or
-     * @return QueryParamInterface
-     */
-    public function addCriterium($name , $operator , $value , $andSeparator = true);
+    public function setQueryCriterionFactory(FactoryAbstract $factory);
     
     /**
      * return all query params object stored
      * @return array
      */
-    public function getStoredQueryParams();
-    
+    public function getStoredQueryCritera();
+
+    /**
+     * create an non stored new QueryCriterionInterface
+     * @param string $property
+     * @param string $operator
+     * @param mixed $value
+     * @return QueryCriterionInterface
+     */
+    public function addCriterion($property , $operator , $value);
     /**
      * return parent builder
      * @return QueryBuilderInterface
      */
     public function builder();
+
 }
 

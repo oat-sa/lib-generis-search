@@ -21,8 +21,10 @@
 
 namespace oat\search;
 
+use oat\search\base\QueryBuilderInterface;
+use oat\search\base\QueryCriterionInterface;
 use oat\search\factory\FactoryAbstract;
-use oat\search\factory\QueryParamFactory;
+use oat\search\factory\QueryCriterionFactory;
 use oat\search\base\QueryInterface;
 use oat\search\UsableTrait\OptionsTrait;
 use oat\search\UsableTrait\ParentFluateTrait;
@@ -41,9 +43,9 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * stored conditions
      * @var array
      */
-    protected $storedQueryParams = [];
+    protected $storedQueryCriteria = [];
     /**
-     * default QueryParam factory
+     * default QueryCriterion factory
      * @var \oat\search\factory\FactoryInterface
      */
     protected $factory;
@@ -51,12 +53,12 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * query param service name
      * @var string
      */
-    protected $queryParamClassName = 'search.query.param';
+    protected $queryCriterionClassName = 'search.query.param';
     /**
      * initialyse factory
      */
     public function __construct() {
-        $this->factory = new QueryParamFactory;
+        $this->factory = new QueryCriterionFactory;
     }
     /**
      * reset query conditions
@@ -70,58 +72,41 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * @return $this
      */
     public function reset() {
-        $this->storedQueryParams = [];
+        $this->storedQueryCriteria = [];
         return $this;
     }
 
-     /**
-      * create a new QueryParam and add it to store.
-      * @param string $name
-      * @param string $operator
-      * @param mixed $value
-      * @param boolean $andSeparator
-      * @return \oat\search\base\QueryParamInterface
-      */
-    public function addCriterium($name, $operator, $value, $andSeparator = true) {
-        $param = $this->factory
-                ->setServiceLocator($this->serviceLocator)
-                ->get($this->queryParamClassName , [$name, $operator, $value, $andSeparator])
-                ->setParent($this);
-        
-        $this->storedQueryParams[] = $param;
-        return $param;
-    }
     /**
-     * create a new QueryParam and add it to store.
+     * create a new QueryCriterion and add it to store.
      * @param string $property
-     * @return \oat\search\base\QueryParamInterface
+     * @return \oat\search\base\QueryCriterionInterface
      */
     public function add($property) {
-        return $this->addCriterium($property, null, null);
+        return $this->addCriterion($property , null , null);
     }
 
         /**
-     * return an array of \oat\search\base\QueryParamInterface
+     * return an array of \oat\search\base\QueryCriterionInterface
      * @return array
      */
-    public function getStoredQueryParams() {
-        return $this->storedQueryParams;
+    public function getStoredQueryCritera() {
+        return $this->storedQueryCriteria;
     }
     /**
-     * change the QueryParam service name
+     * change the QueryCriterion service name
      * @param string $queryParamsClassName
      * @return $this
      */
-    public function setQueryParamClassName($queryParamsClassName) {
-        $this->queryParamClassName = $queryParamsClassName;
+    public function setQueryCriterionClassName($queryParamsClassName) {
+        $this->queryCriterionClassName = $queryParamsClassName;
         return $this;
     }
     /**
-     * change the default QueryParam factory
+     * change the default QueryCriterion factory
      * @param FactoryAbstract $factory
      * @return $this
      */
-    public function setQueryParamFactory(FactoryAbstract $factory) {
+    public function setQueryCriterionFactory(FactoryAbstract $factory) {
         $this->factory = $factory;
         return $this;
     }
@@ -132,5 +117,18 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     public function builder() {
         return $this->getParent();
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function addCriterion($property , $operator , $value)
+    {
+        $factory = $this->factory;
+        $criterion = $factory->get($this->queryCriterionClassName , [$property , $operator , $value]);
+        $this->storedQueryCriteria[] = $criterion;
+        return $criterion;
+        return $criterion;
+    }
+
 }
 

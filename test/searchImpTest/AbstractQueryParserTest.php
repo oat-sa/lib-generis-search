@@ -85,13 +85,13 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
                 ['parseOperation']
                 );
         
-        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryCriterion');
         $mockParam     = $ParamProphecy->reveal();
         $storedParams = [$mockParam];
         
         $QueryProphecy = $this->prophesize('oat\search\Query');
         
-        $QueryProphecy->getStoredQueryParams()->willReturn($storedParams)->shouldBeCalledTimes(1);
+        $QueryProphecy->getStoredQueryCriterions()->willReturn($storedParams)->shouldBeCalledTimes(1);
         $MockQuery = $QueryProphecy->reveal();
         
         $this->instance->expects($this->once())->method('parseOperation')->with($mockParam)->willReturn($this->instance);
@@ -130,7 +130,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         
         $convertOperation = 'test = "toto"';
         
-        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryCriterion');
         
         $ParamProphecy->getOperator()->willReturn($operator)->shouldBeCalledTimes(1);
         $mockParam     = $ParamProphecy->reveal();
@@ -217,7 +217,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
                 ['getOperator' , 'setNextSeparator' , 'prepareOperator' , 'setConditions' , 'getOperationValue']
                 );
         
-        $ParamProphecy = $this->prophesize('oat\search\QueryParam');
+        $ParamProphecy = $this->prophesize('oat\search\QueryCriterion');
         $ParamProphecy->getValue()->willReturn($fixtureValue)->shouldBeCalledTimes(1);
         $ParamProphecy->setValue($fixtureValue)->willReturn($ParamProphecy)->shouldBeCalledTimes(1);
         $ParamProphecy->getSeparator()->willReturn(true)->shouldBeCalledTimes(1);

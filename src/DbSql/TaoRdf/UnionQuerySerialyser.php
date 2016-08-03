@@ -170,7 +170,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
        return $this;
     }
     /**
-     * merge multiple condition QueryParam
+     * merge multiple condition QueryCriterion
      * @param string $command
      * @param string $condition
      * @param string $separator

@@ -22,7 +22,7 @@
 namespace oat\search\base\command;
 
 use oat\search\base\exception\QueryParsingException;
-use oat\search\base\QueryParamInterface;
+use oat\search\base\QueryCriterionInterface;
 use oat\search\base\Query\DriverSensitiveInterface;
 
 /**
@@ -40,9 +40,9 @@ interface OperatorConverterInterface extends DriverSensitiveInterface
      * throw an exception if value data type isn't compatible with operator
      *
      * @throws QueryParsingException
-     * @param QueryParamInterface $query
+     * @param QueryCriterionInterface $query
      * @return mixed
      */
-    public function convert(QueryParamInterface $query);
+    public function convert(QueryCriterionInterface $query);
 
 }

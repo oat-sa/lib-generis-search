@@ -22,7 +22,7 @@ namespace oat\search\test\searchImpTest;
 
 use oat\search\factory\QueryFactory;
 use oat\search\Query;
-use oat\search\QueryParam;
+use oat\search\QueryCriterion;
 use oat\search\test\UnitTestHelper;
 
 /**
@@ -42,47 +42,47 @@ class QueryTest extends UnitTestHelper {
         $this->instance = new Query();
     }
     
-    public function testSetQueryParamClassName() {
-        $fixtureClassName = 'QueryParam';
-        $this->assertSame($this->instance, $this->instance->setQueryParamClassName($fixtureClassName));
+    public function testSetQueryCriterionClassName() {
+        $fixtureClassName = 'QueryCriterion';
+        $this->assertSame($this->instance, $this->instance->setQueryCriterionClassName($fixtureClassName));
         $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance , 'queryParamClassName'));
         
     }
 
-    public function testSetQueryParamFactory() {
+    public function testSetQueryCriterionFactory() {
         
         $Factory = new QueryFactory;
         
-        $this->assertSame($this->instance , $this->instance->setQueryParamFactory($Factory));
+        $this->assertSame($this->instance , $this->instance->setQueryCriterionFactory($Factory));
         $this->assertSame($Factory , $this->getInaccessibleProperty($this->instance , 'factory'));
         
     }
     
-    public function testGetStoredQueryParams() {
+    public function testGetStoredQueryCriterions() {
         
         $fixtureStoredQueries = [
-            new QueryParam(),
-            new QueryParam(),
-            new QueryParam(),
-            new QueryParam(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
         ];
         
-        $this->setInaccessibleProperty($this->instance , 'storedQueryParams', $fixtureStoredQueries);
-        $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueryParams());
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriterions', $fixtureStoredQueries);
+        $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueryCriterions());
         
     }
     
     public function testReset() {
         $fixtureStoredQueries = [
-            new QueryParam(),
-            new QueryParam(),
-            new QueryParam(),
-            new QueryParam(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
         ];
         
-        $this->setInaccessibleProperty($this->instance , 'storedQueryParams', $fixtureStoredQueries);
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriterions', $fixtureStoredQueries);
         $this->assertSame($this->instance , $this->instance->reset());
-        $storedQueries = $this->getInaccessibleProperty($this->instance, 'storedQueryParams');
+        $storedQueries = $this->getInaccessibleProperty($this->instance, 'storedQueryCriterions');
         $this->assertEmpty($storedQueries);
     }
     
@@ -98,7 +98,7 @@ class QueryTest extends UnitTestHelper {
         $mockServiceManager = $ServiceManager->reveal();
         
         
-        $mockQuery = $this->prophesize('\oat\search\QueryParam');
+        $mockQuery = $this->prophesize('\oat\search\QueryCriterion');
         $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
         
@@ -112,7 +112,7 @@ class QueryTest extends UnitTestHelper {
         $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
         $this->assertSame($mockQuery , $this->instance->addCriterium($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
-        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryParams')));
+        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryCriterions')));
         
     }
 

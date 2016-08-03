@@ -25,7 +25,7 @@ namespace oat\search;
 use \oat\search\base\QuerySerialyserInterface;
 use \oat\search\base\QueryBuilderInterface;
 use \oat\search\base\QueryInterface;
-use oat\search\base\QueryParamInterface;
+use oat\search\base\QueryCriterionInterface;
 use \oat\search\base\exception\QueryParsingException;
 use \oat\search\UsableTrait\DriverSensitiveTrait;
 use oat\search\UsableTrait\OptionsTrait;
@@ -132,18 +132,18 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * @return $this
      */
     protected function parseQuery(QueryInterface $query) {
-        foreach ($query->getStoredQueryParams() as $operation) {
+        foreach ($query->getStoredQueryCriterions() as $operation) {
             $this->parseOperation($operation);
         }
         return $this;
     }
 
     /**
-     * parse QueryParamInterface criteria
-     * @param QueryParamInterface $operation
+     * parse QueryCriterionInterface criteria
+     * @param QueryCriterionInterface $operation
      * @return $this
      */
-    protected function parseOperation(QueryParamInterface $operation) {
+    protected function parseOperation(QueryCriterionInterface $operation) {
         
         $operation->setValue($this->getOperationValue($operation->getValue()));
         

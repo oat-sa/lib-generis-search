@@ -21,7 +21,7 @@
 namespace oat\search\DbSql\TaoRdf\Command;
 
 use \oat\search\Command\AbstractOperatorConverter;
-use \oat\search\base\QueryParamInterface;
+use \oat\search\base\QueryCriterionInterface;
 
 /**
  * Description of AbstractRdfOperator
@@ -54,10 +54,10 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
     }
     /**
      * convert Query Param to mysql query string
-     * @param QueryParamInterface $query
+     * @param QueryCriterionInterface $query
      * @return string
      */
-    public function convert(QueryParamInterface $query) {
+    public function convert(QueryCriterionInterface $query) {
         $value = $this->getDriverEscaper()->escape($query->getValue());
         $value = $this->getDriverEscaper()->quote($value);
         return '' . $this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value;
