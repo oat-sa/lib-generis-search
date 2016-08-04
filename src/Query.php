@@ -53,7 +53,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * query param service name
      * @var string
      */
-    protected $queryCriterionClassName = 'search.query.param';
+    protected $queryCriterionClassName = 'search.query.criterion';
     /**
      * initialyse factory
      */
@@ -79,10 +79,11 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     /**
      * create a new QueryCriterion and add it to store.
      * @param string $property
-     * @return \oat\search\base\QueryCriterionInterface
+     * @return QueryCriterionInterface
      */
     public function add($property) {
-        return $this->addCriterion($property , null , null);
+        $this->addCriterion($property , null , null);
+        return $this;
     }
 
         /**
@@ -125,11 +126,68 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     {
         $factory = $this->factory;
         $factory->setServiceLocator($this->serviceLocator);
-        return $factory->get(
+        $this->storedQueryCriteria[] = $factory->get(
             $this->queryCriterionClassName,
             [$property , $operator , $value]
         )->setParent($this);
+        return $this;
     }
-
+    
+    /**
+     * set up operator and value
+     * 
+     * example : 
+     * $this->equal('foo');
+     * $this->in(1 , 2 , 3 , 4 , 5);
+     * $this->between(1,10); 
+     * 
+     * @param string $name
+     * @param array $arguments
+     * @return $this
+     */
+    public function __call($name, $arguments) {
+        /*@var $criterion QueryCriterionInterface */
+        $criterion = end($this->storedQueryCriteria);
+        $criterion->setOperator($name);
+        $value = null;
+        if(empty($arguments)) {
+            $value = '';
+        } elseif(count($arguments) === 1) {
+            $value = $arguments[0];
+        } else {
+            $value = $arguments;
+        }
+        $criterion->setValue($value);
+        return $this;
+    }
+    
+    /**
+     * add a new condition on same property with AND separator
+     * @param mixed $value
+     * @param string|null $operator
+     * @return $this
+     */
+    public function addAnd($value , $operator = null) {
+        
+        /*@var $criterion QueryCriterionInterface */
+        $criterion = end($this->storedQueryCriteria);
+        $criterion->addAnd($value, $operator);
+        return $this;
+    }
+    
+    /**
+     * add a new condition on same property with OR separator
+     * @param mixed $value
+     * @param string|null $operator
+     * @return $this
+     */
+    public function addOr($value , $operator = null) {
+        
+        /*@var $criterion QueryCriterionInterface */
+        $criterion = end($this->storedQueryCriteria);
+        $criterion->addOr($value, $operator);
+        return $this;
+    }
+    
 }
 

@@ -98,8 +98,8 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
      * @param QueryBuilderInterface $Builder
      * @return $this
      */
-    public function parse(QueryBuilderInterface $Builder) {
-        $this->parsedQuery = $this->getSerialyser()->setCriteriaList($Builder)->parse();
+    public function serialyse(QueryBuilderInterface $Builder) {
+        $this->parsedQuery = $this->getSerialyser()->setCriteriaList($Builder)->serialyse();
         return $this;
     }
 

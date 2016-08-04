@@ -58,9 +58,18 @@ interface QueryBuilderInterface extends LimitableInterface, SortableInterface, O
     public function newQuery();
    
     /**
-     * create a new query and store it
-     * @return QueryInterface
+     * store first QueryInterface criteria list
+     * @param QueryInterface $criteria
+     * @return QueryBuilderInterface
      */
-    public function addOr();
+    public function setCriteria(QueryInterface $criteria);
+    
+    /**
+     * accept QueryInterface
+     * and stored it.
+     * @param QueryInterface $criteria
+     * @return QueryBuilderInterface
+     */
+    public function setOr(QueryInterface $criteria);
     
 }

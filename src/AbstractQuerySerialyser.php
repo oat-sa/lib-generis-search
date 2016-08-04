@@ -114,12 +114,14 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * generate query exploitable by driver
      * @return string
      */
-    public function parse() {
+    public function serialyse() {
         
         $this->query = $this->queryPrefix;
         
         foreach ($this->criteriaList->getStoredQueries() as $query) {
+            $this->setNextSeparator(false);
             $this->parseQuery($query);
+            
         }
         
         $this->finishQuery();
@@ -132,8 +134,15 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * @return $this
      */
     protected function parseQuery(QueryInterface $query) {
-        foreach ($query->getStoredQueryCriterions() as $operation) {
+        $operationList = $query->getStoredQueryCritera();
+        $pos = 0;
+        foreach ($operationList as $operation) {
+            if($pos > 0) {
+                $this->addSeparator(true);
+            }
             $this->parseOperation($operation);
+            $pos++;
+            
         }
         return $this;
     }
@@ -146,9 +155,6 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
     protected function parseOperation(QueryCriterionInterface $operation) {
         
         $operation->setValue($this->getOperationValue($operation->getValue()));
-        
-        $this->setNextSeparator($operation->getSeparator())
-                ->prepareOperator();
 
         $command = $this->getOperator($operation->getOperator())->convert($operation);
         

@@ -156,17 +156,6 @@ class QueryCriterion
     }
     
     /**
-     * set up separator value 
-     * with the next QueryCriterion condition
-     * and = true , or  = false
-     * @param string $separator
-     * @return $this
-     */
-    public function setAndSeparator($separator) {
-        $this->separator = $separator;
-        return $this;
-    }
-    /**
      * return and
      * @return array
      */

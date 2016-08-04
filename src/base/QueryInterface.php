@@ -24,6 +24,7 @@ namespace oat\search\base;
 use \oat\search\factory\FactoryAbstract;
 /**
  * create query
+ * represent criteria group must be respect
  */
 interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     
@@ -34,10 +35,10 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     public function reset();
     /**
      * change default query param className
-     * @param string $queryParamsClassName
+     * @param string $queryCriterionClassName
      * @return $this
      */
-    public function setQueryCriterionClassName($queryParamsClassName);
+    public function setQueryCriterionClassName($queryCriterionClassName);
 
     /**
      * change default query param factory
