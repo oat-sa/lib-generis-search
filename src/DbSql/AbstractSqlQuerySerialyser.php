@@ -124,11 +124,12 @@ abstract class AbstractSqlQuerySerialyser extends AbstractQuerySerialyser {
         $limitQuery = '';
 
         if ($limit > 0) {
-            $limitQuery .= $this->getDriverEscaper()->dbCommand('LIMIT') . ' ' . $limit;
+            $limitQuery .= $this->getDriverEscaper()->dbCommand('LIMIT') . ' ' . $limit;  
             if (!is_null($offset)) {
                 $limitQuery .= ' ' . $this->getDriverEscaper()->dbCommand('OFFSET') . ' ' . $offset;
             }
         }
+        
 
         return $limitQuery;
     }

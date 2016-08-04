@@ -48,6 +48,17 @@ trait LimitableTrait {
     }
     
     /**
+     * set query limit
+     * @see \oat\search\base\LimitableInterface::setLimit
+     * @param int $limit
+     * @return $this
+     */
+    public function setLimit($limit) {
+        $this->limit = $limit;
+        return $this;
+    }
+    
+    /**
      * return limit 
      * @see \oat\search\base\LimitableInterface::getLimit
      * @return integer
@@ -57,14 +68,13 @@ trait LimitableTrait {
     }
     
     /**
-     * set limit and offset
+     * set offset
      * @see \oat\search\base\LimitableInterface::setOffset
      * @param integer $limit
      * @param integer $offset
      * @return $this
      */
-    public function setOffset($limit, $offset = null) {
-        $this->limit = $limit;
+    public function setOffset($offset ) {
         $this->offset = $offset;
         return $this;
     }
