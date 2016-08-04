@@ -113,7 +113,90 @@ class QueryTest extends UnitTestHelper {
         $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryCriteria')));
         
     }
-
+    
+    public function testAdd() {
+        $fixtureName      = 'text';
+        
+        $this->instance = $this->getMock('oat\search\Query' , ['addCriterion']);
+        $this->instance
+                ->expects($this->once())
+                ->method('addCriterion')
+                ->with($fixtureName , null ,  null)
+                ->willReturn($this->instance);
+        $this->assertSame($this->instance, $this->instance->add($fixtureName));
+        
+    }
+    
+    public function testCall() {
+        
+        $fixtureOperator  = 'equals';
+        $fixtureValue     = 'test';
+        
+        $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
+        
+        $criterionProphet->setOperator($fixtureOperator)->willReturn($criterionProphet);
+        $criterionProphet->setValue($fixtureValue)->willReturn($criterionProphet);
+        
+        $criterionMock    = $criterionProphet->reveal();
+        
+        $fixtureStoredQueries = [
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            $criterionMock ,
+        ];
+        
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance , $this->instance->equals($fixtureValue));
+        
+    }
+    
+    public function testAddAnd() {
+        
+        $fixtureOperator  = 'equals';
+        $fixtureValue     = 'test';
+        
+        $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
+        
+        $criterionProphet->addAnd($fixtureValue , $fixtureOperator )->willReturn($criterionProphet);
+        
+        $criterionMock    = $criterionProphet->reveal();
+        
+        $fixtureStoredQueries = [
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            $criterionMock ,
+        ];
+        
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance , $this->instance->addAnd($fixtureValue , $fixtureOperator));
+        
+    }
+    
+    public function testAddOr() {
+        
+        $fixtureOperator  = 'equals';
+        $fixtureValue     = 'test';
+        
+        $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
+        
+        $criterionProphet->addOr($fixtureValue , $fixtureOperator )->willReturn($criterionProphet);
+        
+        $criterionMock    = $criterionProphet->reveal();
+        
+        $fixtureStoredQueries = [
+            new QueryCriterion(),
+            new QueryCriterion(),
+            new QueryCriterion(),
+            $criterionMock ,
+        ];
+        
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance , $this->instance->addOr($fixtureValue , $fixtureOperator));
+        
+    }
+    
     public function tearDown() {
         $this->instance = null;
     }
