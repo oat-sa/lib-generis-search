@@ -15,19 +15,29 @@ $query1 = $queryBuilder
         ->newQuery()
         ->add('http://www.taotesting.com/movies.rdf#directedBy')
         ->equals('http://www.taotesting.com/movies.rdf#MartinScorsese')
-        ->addOr('http://www.taotesting.com/movies.rdf#QuentinTarantino');
-$query1->add('http://www.taotesting.com/movies.rdf#year')
+        ->addOr('http://www.taotesting.com/movies.rdf#QuentinTarantino')
+        ->add('http://www.taotesting.com/movies.rdf#year')
         ->in('2012' , '2013' , '2014');
 
 /*@var $query2 \oat\search\base\QueryInterface */
 $query2 = $queryBuilder->newQuery()
         ->add('http://www.taotesting.com/movies.rdf#starring')
         ->equals('http://www.taotesting.com/movies.rdf#LeonardoDiCaprio')
-        ->addOr('http://www.taotesting.com/movies.rdf#ChristophWaltz');
-$query2->add('http://www.taotesting.com/movies.rdf#year')
+        ->addOr('http://www.taotesting.com/movies.rdf#ChristophWaltz')
+        ->add('http://www.taotesting.com/movies.rdf#year')
         ->in('2012' , '2013' , '2014');
 
-$queryBuilder->setCriteria($query1)->setOr($query2)->setLimit(5)->sort(
+/*@var $query3 \oat\search\base\QueryInterface */
+$query3 = $queryBuilder->newQuery()
+        ->add('http://www.taotesting.com/movies.rdf#year')
+        ->between('2008' , '2010')
+        ->add('http://www.taotesting.com/movies.rdf#directedBy')
+        ->equals('http://www.taotesting.com/movies.rdf#MartinScorsese');
+
+$queryBuilder->setCriteria($query1)
+        ->setOr($query2)
+        ->setOr($query3)
+        ->setLimit(5)->sort(
             ['http://www.w3.org/2000/01/rdf-schema#label' => 'asc']
         );
 
