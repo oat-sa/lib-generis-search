@@ -77,7 +77,7 @@ class AbstractSearchGateWayTest extends \oat\search\test\UnitTestHelper {
         $SerialyserProphecy = $this->prophesize('\oat\search\base\QuerySerialyserInterface');
         
         $SerialyserProphecy->setCriteriaList($BuilderMock)->willReturn($SerialyserProphecy);
-        $SerialyserProphecy->parse()->willReturn($fixtureQuery);
+        $SerialyserProphecy->serialyse()->willReturn($fixtureQuery);
         
         $SerialyserMock     = $SerialyserProphecy->reveal();
         
@@ -89,7 +89,7 @@ class AbstractSearchGateWayTest extends \oat\search\test\UnitTestHelper {
         
         $this->instance->expects($this->once())->method('getSerialyser')->willReturn($SerialyserMock);
         
-        $this->assertSame($this->instance, $this->instance->parse($BuilderMock));
+        $this->assertSame($this->instance, $this->instance->serialyse($BuilderMock));
         $this->assertSame($fixtureQuery, $this->getInaccessibleProperty($this->instance, 'parsedQuery'));
     }
     

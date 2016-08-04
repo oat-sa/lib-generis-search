@@ -57,10 +57,6 @@ class QueryCriterionfactoryTest extends \oat\search\test\UnitTestHelper {
                 ->with($fixtureOptions[2])
                 ->willReturn($mockTest);
         $mockTest->expects($this->once())
-                ->method('setAndSeparator')
-                ->with($fixtureOptions[3])
-                ->willReturn($mockTest);
-        $mockTest->expects($this->once())
                 ->method('setServiceLocator')
                 ->with($serviceManager)
                 ->willReturn($mockTest);

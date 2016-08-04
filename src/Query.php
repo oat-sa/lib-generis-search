@@ -90,7 +90,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      * return an array of \oat\search\base\QueryCriterionInterface
      * @return array
      */
-    public function getStoredQueryCritera() {
+    public function getStoredQueryCriteria() {
         return $this->storedQueryCriteria;
     }
     /**
@@ -126,10 +126,12 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     {
         $factory = $this->factory;
         $factory->setServiceLocator($this->serviceLocator);
+        
         $this->storedQueryCriteria[] = $factory->get(
             $this->queryCriterionClassName,
             [$property , $operator , $value]
         )->setParent($this);
+        
         return $this;
     }
     

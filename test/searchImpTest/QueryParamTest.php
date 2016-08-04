@@ -55,11 +55,6 @@ class QueryCriterionTest extends \oat\search\test\UnitTestHelper {
         $this->assertSame($fixtureValue, $this->instance->getValue());
     }
     
-    public function testSetGetSeparator() {
-        $fixtureSeparator = false;
-        $this->assertSame($this->instance, $this->instance->setAndSeparator($fixtureSeparator));
-        $this->assertSame($fixtureSeparator, $this->instance->getSeparator());
-    }
 
     public function testAddGetAnd() {
         

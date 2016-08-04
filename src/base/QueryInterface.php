@@ -51,7 +51,7 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
      * return all query params object stored
      * @return array
      */
-    public function getStoredQueryCritera();
+    public function getStoredQueryCriteria();
 
     /**
      * create an non stored new QueryCriterionInterface

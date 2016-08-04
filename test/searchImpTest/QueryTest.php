@@ -45,7 +45,7 @@ class QueryTest extends UnitTestHelper {
     public function testSetQueryCriterionClassName() {
         $fixtureClassName = 'QueryCriterion';
         $this->assertSame($this->instance, $this->instance->setQueryCriterionClassName($fixtureClassName));
-        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance , 'queryParamClassName'));
+        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance , 'queryCriterionClassName'));
         
     }
 
@@ -67,8 +67,8 @@ class QueryTest extends UnitTestHelper {
             new QueryCriterion(),
         ];
         
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriterions', $fixtureStoredQueries);
-        $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueryCriterions());
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueryCriteria());
         
     }
     
@@ -80,23 +80,21 @@ class QueryTest extends UnitTestHelper {
             new QueryCriterion(),
         ];
         
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriterions', $fixtureStoredQueries);
+        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
         $this->assertSame($this->instance , $this->instance->reset());
-        $storedQueries = $this->getInaccessibleProperty($this->instance, 'storedQueryCriterions');
+        $storedQueries = $this->getInaccessibleProperty($this->instance, 'storedQueryCriteria');
         $this->assertEmpty($storedQueries);
     }
     
-    public function testAddCriterium() {
+    public function testAddCriterion() {
         $fixtureName      = 'text';
-        $fixtureOperator  = 'equal';
+        $fixtureOperator  = 'equals';
         $fixtureValue     = 'test';
-        $fixtureSeparator =  false;
         
         $fixtureQueryClass = 'stdClass';
         
         $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager = $ServiceManager->reveal();
-        
         
         $mockQuery = $this->prophesize('\oat\search\QueryCriterion');
         $mockQuery->setParent($this->instance)->willreturn($mockQuery);
@@ -104,15 +102,15 @@ class QueryTest extends UnitTestHelper {
         
         $mockFactoryProphecy = $this->prophesize('\oat\search\factory\FactoryInterface');
         $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
-        $mockFactoryProphecy->get($fixtureQueryClass , [$fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator])->willReturn($mockQuery)->shouldBeCalledTimes(1);
+        $mockFactoryProphecy->get($fixtureQueryClass , [$fixtureName, $fixtureOperator, $fixtureValue])->willReturn($mockQuery)->shouldBeCalledTimes(1);
         $mockFactory = $mockFactoryProphecy->reveal();
         
-        $this->setInaccessibleProperty($this->instance , 'queryParamClassName', $fixtureQueryClass);
+        $this->setInaccessibleProperty($this->instance , 'queryCriterionClassName', $fixtureQueryClass);
         $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
         $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
-        $this->assertSame($mockQuery , $this->instance->addCriterium($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
-        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryCriterions')));
+        $this->assertSame($this->instance , $this->instance->addCriterion($fixtureName, $fixtureOperator, $fixtureValue));
+        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryCriteria')));
         
     }
 

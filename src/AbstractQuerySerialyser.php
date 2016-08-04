@@ -134,7 +134,7 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * @return $this
      */
     protected function parseQuery(QueryInterface $query) {
-        $operationList = $query->getStoredQueryCritera();
+        $operationList = $query->getStoredQueryCriteria();
         $pos = 0;
         foreach ($operationList as $operation) {
             if($pos > 0) {
@@ -156,7 +156,7 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
         
         $operation->setValue($this->getOperationValue($operation->getValue()));
 
-        $command = $this->getOperator($operation->getOperator())->convert($operation);
+        $command = $this->prepareOperator()->getOperator($operation->getOperator())->convert($operation);
         
         $this->setConditions($command , $operation->getAnd(), 'and');
         $this->setConditions($command , $operation->getOr(), 'or');
