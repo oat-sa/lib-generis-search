@@ -123,7 +123,7 @@ abstract class AbstractSqlQuerySerialyser extends AbstractQuerySerialyser {
     protected function addLimit($limit, $offset = null) {
         $limitQuery = '';
 
-        if ($limit > 0) {
+        if (intval($limit) > 0) {
             $limitQuery .= $this->getDriverEscaper()->dbCommand('LIMIT') . ' ' . $limit;  
             if (!is_null($offset)) {
                 $limitQuery .= ' ' . $this->getDriverEscaper()->dbCommand('OFFSET') . ' ' . $offset;
