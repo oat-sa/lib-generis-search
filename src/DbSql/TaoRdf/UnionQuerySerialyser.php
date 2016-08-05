@@ -21,7 +21,7 @@
 namespace oat\search\DbSql\TaoRdf;
 
 use oat\search\base\exception\QueryParsingException;
-use oat\search\base\helper\SupportedOperatorHelper;
+use oat\search\helper\SupportedOperatorHelper;
 use oat\search\DbSql\AbstractSqlQuerySerialyser;
 /**
  * Tao RDF Onthology serialyser

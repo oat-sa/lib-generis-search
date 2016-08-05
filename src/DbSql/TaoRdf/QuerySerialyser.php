@@ -22,7 +22,7 @@
 namespace oat\search\DbSql\TaoRdf;
 
 use \oat\search\DbSql\AbstractSqlQuerySerialyser;
-use \oat\search\base\helper\SupportedOperatorHelper;
+use \oat\search\helper\SupportedOperatorHelper;
 /**
  * Tao RDF Onthology serialyser
  * 
