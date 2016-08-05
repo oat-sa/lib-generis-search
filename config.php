@@ -3,7 +3,7 @@
 $rootDir = dirname(__FILE__); 
 require $rootDir . "/vendor/autoload.php";
 
-use oat\taoSearch\model\search\helper\SupportedOperatorHelper as SupportedOperatorHelper;
+use oat\search\helper\SupportedOperatorHelper as SupportedOperatorHelper;
 
 $ServicConfig = new \Zend\ServiceManager\Config(
             array(
