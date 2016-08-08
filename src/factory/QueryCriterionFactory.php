@@ -22,21 +22,21 @@
 namespace oat\search\factory;
 
 /**
- * Description of QueryParamFactory
+ * Description of QueryCriterionFactory
  *
  * @author christophe
  */
-class QueryParamFactory extends FactoryAbstract {
+class QueryCriterionFactory extends FactoryAbstract {
     /**
      * supported interface 
      * @var string
      */
-    protected $validInterface = 'oat\\search\\base\\QueryParamInterface';
+    protected $validInterface = 'oat\\search\\base\\QueryCriterionInterface';
     /**
      * return a new Query param
      * @param string $className
      * @param array $options
-     * @return \oat\search\factory\QueryParamInterface
+     * @return \oat\search\factory\QueryCriterionInterface
      * @throws \InvalidArgumentException
      */
     public function get($className,array $options = array()) {
@@ -46,7 +46,6 @@ class QueryParamFactory extends FactoryAbstract {
             $Param->setName($options[0])
                 ->setOperator($options[1])
                 ->setValue($options[2])
-                ->setAndSeparator($options[3])
                 ->setServiceLocator($this->getServiceLocator());
             
             return $Param;

@@ -20,7 +20,7 @@
  */
 namespace oat\search\DbSql\TaoRdf\Command;
 
-use \oat\search\base\QueryParamInterface;
+use \oat\search\base\QueryCriterionInterface;
 use \oat\search\base\exception\QueryParsingException;
 /**
  * Description of LikeContain
@@ -47,11 +47,11 @@ class Between extends AbstractRdfOperator {
     }
     /**
      * convert Query Param to mysql query string
-     * @param QueryParamInterface $query
+     * @param QueryCriterionInterface $query
      * @return string
      * @throws QueryParsingException
      */
-    public function convert(QueryParamInterface $query) {
+    public function convert(QueryCriterionInterface $query) {
         if(!is_array($query->getValue())) {
             throw new QueryParsingException('Only array value is only supported by BETWEEN');
         }

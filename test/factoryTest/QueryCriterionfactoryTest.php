@@ -23,10 +23,10 @@ namespace oat\taoSearch\factoryTest;
 /**
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParamfactoryTest extends \oat\search\test\UnitTestHelper {
+class QueryCriterionfactoryTest extends \oat\search\test\UnitTestHelper {
     
     public function setup() {
-        $this->instance = $this->getMock('\\oat\\search\\factory\\QueryParamFactory', ['isValidClass' , 'getServiceLocator']);
+        $this->instance = $this->getMock('\\oat\\search\\factory\\QueryCriterionFactory', ['isValidClass' , 'getServiceLocator']);
     }
     
     public function testInvokeFactory() {
@@ -38,7 +38,7 @@ class QueryParamfactoryTest extends \oat\search\test\UnitTestHelper {
             false
         ];
         
-        $testClassName  = '\\oat\\search\\QueryParam';
+        $testClassName  = '\\oat\\search\\QueryCriterion';
         
         $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
         
@@ -55,10 +55,6 @@ class QueryParamfactoryTest extends \oat\search\test\UnitTestHelper {
         $mockTest->expects($this->once())
                 ->method('setValue')
                 ->with($fixtureOptions[2])
-                ->willReturn($mockTest);
-        $mockTest->expects($this->once())
-                ->method('setAndSeparator')
-                ->with($fixtureOptions[3])
                 ->willReturn($mockTest);
         $mockTest->expects($this->once())
                 ->method('setServiceLocator')

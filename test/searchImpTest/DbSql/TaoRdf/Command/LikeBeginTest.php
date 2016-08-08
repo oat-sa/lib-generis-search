@@ -44,12 +44,12 @@ class LikeBeginTest extends UnitTestHelper {
         
         $expected = '' . $fixtureProperty . ' `object` LIKE "test%"';
         
-        $QueryParamProphecy = $this->prophesize('\oat\search\base\QueryParamInterface');
+        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         
-        $QueryParamProphecy->getValue()->willReturn($fixtureValue);
-        $QueryParamProphecy->getName()->willReturn($fixturePredicate);
+        $QueryCriterionProphecy->getValue()->willReturn($fixtureValue);
+        $QueryCriterionProphecy->getName()->willReturn($fixturePredicate);
         
-        $QueryParamMock = $QueryParamProphecy->reveal();
+        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
@@ -64,6 +64,6 @@ class LikeBeginTest extends UnitTestHelper {
         $this->instance->expects($this->any())->method('getOperator')->willReturn($fixtureOperator);
         
         $this->setInaccessibleProperty($this->instance, 'operator', $fixtureOperator);
-        $this->assertSame($expected, $this->instance->convert($QueryParamMock));
+        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
     }
 }

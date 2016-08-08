@@ -24,6 +24,7 @@ namespace oat\search\base;
 use \oat\search\factory\FactoryAbstract;
 /**
  * create query
+ * represent criteria group must be respect
  */
 interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     
@@ -34,38 +35,37 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     public function reset();
     /**
      * change default query param className
-     * @param string $queryParamsClassName
+     * @param string $queryCriterionClassName
      * @return $this
      */
-    public function setQueryParamClassName($queryParamsClassName);
+    public function setQueryCriterionClassName($queryCriterionClassName);
 
     /**
      * change default query param factory
-     * @param callable $factory
+     * @param FactoryAbstract $factory
      * @return $this
      */
-    public function setQueryParamFactory(FactoryAbstract $factory);
-    
-     /**
-     * create and store a new QueryParamInterface
-     * @param string $name
-     * @param string $operator
-     * @param mixed $value
-     * @param bool $andSeparator true for and , false for or
-     * @return QueryParamInterface
-     */
-    public function addCriterium($name , $operator , $value , $andSeparator = true);
+    public function setQueryCriterionFactory(FactoryAbstract $factory);
     
     /**
      * return all query params object stored
      * @return array
      */
-    public function getStoredQueryParams();
-    
+    public function getStoredQueryCriteria();
+
+    /**
+     * create an non stored new QueryCriterionInterface
+     * @param string $property
+     * @param string $operator
+     * @param mixed $value
+     * @return QueryCriterionInterface
+     */
+    public function addCriterion($property , $operator , $value);
     /**
      * return parent builder
      * @return QueryBuilderInterface
      */
     public function builder();
+
 }
 

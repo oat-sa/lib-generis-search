@@ -14,13 +14,14 @@ see API Documentation at http://forge.taotesting.com/projects/tao/wiki/use-compl
 /* @var $search \oat\oatbox\search\ComplexeSearchService */
 $search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexeSearchService::SERVICE_ID);
 /* @var $queryBuilder \oat\search\QueryBuilder */
+$queryBuilder = $search->query();
 /* search for all test takers */
-$queryBuilder = $search
-       ->searchType('http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject' , true);
-/* with label contain '11' */        
-$queryBuilder->criteria()
+$query = $search
+       ->searchType($queryBuilder, 'http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject' , true)
              ->add('http://www.w3.org/2000/01/rdf-schema#label')
              ->contain('11');
+
+$queryBuilder->setCriteria($query);
 /* return an iterator */        
 $result = $search->getGateway()->search($queryBuilder);
 /* get max result */

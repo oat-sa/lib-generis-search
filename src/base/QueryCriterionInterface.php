@@ -22,11 +22,11 @@
 namespace oat\search\base;
 
 /**
- * Interface QueryParamInterface
+ * Interface QueryCriterionInterface
  * @package oat\search\base
  */
 
-interface QueryParamInterface extends ParentFluateInterface {
+interface QueryCriterionInterface extends ParentFluateInterface {
 
     /**
      * set object property on which you need to search
@@ -48,14 +48,6 @@ interface QueryParamInterface extends ParentFluateInterface {
      * @return $this
      */
     public function setOperator($operator);
-    
-    /**
-     * set separator with next query.
-     * 
-     * @param boolean $separator
-     * @return $this
-     */
-    public function setAndSeparator($separator);
 
     /**
      * set `and` condition.
@@ -99,20 +91,15 @@ interface QueryParamInterface extends ParentFluateInterface {
      * @return mixed
      */
     public function getOperator();
-    /**
-     * return true for AND and false for OR
-     * @return boolean
-     */
-    public function getSeparator();
     
     /**
-     * return an array of QueryParamInterface stored for 'or' condition
+     * return an array of QueryCriterionInterface stored for 'or' condition
      * @return array
      */
     public function getOr();
     
     /**
-     * return an array of QueryParamInterface stored for 'and' condition
+     * return an array of QueryCriterionInterface stored for 'and' condition
      * @return array
      */
     public function getAnd();

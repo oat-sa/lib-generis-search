@@ -30,7 +30,8 @@ class LimitableTraitTest extends \oat\search\test\UnitTestHelper
         $fixtureLimit  = 10;
         $fixtureOffset = 5;
         
-        $this->assertSame($this->instance, $this->instance->setOffset($fixtureLimit , $fixtureOffset));
+        $this->assertSame($this->instance, $this->instance->setOffset($fixtureOffset));
+        $this->assertSame($this->instance, $this->instance->setLimit($fixtureLimit));
         $this->assertSame($fixtureLimit, $this->instance->getLimit());
         $this->assertSame($fixtureOffset, $this->instance->getOffset());
     }

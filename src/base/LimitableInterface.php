@@ -29,13 +29,20 @@ namespace oat\search\base;
 interface LimitableInterface {
     
     /**
+     * set query offset
+     *
+     * @param int $offset
+     * @return $this
+     */
+    public function setOffset($offset);
+    
+    /**
      * set query limit
      *
      * @param int $limit
-     * @param int|null $offset
      * @return $this
      */
-    public function setOffset($limit , $offset = null);
+    public function setLimit($limit);
     
     /**
      * return start item

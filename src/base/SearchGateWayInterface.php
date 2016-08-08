@@ -88,7 +88,7 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * @param \oat\search\base\QueryBuilderInterface $Builder
      * @return $this
      */
-    public function parse(QueryBuilderInterface $Builder);
+    public function serialyse(QueryBuilderInterface $Builder);
 
         /**
      * set up a new serialyser

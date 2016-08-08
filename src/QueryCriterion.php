@@ -21,16 +21,16 @@
 
 namespace oat\search;
 
-use oat\search\base\QueryParamInterface;
+use oat\search\base\QueryCriterionInterface;
 use oat\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
- * imlpemented QueryParam
+ * imlpemented QueryCriterion
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParam 
-    implements QueryParamInterface , 
+class QueryCriterion
+    implements QueryCriterionInterface ,
         ServiceLocatorAwareInterface 
         {
     
@@ -51,11 +51,6 @@ class QueryParam
      * @var mixed
      */
     protected $value;
-    /**
-     * and = true , or  = false
-     * @var boolean
-     */
-    protected $separator;
     /**
      * others conditions separated by and 
      * @var array
@@ -131,14 +126,6 @@ class QueryParam
     }
     
     /**
-     * return separator
-     * @return boolean
-     */
-    public function getSeparator() {
-        return $this->separator;
-    }
-    
-    /**
      * set up property name
      * @param string $name
      * @return $this
@@ -168,17 +155,6 @@ class QueryParam
         return $this;
     }
     
-    /**
-     * set up separator value 
-     * with the next QueryParam condition 
-     * and = true , or  = false
-     * @param string $separator
-     * @return $this
-     */
-    public function setAndSeparator($separator) {
-        $this->separator = $separator;
-        return $this;
-    }
     /**
      * return and
      * @return array
@@ -217,22 +193,6 @@ class QueryParam
         }
         
         return $this;
-    }
-    
-    /**
-     * set separator 'and' and return parent query 
-     * @return Query
-     */
-    public function andQuery() {
-        return $this->setAndSeparator(true)->getParent();
-    }
-    
-    /**
-     * set separator 'or' and return parent query 
-     * @return Query
-     */
-    public function orQuery() {
-        return $this->setAndSeparator(false)->getParent();
     }
 
 }

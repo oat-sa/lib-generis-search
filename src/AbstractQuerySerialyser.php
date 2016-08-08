@@ -25,7 +25,7 @@ namespace oat\search;
 use \oat\search\base\QuerySerialyserInterface;
 use \oat\search\base\QueryBuilderInterface;
 use \oat\search\base\QueryInterface;
-use oat\search\base\QueryParamInterface;
+use oat\search\base\QueryCriterionInterface;
 use \oat\search\base\exception\QueryParsingException;
 use \oat\search\UsableTrait\DriverSensitiveTrait;
 use oat\search\UsableTrait\OptionsTrait;
@@ -114,12 +114,14 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * generate query exploitable by driver
      * @return string
      */
-    public function parse() {
+    public function serialyse() {
         
         $this->query = $this->queryPrefix;
         
         foreach ($this->criteriaList->getStoredQueries() as $query) {
+            $this->setNextSeparator(false);
             $this->parseQuery($query);
+            
         }
         
         $this->finishQuery();
@@ -132,25 +134,29 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * @return $this
      */
     protected function parseQuery(QueryInterface $query) {
-        foreach ($query->getStoredQueryParams() as $operation) {
+        $operationList = $query->getStoredQueryCriteria();
+        $pos = 0;
+        foreach ($operationList as $operation) {
+            if($pos > 0) {
+                $this->addSeparator(true);
+            }
             $this->parseOperation($operation);
+            $pos++;
+            
         }
         return $this;
     }
 
     /**
-     * parse QueryParamInterface criteria
-     * @param QueryParamInterface $operation
+     * parse QueryCriterionInterface criteria
+     * @param QueryCriterionInterface $operation
      * @return $this
      */
-    protected function parseOperation(QueryParamInterface $operation) {
+    protected function parseOperation(QueryCriterionInterface $operation) {
         
         $operation->setValue($this->getOperationValue($operation->getValue()));
-        
-        $this->setNextSeparator($operation->getSeparator())
-                ->prepareOperator();
 
-        $command = $this->getOperator($operation->getOperator())->convert($operation);
+        $command = $this->prepareOperator()->getOperator($operation->getOperator())->convert($operation);
         
         $this->setConditions($command , $operation->getAnd(), 'and');
         $this->setConditions($command , $operation->getOr(), 'or');

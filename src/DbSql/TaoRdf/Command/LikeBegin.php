@@ -22,7 +22,7 @@
 
 namespace oat\search\DbSql\TaoRdf\Command;
 
-use \oat\search\base\QueryParamInterface;
+use \oat\search\base\QueryCriterionInterface;
 /**
  * create a subquery with LIKE "value%"
  *
@@ -37,10 +37,10 @@ class LikeBegin extends AbstractRdfOperator {
 
     /**
      * convert Query Param to mysql query string
-     * @param QueryParamInterface $query
+     * @param QueryCriterionInterface $query
      * @return string
      */
-    public function convert(QueryParamInterface $query) {
+    public function convert(QueryCriterionInterface $query) {
         $value = $query->getValue() . '%';
         $value = $this->getDriverEscaper()->escape($value);
         $value = $this->getDriverEscaper()->quote($value);

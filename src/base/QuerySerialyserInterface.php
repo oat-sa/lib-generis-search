@@ -63,6 +63,6 @@ interface QuerySerialyserInterface extends DriverSensitiveInterface, OptionsInte
      * @internal OperatorConverterInterface $converter
      * @return mixed
      */
-    public function parse();
+    public function serialyse();
 
 }

@@ -19,7 +19,7 @@
  * 
  */
 
-namespace oat\search\base\helper;
+namespace oat\search\helper;
 
 /**
  * Class SupportedOperatorHelper

@@ -21,6 +21,7 @@
 
 namespace oat\search;
 
+use oat\search\base\QueryInterface;
 use oat\search\factory\FactoryAbstract;
 use oat\search\factory\QueryFactory;
 use oat\search\base\QueryBuilderInterface;
@@ -81,16 +82,6 @@ class QueryBuilder implements QueryBuilderInterface {
         $factory->setServiceLocator($this->serviceLocator);
         return $factory->get($this->queryClassName)->setParent($this);
     }
-    
-    /**
-     * create a new query and store it
-     * @return QueryInterface
-     */
-    public function criteria() {
-        $criteria = $this->newQuery();
-        $this->storedQueries[] = $criteria;
-        return $criteria;
-    }
 
      /**
      * change default Query service name
@@ -109,6 +100,26 @@ class QueryBuilder implements QueryBuilderInterface {
      */
     public function setQueryFactory(FactoryAbstract $factory) {
         $this->factory = $factory;
+        return $this;
+    }
+    
+    /**
+     * store first QueryInterface criteria list
+     * @param QueryInterface $criteria
+     * @return QueryBuilderInterface
+     */
+    public function setCriteria(QueryInterface $criteria) {
+        $this->storedQueries[0] = $criteria;
+        return $this;
+    }
+    
+    /**
+     * accept an array of QueryInterface
+     * and stored it.
+     * @return $this
+     */
+    public function setOr(QueryInterface $criteria) {
+        $this->storedQueries[] = $criteria;
         return $this;
     }
 
