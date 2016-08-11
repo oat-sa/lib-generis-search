@@ -278,6 +278,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         $language = empty($this->userLanguage)? $this->defaultLanguage : $this->userLanguage;
         foreach ($aliases as $alias ) {
             $sortFields[] = $this->operationSeparator . 
+                    $this->getDriverEscaper()->dbCommand('LEFT') . ' ' . 
                     $this->getDriverEscaper()->dbCommand('JOIN') . ' (' . 
                     $this->getDriverEscaper()->dbCommand('SELECT') .' ' . 
                     $this->getDriverEscaper()->reserved('subject') . 
