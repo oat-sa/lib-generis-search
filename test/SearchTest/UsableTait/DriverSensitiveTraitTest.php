@@ -18,30 +18,30 @@
  *  Copyright (c) 2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchTest\UsableTrait;
+namespace oat\search\test\searchTest\UsableTrait;
 
 /**
  * Description of DriverSensitiveTraitTest
  *
  * @author christophe
  */
-class DriverSensitiveTraitTest extends \oat\taoSearch\test\UnitTestHelper
+class DriverSensitiveTraitTest extends \oat\search\test\UnitTestHelper
 {
     /**
      *
-     * @var oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait 
+     * @var oat\search\base\UsableTrait\DriverSensitiveTrait 
      */
     protected $instance;
     
     public function setup() {
         
-        $this->instance = $this->getMockForTrait('\\oat\\taoSearch\\model\\search\\UsableTrait\\DriverSensitiveTrait');
+        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\DriverSensitiveTrait');
         
     }
     
     public function testsSetGetDriverEscaper() {
         
-        $mock = $this->getMock('oat\taoSearch\model\search\Query\EscaperInterface');
+        $mock = $this->getMock('oat\search\base\Query\EscaperInterface');
         
         $this->assertSame($this->instance, $this->instance->setDriverEscaper($mock));
         $this->assertSame($mock, $this->instance->getDriverEscaper());

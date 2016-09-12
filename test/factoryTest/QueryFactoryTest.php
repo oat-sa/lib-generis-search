@@ -13,14 +13,14 @@ namespace oat\taoSearch\factoryTest;
  *
  * @author christophe
  */
-class QueryFactoryTest extends \oat\taoSearch\test\UnitTestHelper 
+class QueryFactoryTest extends \oat\search\test\UnitTestHelper 
 {
     
     protected $instance;
     
     public function setup() {
         
-    $this->instance = $this->getMock('\\oat\\taoSearch\\model\\factory\\QueryFactory', ['isValidClass' , 'getServiceLocator']);
+    $this->instance = $this->getMock('\\oat\\search\\factory\\QueryFactory', ['isValidClass' , 'getServiceLocator']);
         
     }
     
@@ -35,7 +35,7 @@ class QueryFactoryTest extends \oat\taoSearch\test\UnitTestHelper
          
         $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
         
-        $testClassName  = '\\oat\\taoSearch\\model\\search\\QueryInterface';
+        $testClassName  = '\\oat\\search\\base\\QueryInterface';
         $mockTest       = $this->getMock('\\stdClass' , ['setOptions' , 'setServiceLocator']);
         
         $mockTest->expects($this->once())

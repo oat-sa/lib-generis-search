@@ -12,8 +12,8 @@
     "minimum-stability" : "dev",
 	"autoload" : {
 		"psr-4" : {
-			"oat\\taoSearch\\model\\" : "src",
-			"oat\\taoSearch\\test\\" : "test"
+                        "oat\\search\\test\\" : "test",
+			"oat\\search\\" : "src"
 		}
 	}
     

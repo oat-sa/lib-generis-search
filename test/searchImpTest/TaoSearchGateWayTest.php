@@ -18,17 +18,17 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
 /**
  * TaoSearchGateWay Test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
+class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     
     public function setUp() {
-        $this->instance = new \oat\taoSearch\model\searchImp\TaoSearchGateWay();
+        $this->instance = new \oat\search\TaoSearchGateWay();
     }
     /**
      * try connection
@@ -52,8 +52,8 @@ class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     
     public function testSearch() {
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\TaoSearchGateWay' , ['parse']);
-        $builderMock = $this->prophesize('oat\taoSearch\model\search\QueryBuilderInterface')->reveal();
+        $this->instance = $this->getMock('\oat\search\TaoSearchGateWay' , ['parse']);
+        $builderMock = $this->prophesize('oat\search\base\QueryBuilderInterface')->reveal();
         
         $fixtureQuery = 'select * from toto where id = 2';
         

@@ -1,7 +1,7 @@
 <?php
 
-use oat\taoSearch\model\search\Query\EscaperAbstract;
-use oat\taoSearch\model\searchImp\DbSql\Driver\PostgreSQL;
+use oat\search\base\Query\EscaperAbstract;
+use oat\search\DbSql\Driver\PostgreSQL;
 /*
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ use oat\taoSearch\model\searchImp\DbSql\Driver\PostgreSQL;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class PostgreSQLTest extends \oat\taoSearch\test\UnitTestHelper  {
+class PostgreSQLTest extends \oat\search\test\UnitTestHelper  {
     
     /**
      * @var EscaperAbstract

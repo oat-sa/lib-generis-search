@@ -18,9 +18,9 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest\DbSql\TaoRdf\Command;
+namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 
 /**
  * test for Between
@@ -35,9 +35,9 @@ class BetweenTest extends UnitTestHelper {
         
         $expected = '"0" AND "10"';
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\Between' , ['getDriverEscaper'] );
+        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , ['getDriverEscaper'] );
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
         $DriverProphecy->escape(10)->willReturn(10)->shouldBeCalledTimes(1);
         $DriverProphecy->quote(0)->willReturn('"0"')->shouldBeCalledTimes(1);
@@ -86,19 +86,19 @@ class BetweenTest extends UnitTestHelper {
         
         $fixtureOperator  = 'BETWEEN';
         
-        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\Between' , 
+        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , 
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
-        $QueryParamProphecy->getValue()->willReturn($value);
+        $QueryCriterionProphecy->getValue()->willReturn($value);
         
         if($exception) {
-          $this->setExpectedException('\oat\taoSearch\model\search\exception\QueryParsingException');  
+          $this->setExpectedException('\oat\search\base\exception\QueryParsingException');  
         } else {
             
-            $QueryParamProphecy->getName()->willReturn($predicate);
+            $QueryCriterionProphecy->getName()->willReturn($predicate);
 
             $DriverProphecy->reserved('object')->willReturn('`object`')->shouldBeCalledTimes(1);
 
@@ -111,8 +111,8 @@ class BetweenTest extends UnitTestHelper {
             
         }
         
-        $QueryParamMock = $QueryParamProphecy->reveal();
+        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
 
-        $this->assertSame($expected, $this->instance->convert($QueryParamMock));
+        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
     }
 }

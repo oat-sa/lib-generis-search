@@ -18,9 +18,9 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest\DbSql\TaoRdf\Command;
+namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 /**
  * test for LikeBegin
  *
@@ -37,21 +37,21 @@ class LikeBeginTest extends UnitTestHelper {
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\LikeBegin',
+                'oat\search\DbSql\TaoRdf\Command\LikeBegin',
                 [], '',  true, true, true, 
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
         );
         
         $expected = '' . $fixtureProperty . ' `object` LIKE "test%"';
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
+        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         
-        $QueryParamProphecy->getValue()->willReturn($fixtureValue);
-        $QueryParamProphecy->getName()->willReturn($fixturePredicate);
+        $QueryCriterionProphecy->getValue()->willReturn($fixtureValue);
+        $QueryCriterionProphecy->getName()->willReturn($fixturePredicate);
         
-        $QueryParamMock = $QueryParamProphecy->reveal();
+        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->escape($fixtureValue . '%')->willReturn($fixtureValue . '%')->shouldBeCalledTimes(1);
         $DriverProphecy->quote($fixtureValue . '%')->willReturn('"' . $fixtureValue . '%"')->shouldBeCalledTimes(1);
@@ -64,6 +64,6 @@ class LikeBeginTest extends UnitTestHelper {
         $this->instance->expects($this->any())->method('getOperator')->willReturn($fixtureOperator);
         
         $this->setInaccessibleProperty($this->instance, 'operator', $fixtureOperator);
-        $this->assertSame($expected, $this->instance->convert($QueryParamMock));
+        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
     }
 }

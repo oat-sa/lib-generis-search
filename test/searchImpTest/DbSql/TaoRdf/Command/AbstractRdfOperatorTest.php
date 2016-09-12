@@ -18,9 +18,9 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest\DbSql\TaoRdf\Command;
+namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
-use oat\taoSearch\test\UnitTestHelper;
+use oat\search\test\UnitTestHelper;
 
 /**
  * Description of AbstractRdfOperatorTest
@@ -34,12 +34,12 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $operator = '=';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->dbCommand($operator)->willReturn($operator)->shouldBeCalledTimes(1);
         
         $DriverMock     = $DriverProphecy->reveal();
@@ -55,14 +55,14 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $fixtureName = 'http://www.w3.org/2000/01/rdf-schema#label';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 [], '',  true, true, true, 
                 ['getDriverEscaper']
                 );
         
         $expected = '`predicate` = "' . $fixtureName . '" AND ( ';
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape($fixtureName)->willReturn($fixtureName)->shouldBeCalledTimes(1);
         $DriverProphecy->quote($fixtureName)->willReturn('"' . $fixtureName . '"')->shouldBeCalledTimes(1);
         
@@ -85,20 +85,20 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
         
         $this->instance = $this->getMock(
-                'oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command\AbstractRdfOperator',
+                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
                 ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
         );
         
         $expected = '' . $fixtureProperty . ' `object` = "test"';
         
-        $QueryParamProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParamInterface');
+        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         
-        $QueryParamProphecy->getValue()->willReturn($fixtureValue);
-        $QueryParamProphecy->getName()->willReturn($fixturePredicate);
+        $QueryCriterionProphecy->getValue()->willReturn($fixtureValue);
+        $QueryCriterionProphecy->getName()->willReturn($fixturePredicate);
         
-        $QueryParamMock = $QueryParamProphecy->reveal();
+        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
         
-        $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         
         $DriverProphecy->escape($fixtureValue)->willReturn($fixtureValue)->shouldBeCalledTimes(1);
         $DriverProphecy->quote($fixtureValue)->willReturn('"' . $fixtureValue . '"')->shouldBeCalledTimes(1);
@@ -111,7 +111,7 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $this->instance->expects($this->any())->method('getOperator')->willReturn($fixtureOperator);
         
         $this->setInaccessibleProperty($this->instance, 'operator', $fixtureOperator);
-        $this->assertSame($expected, $this->instance->convert($QueryParamMock));
+        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
     }
     
 }

@@ -13,7 +13,7 @@ namespace oat\taoSearch\factoryTest;
  *
  * @author christophe
  */
-class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
+class FactoryAbstractTest extends \oat\search\test\UnitTestHelper
 {
     
     protected $instance;
@@ -21,15 +21,15 @@ class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
 
     public function setUp() {
         
-        $this->instance = $this->getMockForAbstractClass('oat\taoSearch\model\factory\FactoryAbstract');
+        $this->instance = $this->getMockForAbstractClass('oat\search\factory\FactoryAbstract');
         
     }
     
     public function isValidClassProvide() {
         
         return [
-            ['\\oat\\taoSearch\\model\\searchImp\\QueryParam' , true  , false],
-            ['\\oat\\taoSearch\\model\\searchImp\\Query'      , null , true ]
+            ['\\oat\\search\\QueryCriterion' , true  , false],
+            ['\\oat\\search\\Query'      , null , true ]
         ];
         
     }
@@ -47,7 +47,7 @@ class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
             $this->setExpectedException('\InvalidArgumentException');
         } 
         
-        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\taoSearch\\model\\search\\QueryParamInterface');
+        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\search\\base\\QueryCriterionInterface');
         
         $class = new $class();
         

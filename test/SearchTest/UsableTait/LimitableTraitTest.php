@@ -6,21 +6,21 @@
  * and open the template in the editor.
  */
 
-namespace oat\taoSearch\test\searchTest\UsableTrait;
+namespace oat\search\test\searchTest\UsableTrait;
 
 /**
  * Description of LimitableTraitTest
  *
  * @author christophe
  */
-class LimitableTraitTest extends \oat\taoSearch\test\UnitTestHelper 
+class LimitableTraitTest extends \oat\search\test\UnitTestHelper 
 {
     
     protected $instance;
     
     public function setup() {
         
-        $this->instance = $this->getMockForTrait('\\oat\\taoSearch\\model\\search\\UsableTrait\\LimitableTrait');
+        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\LimitableTrait');
         
     }
     /**
@@ -30,7 +30,8 @@ class LimitableTraitTest extends \oat\taoSearch\test\UnitTestHelper
         $fixtureLimit  = 10;
         $fixtureOffset = 5;
         
-        $this->assertSame($this->instance, $this->instance->setOffset($fixtureLimit , $fixtureOffset));
+        $this->assertSame($this->instance, $this->instance->setOffset($fixtureOffset));
+        $this->assertSame($this->instance, $this->instance->setLimit($fixtureLimit));
         $this->assertSame($fixtureLimit, $this->instance->getLimit());
         $this->assertSame($fixtureOffset, $this->instance->getOffset());
     }

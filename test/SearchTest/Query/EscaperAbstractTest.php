@@ -18,22 +18,22 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\SearchTest\Query;
+namespace oat\search\test\SearchTest\Query;
 
 /**
  * Description of EscaperAbstractTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class EscaperAbstractTest extends \oat\taoSearch\test\UnitTestHelper 
+class EscaperAbstractTest extends \oat\search\test\UnitTestHelper 
 {
     /**
-     * @var \oat\taoSearch\model\search\Query\EscaperAbstract 
+     * @var \oat\search\base\Query\EscaperAbstract 
      */
     protected $instance;
 
     public function setUp() {
-        $this->instance = $this->getMockForAbstractClass('oat\taoSearch\model\search\Query\EscaperAbstract');
+        $this->instance = $this->getMockForAbstractClass('oat\search\base\Query\EscaperAbstract');
     }
     
     public function testQuote() {

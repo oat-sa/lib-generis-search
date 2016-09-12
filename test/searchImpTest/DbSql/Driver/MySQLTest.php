@@ -1,7 +1,7 @@
 <?php
 
-use oat\taoSearch\model\search\Query\EscaperAbstract;
-use oat\taoSearch\model\searchImp\DbSql\Driver\MySQL;
+use oat\search\base\Query\EscaperAbstract;
+use oat\search\DbSql\Driver\MySQL;
 
 /*
  * This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@ use oat\taoSearch\model\searchImp\DbSql\Driver\MySQL;
  *
  * @author christophe
  */
-class MySQLTest extends \oat\taoSearch\test\UnitTestHelper  {
+class MySQLTest extends \oat\search\test\UnitTestHelper  {
     
     /**
      * @var EscaperAbstract

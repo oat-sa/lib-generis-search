@@ -19,7 +19,7 @@
  * 
  */
 
-namespace oat\taoSearch\model\factory;
+namespace oat\search\factory;
 
 /**
  * Description of QueryFactory
@@ -32,14 +32,14 @@ class QueryFactory extends FactoryAbstract {
      * supported interface 
      * @var string
      */
-    protected $validInterface = 'oat\\taoSearch\\model\\search\\QueryInterface';
+    protected $validInterface = 'oat\\search\\base\\QueryInterface';
 
 
     /**
      * return a new Query
      * @param string $className
      * @param array $options
-     * @return \oat\taoSearch\model\factory\QueryInterface
+     * @return \oat\search\factory\QueryInterface
      * @throws \InvalidArgumentException
      */
     public function get($className , array $options = array())  {

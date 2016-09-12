@@ -19,7 +19,7 @@
  * 
  */
 
-namespace oat\taoSearch\model\factory;
+namespace oat\search\factory;
 
 use \Zend\ServiceManager\ServiceLocatorAwareInterface;
 

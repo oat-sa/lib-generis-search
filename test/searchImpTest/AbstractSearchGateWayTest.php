@@ -18,14 +18,14 @@
  *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
-namespace oat\taoSearch\test\searchImpTest;
+namespace oat\search\test\searchImpTest;
 
 /**
  *  AbstractSearchGateWay Test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
+class AbstractSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     
     /**
      * test init
@@ -40,7 +40,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
             'taoRdf' => 'search.driver.mysql'
         ];
         
-        $DriverProphecy    = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
+        $DriverProphecy    = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverMock        = $DriverProphecy->reveal();
         
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
@@ -49,7 +49,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManagerMock = $ServiceManager->reveal();
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator' , 'setOptions' , 'setDriverEscaper']
                 );
@@ -65,31 +65,31 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     }
     /**
      * test parse
-     * verify parser is called and parse query is stored
+     * verify serialyser is called and parse query is stored
      */
     public function testParse() {
         
         $fixtureQuery = 'select * from toto where id = 2';
         
-        $builder        = $this->prophesize('\oat\taoSearch\model\search\QueryBuilderInterface');
+        $builder        = $this->prophesize('\oat\search\base\QueryBuilderInterface');
         $BuilderMock    = $builder->reveal();
         
-        $ParserProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParserInterface');
+        $SerialyserProphecy = $this->prophesize('\oat\search\base\QuerySerialyserInterface');
         
-        $ParserProphecy->setCriteriaList($BuilderMock)->willReturn($ParserProphecy);
-        $ParserProphecy->parse()->willReturn($fixtureQuery);
+        $SerialyserProphecy->setCriteriaList($BuilderMock)->willReturn($SerialyserProphecy);
+        $SerialyserProphecy->serialyse()->willReturn($fixtureQuery);
         
-        $ParserMock     = $ParserProphecy->reveal();
+        $SerialyserMock     = $SerialyserProphecy->reveal();
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
-                ['getParser']
+                ['getSerialyser']
             );
         
-        $this->instance->expects($this->once())->method('getParser')->willReturn($ParserMock);
+        $this->instance->expects($this->once())->method('getSerialyser')->willReturn($SerialyserMock);
         
-        $this->assertSame($this->instance, $this->instance->parse($BuilderMock));
+        $this->assertSame($this->instance, $this->instance->serialyse($BuilderMock));
         $this->assertSame($fixtureQuery, $this->getInaccessibleProperty($this->instance, 'parsedQuery'));
     }
     
@@ -99,7 +99,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testGetDriverName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureDriverName = 'mysql';
@@ -113,7 +113,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
      */
     public function testSetGetConnector() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $connectorMock = $this->prophesize('\PDO')->reveal();
@@ -123,49 +123,49 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     }
     
     /**
-     * verify parser initialisation
+     * verify serialyser initialisation
      */
-    public function testGetParser() {
+    public function testGetSerialyser() {
         
         $fixtureDriver  = 'taoRdf';
         $fixtureOptions = [
             'driver' => $fixtureDriver,
         ];
         
-        $fixtureParserList = [
-            'taoRdf' => 'search.tao.parser'
+        $fixtureSerialyserList = [
+            'taoRdf' => 'search.tao.serialyser'
         ];
         
-        $DriverMock     = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface')->reveal();
+        $DriverMock     = $this->prophesize('oat\search\base\Query\EscaperInterface')->reveal();
         
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $ServiceManagerMock = $ServiceManager->reveal();
         
-        $ParserProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryParserInterface');
-        $ParserProphecy->setServiceLocator($ServiceManagerMock)->willReturn($ParserProphecy);
-        $ParserProphecy->setDriverEscaper($DriverMock)->willReturn($ParserProphecy);
-        $ParserProphecy->setOptions($fixtureOptions)->willReturn($ParserProphecy);
-        $ParserProphecy->prefixQuery()->willReturn($ParserProphecy);
-        $ParserMock     = $ParserProphecy->reveal();
+        $SerialyserProphecy = $this->prophesize('\oat\search\base\QuerySerialyserInterface');
+        $SerialyserProphecy->setServiceLocator($ServiceManagerMock)->willReturn($SerialyserProphecy);
+        $SerialyserProphecy->setDriverEscaper($DriverMock)->willReturn($SerialyserProphecy);
+        $SerialyserProphecy->setOptions($fixtureOptions)->willReturn($SerialyserProphecy);
+        $SerialyserProphecy->prefixQuery()->willReturn($SerialyserProphecy);
+        $SerialyserMock     = $SerialyserProphecy->reveal();
         
-        $ServiceManager->get('search.tao.parser')->willReturn($ParserMock);
+        $ServiceManager->get('search.tao.serialyser')->willReturn($SerialyserMock);
         $ServiceManagerMock = $ServiceManager->reveal();  
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator']
                 );
         
         $this->instance->expects($this->once())->method('getServiceLocator')->willReturn($ServiceManagerMock);
         
-        $this->setInaccessibleProperty($this->instance, 'parserList', $fixtureParserList);
+        $this->setInaccessibleProperty($this->instance, 'serialyserList', $fixtureSerialyserList);
         $this->setInaccessibleProperty($this->instance, 'options', $fixtureOptions);
         $this->setInaccessibleProperty($this->instance, 'driverName', $fixtureDriver);
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
         $this->setInaccessibleProperty($this->instance, 'serviceLocator', $ServiceManagerMock);
          
-        $this->assertSame($ParserMock, $this->instance->getParser());
+        $this->assertSame($SerialyserMock, $this->instance->getSerialyser());
     }
      /**
      * test resultSetClassName getter and setter
@@ -173,7 +173,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testSetGetResultSetClassName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureResultSetName = 'search.result.tao';
@@ -187,7 +187,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testSetGetBuilderClassName() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay'
+                'oat\search\AbstractSearchGateWay'
             );
         
         $fixtureResultSetName = 'search.query.builder.test';
@@ -210,7 +210,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManager    = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $ServiceManagerMock = $ServiceManager->reveal();
         
-        $QueryProphecy = $this->prophesize('\oat\taoSearch\model\search\QueryBuilderInterface');
+        $QueryProphecy = $this->prophesize('\oat\search\base\QueryBuilderInterface');
         $QueryProphecy->setServiceLocator($ServiceManagerMock)->willReturn($QueryProphecy);
         $QueryProphecy->setOptions($fixtureOptions)->willReturn($QueryProphecy);
 
@@ -220,7 +220,7 @@ class AbstractSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
         $ServiceManagerMock = $ServiceManager->reveal();  
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\taoSearch\model\searchImp\AbstractSearchGateWay',
+                'oat\search\AbstractSearchGateWay',
                 [], '',  true, true, true, 
                 ['getServiceLocator']
                 );
