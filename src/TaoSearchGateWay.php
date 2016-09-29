@@ -45,7 +45,7 @@ class TaoSearchGateWay extends AbstractSearchGateWay
      * @todo use generis persistence
      */
     public function search(QueryBuilderInterface $Builder) {
-        $this->parse($Builder);
+        $this->serialyse($Builder);
         return $this->parsedQuery;
     }
     
@@ -59,7 +59,7 @@ class TaoSearchGateWay extends AbstractSearchGateWay
     }
 
     public function count(QueryBuilderInterface $Builder) {
-         return $this->getSerialyser()->setCriteriaList($Builder)->count(true)->parse(); 
+         return $this->getSerialyser()->setCriteriaList($Builder)->count(true)->serialyse(); 
     }
 
 }
