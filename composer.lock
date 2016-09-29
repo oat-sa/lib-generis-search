@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d883566b83ae601a50b38b249e92450dc57cf875"
+                "reference": "c1016e6501312201ede77e3911748024d78cdd31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d883566b83ae601a50b38b249e92450dc57cf875",
-                "reference": "d883566b83ae601a50b38b249e92450dc57cf875",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c1016e6501312201ede77e3911748024d78cdd31",
+                "reference": "c1016e6501312201ede77e3911748024d78cdd31",
                 "shasum": ""
             },
             "require": {
@@ -319,7 +319,8 @@
                 "sebastian/recursion-context": "^1.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.0"
+                "phpspec/phpspec": "^2.0",
+                "phpunit/phpunit": "^4.8 || ^5"
             },
             "type": "library",
             "extra": {
@@ -357,7 +358,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-07-19 16:08:43"
+            "time": "2016-09-28 11:19:12"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -608,12 +609,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c062dddcb68e44b563f66ee319ddae2b5a322a90"
+                "reference": "d99e588e3cbab28db86f8da22e22c72d8cc38543"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c062dddcb68e44b563f66ee319ddae2b5a322a90",
-                "reference": "c062dddcb68e44b563f66ee319ddae2b5a322a90",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d99e588e3cbab28db86f8da22e22c72d8cc38543",
+                "reference": "d99e588e3cbab28db86f8da22e22c72d8cc38543",
                 "shasum": ""
             },
             "require": {
@@ -672,7 +673,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-07-21 06:48:14"
+            "time": "2016-09-22 17:37:27"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -852,12 +853,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "622c5dc0a8036cfc4ccd73c7b1b668a431e69d96"
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/622c5dc0a8036cfc4ccd73c7b1b668a431e69d96",
-                "reference": "622c5dc0a8036cfc4ccd73c7b1b668a431e69d96",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/be2c607e43ce4c89ecd60e75c6a85c126e754aea",
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea",
                 "shasum": ""
             },
             "require": {
@@ -894,7 +895,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-06-11 08:21:19"
+            "time": "2016-08-18 05:49:44"
         },
         {
             "name": "sebastian/exporter",
@@ -1108,12 +1109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f891dd5781923380e069385881728250c929cb4b"
+                "reference": "f3abbc0c63c0c7803db79a7398bb983e5b089f53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f891dd5781923380e069385881728250c929cb4b",
-                "reference": "f891dd5781923380e069385881728250c929cb4b",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/f3abbc0c63c0c7803db79a7398bb983e5b089f53",
+                "reference": "f3abbc0c63c0c7803db79a7398bb983e5b089f53",
                 "shasum": ""
             },
             "require": {
@@ -1155,7 +1156,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-08-02 07:47:02"
+            "time": "2016-09-28 14:20:56"
         },
         {
             "name": "webmozart/assert",
@@ -1163,16 +1164,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "3a8e045064f294992a13966b6c892fb9d64853a3"
+                "reference": "8444f2ac9f86342665cdae47b6d3ea6e07794456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/3a8e045064f294992a13966b6c892fb9d64853a3",
-                "reference": "3a8e045064f294992a13966b6c892fb9d64853a3",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/8444f2ac9f86342665cdae47b6d3ea6e07794456",
+                "reference": "8444f2ac9f86342665cdae47b6d3ea6e07794456",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3|^7.0"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6",
@@ -1181,7 +1182,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -1205,7 +1206,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-03-04 13:27:44"
+            "time": "2016-08-18 09:30:53"
         }
     ],
     "aliases": [],

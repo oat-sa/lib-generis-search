@@ -52,13 +52,13 @@ class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     
     public function testSearch() {
         
-        $this->instance = $this->getMock('\oat\search\TaoSearchGateWay' , ['parse']);
+        $this->instance = $this->getMock('\oat\search\TaoSearchGateWay' , ['serialyse']);
         $builderMock = $this->prophesize('oat\search\base\QueryBuilderInterface')->reveal();
         
         $fixtureQuery = 'select * from toto where id = 2';
         
         $this->instance->expects($this->once())
-                ->method('parse')
+                ->method('serialyse')
                 ->with($builderMock)
                 ->willReturn($fixtureQuery);
         
