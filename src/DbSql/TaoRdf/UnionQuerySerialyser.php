@@ -71,10 +71,14 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
                  SupportedOperatorHelper::LESSER_THAN_EQUAL  => 'LesserThanOrEqual',
                  SupportedOperatorHelper::CONTAIN            => 'LikeContain',
                  SupportedOperatorHelper::MATCH              => 'Like',
+                 SupportedOperatorHelper::NOT_MATCH          => 'NotLike',
                  SupportedOperatorHelper::IN                 => 'In',
                  SupportedOperatorHelper::BETWEEN            => 'Between',
                  SupportedOperatorHelper::BEGIN_BY           => 'LikeBegin',
-                 SupportedOperatorHelper::DIFFERENT          => 'NotEqual',
+                 SupportedOperatorHelper::ENDING_BY          => 'LikeEnd',
+                 SupportedOperatorHelper::NOT_IN             => 'NotIn',
+                 SupportedOperatorHelper::IS_NULL            => 'IsNULL',
+                 SupportedOperatorHelper::IS_NOT_NULL        => 'IsNotNull',
              ];
     
      /**

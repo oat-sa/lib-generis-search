@@ -1,4 +1,5 @@
 <?php
+
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,47 +20,19 @@
  * 
  */
 
-namespace oat\search\helper;
+namespace oat\search\DbSql\TaoRdf\Command;
 
 /**
- * Class SupportedOperatorHelper
+ * create search criterium with for LIKE operator
  *
- * define constant for each supported operator.
- *
- * @package oat\search\base\helper
+ * @author christophe
  */
-class SupportedOperatorHelper {
+class NotLike extends AbstractRdfOperator {
+    /**
+     * operator
+     * @var string
+     */
+    protected $operator = 'NOT LIKE';
 
-    const EQUAL = 'equals';
-
-    const DIFFERENT = 'notEqual';
-
-    const GREATER_THAN = 'gt';
-
-    const GREATER_THAN_EQUAL = 'gte';
-
-    const LESSER_THAN = 'lt';
-
-    const LESSER_THAN_EQUAL = 'lte';
-
-    const BETWEEN = 'between';
-
-    const IN      = 'in';
     
-    const NOT_IN  = 'notIn';
-
-    const MATCH   = 'match';
-    
-    const NOT_MATCH   = 'notMatch';
-
-    const CONTAIN = 'contains';
-    
-    const BEGIN_BY = 'begin';
-    
-    const ENDING_BY = 'end';
-    
-    const IS_NULL  = 'null';
-    
-    const IS_NOT_NULL = 'notNull';
-
 }
