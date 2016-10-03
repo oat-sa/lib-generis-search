@@ -1,4 +1,5 @@
 <?php
+
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,47 +20,31 @@
  * 
  */
 
-namespace oat\search\helper;
+namespace oat\search\DbSql\TaoRdf\Command;
 
+use \oat\search\base\QueryCriterionInterface;
 /**
- * Class SupportedOperatorHelper
+ * create a subquery with LIKE "%value"
  *
- * define constant for each supported operator.
- *
- * @package oat\search\base\helper
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class SupportedOperatorHelper {
+class LikeEnd extends AbstractRdfOperator {
+    /**
+     * operator
+     * @var string
+     */
+    protected $operator = 'LIKE';
 
-    const EQUAL = 'equals';
-
-    const DIFFERENT = 'notEqual';
-
-    const GREATER_THAN = 'gt';
-
-    const GREATER_THAN_EQUAL = 'gte';
-
-    const LESSER_THAN = 'lt';
-
-    const LESSER_THAN_EQUAL = 'lte';
-
-    const BETWEEN = 'between';
-
-    const IN      = 'in';
+    /**
+     * convert Query Param to mysql query string
+     * @param QueryCriterionInterface $query
+     * @return string
+     */
+    public function convert(QueryCriterionInterface $query) {
+        $value = '%' . $query->getValue();
+        $value = $this->getDriverEscaper()->escape($value);
+        $value = $this->getDriverEscaper()->quote($value);
+        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . '';
+    }
     
-    const NOT_IN  = 'notIn';
-
-    const MATCH   = 'match';
-    
-    const NOT_MATCH   = 'notMatch';
-
-    const CONTAIN = 'contains';
-    
-    const BEGIN_BY = 'begin';
-    
-    const ENDING_BY = 'end';
-    
-    const IS_NULL  = 'null';
-    
-    const IS_NOT_NULL = 'notNull';
-
 }
