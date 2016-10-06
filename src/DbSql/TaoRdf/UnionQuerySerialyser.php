@@ -57,7 +57,13 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      protected $defaultLanguage = '';
      
      protected $predicateLoop = 0;
-
+     
+     /**
+      * readables model ID
+      * @var array
+      */
+     protected $readableModels = [];
+     
      /**
       * suppoted operator class name
       * @var array
@@ -97,7 +103,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             if(array_key_exists('defaultLanguage' , $options)) {
                $this->defaultLanguage = $this->setLanguageCondition($options['defaultLanguage'] , true);
             }
-            
+            $this->readableModels = $options['readable'];
             $this->queryPrefix = $this->initQuery();
         }
         return $this;
