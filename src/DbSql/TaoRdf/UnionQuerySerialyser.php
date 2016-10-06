@@ -213,7 +213,12 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
     }
     
     protected function closeOperation() {
-        return ') '. $this->getDriverEscaper()->dbCommand('AS') . ' unionq' . 
+        return ') ' .
+                    $this->getDriverEscaper()->dbCommand('AND') .
+                    $this->getDriverEscaper()->reserved('modelid') .
+                    $this->getDriverEscaper()->dbCommand('IN') .
+                    '(' . implode(',' , $this->readableModels) . ')' .
+                    $this->getDriverEscaper()->dbCommand('AS') . ' unionq' . 
                     $this->operationSeparator . 
                     $this->getDriverEscaper()->dbCommand('GROUP') . ' ' .
                     $this->getDriverEscaper()->dbCommand('BY') . ' ' .
