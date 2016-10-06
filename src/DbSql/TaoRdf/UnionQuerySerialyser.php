@@ -23,6 +23,7 @@ namespace oat\search\DbSql\TaoRdf;
 use oat\search\base\exception\QueryParsingException;
 use oat\search\helper\SupportedOperatorHelper;
 use oat\search\DbSql\AbstractSqlQuerySerialyser;
+use oat\generis\model\data\Model;
 
 /**
  * Tao RDF Onthology serialyser
@@ -58,13 +59,14 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @var string
      */
     protected $defaultLanguage = '';
+
     protected $predicateLoop = 0;
 
     /**
      * readables model ID
-     * @var array
+     * @var \core_kernel_persistence_smoothsql_SmoothModel
      */
-    protected $readableModels = [];
+    protected $model = null;
 
     /**
      * suppoted operator class name
@@ -103,7 +105,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             if (array_key_exists('defaultLanguage', $options)) {
                 $this->defaultLanguage = $this->setLanguageCondition($options['defaultLanguage'], true);
             }
-            $this->readableModels = $options['readable'];
+            $this->model = $options['model'];
             $this->queryPrefix = $this->initQuery();
         }
         return $this;
@@ -170,8 +172,16 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
                 $this->getDriverEscaper()->reserved($this->options['table']) . ' ' .
                 $this->getDriverEscaper()->dbCommand('WHERE') .
                 $this->operationSeparator .
-                $this->userLanguage . ' ' . $expression . ' )' .
-                ')';
+                $this->userLanguage . ' ' . $expression;
+
+        if (!empty($this->model)) {
+            $this->query .=  $this->getDriverEscaper()->dbCommand('AND') . ' '.
+                $this->getDriverEscaper()->reserved('modelid') . ' '.
+                $this->getDriverEscaper()->dbCommand('IN') . ' '.
+                '(' . implode(',', $this->model->getReadableModels()) . ')'.
+                $this->operationSeparator ;
+        }
+        $this->query .= ' )'.')';
 
         $this->predicateLoop ++;
 
@@ -219,14 +229,8 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
 
     protected function closeOperation() {
 
-        $sql = ') ';
-        if (!empty($this->readableModels)) {
-            $sql .= $this->getDriverEscaper()->dbCommand('AND') .
-                    $this->getDriverEscaper()->reserved('modelid') .
-                    $this->getDriverEscaper()->dbCommand('IN') .
-                    '(' . implode(',', $this->readableModels) . ')';
-        }
-        $sql .= $this->getDriverEscaper()->dbCommand('AS') . ' unionq' .
+        $sql = ') '.
+                $this->getDriverEscaper()->dbCommand('AS') . ' unionq' .
                 $this->operationSeparator .
                 $this->getDriverEscaper()->dbCommand('GROUP') . ' ' .
                 $this->getDriverEscaper()->dbCommand('BY') . ' ' .
