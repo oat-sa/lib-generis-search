@@ -19,47 +19,32 @@
  * 
  */
 
-namespace oat\search\helper;
+namespace oat\search\DbSql\TaoRdf\Command;
+
+use oat\search\base\exception\QueryParsingException;
+use oat\search\base\QueryCriterionInterface;
 
 /**
- * Class SupportedOperatorHelper
+ * IsNotNull operator
  *
- * define constant for each supported operator.
- *
- * @package oat\search\base\helper
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class SupportedOperatorHelper {
-
-    const EQUAL = 'equals';
-
-    const DIFFERENT = 'notEqual';
-
-    const GREATER_THAN = 'gt';
-
-    const GREATER_THAN_EQUAL = 'gte';
-
-    const LESSER_THAN = 'lt';
-
-    const LESSER_THAN_EQUAL = 'lte';
-
-    const BETWEEN = 'between';
-
-    const IN      = 'in';
+class IsNotNull extends AbstractRdfOperator {
     
-    const NOT_IN  = 'notIn';
-
-    const MATCH   = 'match';
+    /**
+     * operator
+     * @var string
+     */
+    protected $operator = 'IS NOT NULL';
     
-    const NOT_MATCH   = 'notMatch';
-
-    const CONTAIN = 'contains';
+    /**
+     * convert Query Param to mysql query string
+     * @param QueryCriterionInterface $query
+     * @return string
+     * @throws QueryParsingException
+     */
+    public function convert(QueryCriterionInterface $query) {
+        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ';
+    }
     
-    const BEGIN_BY = 'begin';
-    
-    const ENDING_BY = 'end';
-    
-    const IS_NULL  = 'null';
-    
-    const IS_NOT_NULL = 'notNull';
-
 }
