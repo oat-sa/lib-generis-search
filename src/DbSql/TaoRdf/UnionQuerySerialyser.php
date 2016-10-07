@@ -105,7 +105,9 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             if (array_key_exists('defaultLanguage', $options)) {
                 $this->defaultLanguage = $this->setLanguageCondition($options['defaultLanguage'], true);
             }
-            $this->model = $options['model'];
+            if (array_key_exists('model', $options)) {
+                $this->model = $options['model'];
+            }
             $this->queryPrefix = $this->initQuery();
         }
         return $this;
