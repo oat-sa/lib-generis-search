@@ -57,4 +57,8 @@ class PostgreSQL extends EscaperAbstract
     public function escape($stringValue) {
         return pg_escape_string($stringValue);
     }
+    
+    public function random() {
+        return 'RANDOM()';
+    }
 }

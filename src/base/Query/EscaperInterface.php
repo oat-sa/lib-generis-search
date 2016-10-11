@@ -90,5 +90,9 @@ interface EscaperInterface {
      * @return string
      */
     public function getEmpty();
-    
+    /**
+     * return random cammand as string
+     * @return string
+     */
+    public function random();
 }

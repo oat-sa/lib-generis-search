@@ -58,5 +58,9 @@ class MySQL extends EscaperAbstract
     public function escape($stringValue) {
         return addcslashes($stringValue, '\'"');
     }
-
+    
+    public function random() {
+        return 'RAND()';
+    }
+    
 }
