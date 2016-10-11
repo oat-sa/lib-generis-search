@@ -23,7 +23,6 @@ namespace oat\search\DbSql\TaoRdf;
 use oat\search\base\exception\QueryParsingException;
 use oat\search\helper\SupportedOperatorHelper;
 use oat\search\DbSql\AbstractSqlQuerySerialyser;
-use oat\generis\model\data\Model;
 
 /**
  * Tao RDF Onthology serialyser
@@ -128,7 +127,6 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @return string
      */
     protected function initQuery() {
-
         /**
          * SELECT subject FROM (
          */
