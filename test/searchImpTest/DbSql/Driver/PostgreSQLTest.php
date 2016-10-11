@@ -44,4 +44,7 @@ class PostgreSQLTest extends \oat\search\test\UnitTestHelper  {
         $this->assertSame($expected, $this->instance->dbCommand($fitureCommand));
     }
     
+    public function testRandom() {
+        $this->assertSame('RANDOM()', $this->instance->random());
+    }
 }
