@@ -358,6 +358,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         }
         
     }
+    
     /**
      * set sort as random
      * @return string
@@ -365,7 +366,8 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
     protected function addRandomSort() {
         $random = '';
         
-        $this->query .= $this->getDriverEscaper()->dbCommand('ORDER BY') . ' ' .
+        $this->query .= $this->operationSeparator .
+                $this->getDriverEscaper()->dbCommand('ORDER BY') . ' ' .
                 $this->getDriverEscaper()->dbCommand('RAND()') . 
                 $this->operationSeparator;
         

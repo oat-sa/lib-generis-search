@@ -69,11 +69,9 @@ trait SortableTrait {
     
     /**
      * @see \oat\search\base\SortableInterface::getRandom
-     * set up random mod
-     * @return $this
+     * @return boolean
      */
-    public function setRandom() {
-        $this->random = true;
-        return $this;
+    public function getRandom() {
+        return $this->random;
     }
 }
