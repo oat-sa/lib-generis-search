@@ -31,6 +31,9 @@ trait SortableTrait {
      * @var array
      */
     protected $sort = [];
+    
+    protected $random = false;
+
 
     /**
      * return sort criterias
@@ -54,4 +57,23 @@ trait SortableTrait {
         return $this;
     }
     
+    /**
+     * @see \oat\search\base\SortableInterface::setRandom
+     * set up random mod
+     * @return $this
+     */
+    public function setRandom() {
+        $this->random = true;
+        return $this;
+    }
+    
+    /**
+     * @see \oat\search\base\SortableInterface::getRandom
+     * set up random mod
+     * @return $this
+     */
+    public function setRandom() {
+        $this->random = true;
+        return $this;
+    }
 }
