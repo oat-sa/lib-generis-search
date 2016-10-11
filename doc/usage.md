@@ -323,6 +323,9 @@ $queryBuilder = $search->query();
 $query = $queryBuilder->add(RDFS_COMMENT)->contains('foo');
 
 $queryBuilder->setCriteria($query)->setRandom();
+
+//fields are ignore when random is enable
+
 $result = $search->getGateway()->search($queryBuilder);
 ```
 
