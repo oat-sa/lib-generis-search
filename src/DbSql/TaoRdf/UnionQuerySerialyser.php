@@ -366,7 +366,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         
         $this->query .= $this->operationSeparator .
                 $this->getDriverEscaper()->dbCommand('ORDER BY') . ' ' .
-                $this->getDriverEscaper()->dbCommand('RAND()') . 
+                $this->getDriverEscaper()->random() . 
                 $this->operationSeparator;
         
         return $random;
