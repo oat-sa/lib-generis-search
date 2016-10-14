@@ -7,7 +7,7 @@
 search every items with label equal to 'foo'.
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query()
 $myquery = $queryBuilder->newQuery()->add(RDFS_LABEL)->equals('foo');
 $queryBuilder->setCriteria($myquery);
@@ -19,7 +19,7 @@ $result = $search->getGateway()->search($queryBuilder);
 search every test-takers.
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $search->searchType( $queryBuilder , 'http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject' , true);
 $queryBuilder->setCriteria($query);
@@ -29,7 +29,7 @@ $result = $search->getGateway()->search($queryBuilder);
 add criteria : search every test-takers having label containing 'foo'.
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $search->searchType($queryBuilder , 'http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject' , true)
                  ->add(RDFS_LABEL)
@@ -41,7 +41,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### language search :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $search->setLanguage($queryBuilder , $userLanguage , $defaultLanguage)
                  ->add(RDFS_LABEL)
@@ -53,7 +53,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### multiple criteria search :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $queryBuilder->newQuery()
                  ->add(RDFS_LABEL)
@@ -68,7 +68,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### multiple values on same criterion search :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $queryBuilder->newQuery()
                  ->add(RDFS_LABEL)
@@ -81,7 +81,7 @@ $result = $search->getGateway()->search($queryBuilder);
 using different operator  on same criterion :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $queryBuilder->newQuery()
                  ->add(RDFS_LABEL)
@@ -94,7 +94,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### use OR :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $queryBuilder = $search->query();
 
@@ -111,7 +111,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ```
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $queryBuilder = $search->query();
 
@@ -142,7 +142,7 @@ by default, Criteria are grouped by AND operator :
 to search test takers which label begin by 'a' or begin by 'z' :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 /**
 * a test taker with label begins by 'a'
@@ -168,7 +168,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ```
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 /**
 * a test taker with label begin by 'a' or label begin by 'b'
@@ -282,7 +282,7 @@ $query->addCriterion( RDFS_LABEL ,SupportedOperatorHelper::NOT_NULL , null]);
 ### Sort method is available on QueryBuilder :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query()->sort(
 [
 RDFS_LABEL => 'asc'
@@ -298,7 +298,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### Example for muliple sort :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $queryBuilder = $search->query();
 
@@ -316,7 +316,7 @@ $result = $search->getGateway()->search($queryBuilder);
 ### random sorting
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $queryBuilder = $search->query();
 
@@ -336,18 +336,18 @@ limit method is also available on QueryBuilder :
 get 10 results :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $query = $queryBuilder->newQuery()->add(RDFS_COMMENT)->contains('foo');
 
-$queryBuilder->setCriteria($query);
+$queryBuilder->setCriteria($query)->setLimit(10);
 
-$result = $search->getGateway()->search($queryBuilder)->setLimit(10);
+$result = $search->getGateway()->search($queryBuilder);
 ```
 get 10 results offset 5 :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query()->setLimit(10)->setOffset(5);
 
 $query = $queryBuilder->newQuery()->add(RDFS_COMMENT)->contains('foo');
@@ -391,7 +391,7 @@ Each entry of result set is a tao resource Object.
 ### basic usage :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 
 $queryBuilder = $search->query();
 $query = $queryBuilder->newQuery()->add(RDFS_COMMENT)->contains('foo');
@@ -407,7 +407,7 @@ foreach($result as $resource) {
 ### use total :
 
 ```php
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\searchComplexSearchService::SERVICE_ID);
 $queryBuilder = $search->query();
 $query = $queryBuilder->newQuery()->add(RDFS_COMMENT)->contains('foo');
 
