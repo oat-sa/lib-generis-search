@@ -43,4 +43,16 @@ interface SortableInterface {
      */
     public function getSort();
     
+    /**
+     * set up random sort
+     * @return $this
+     */
+    public function setRandom();
+    
+    /**
+     * return random mod value
+     * @return boolean
+     */
+    public function getRandom();
+    
 }

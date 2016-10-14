@@ -29,6 +29,15 @@ class SortableTraitTest extends \oat\search\test\UnitTestHelper
         $this->assertSame($this->instance, $this->instance->sort($fixtureSortCriteria));
         $this->assertSame($fixtureSortCriteria, $this->instance->getSort());
     }
+    /*
+     * test setRandom and getRandom
+     */
+    public function testSetGetRandom() {
+
+        $this->assertFalse($this->instance->getRandom());
+        $this->assertSame($this->instance, $this->instance->setRandom());
+        $this->assertTrue($this->instance->getRandom());
+    }
     
 }
 

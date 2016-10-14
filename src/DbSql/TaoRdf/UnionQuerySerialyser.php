@@ -23,7 +23,6 @@ namespace oat\search\DbSql\TaoRdf;
 use oat\search\base\exception\QueryParsingException;
 use oat\search\helper\SupportedOperatorHelper;
 use oat\search\DbSql\AbstractSqlQuerySerialyser;
-use oat\generis\model\data\Model;
 
 /**
  * Tao RDF Onthology serialyser
@@ -128,7 +127,6 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @return string
      */
     protected function initQuery() {
-
         /**
          * SELECT subject FROM (
          */
@@ -326,23 +324,13 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
 
         return implode($this->operationSeparator, $sortFields);
     }
-
-    /**
-     * parse sort criteria
-     * @param array $sortCriteria
-     * @return string
-     */
-    protected function addSort(array $sortCriteria) {
-
+    
+    protected function setSortQuery(array $sortCriteria , $orderOperator) {
+        
         $sort = '';
         $aliases = [];
         $index = 1;
-
-        $orderOperator = [
-            'asc' => $this->getDriverEscaper()->dbCommand('ASC'),
-            'desc' => $this->getDriverEscaper()->dbCommand('DESC'),
-        ];
-
+        
         if (count($sortCriteria) > 0) {
 
             foreach ($sortCriteria as $field => $order) {
@@ -364,8 +352,43 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
                     ' rootq' . $this->operationSeparator;
 
             $this->query = $sort;
+            return $sort;
         }
+        
+    }
+    
+    /**
+     * set sort as random
+     * @return string
+     */
+    protected function addRandomSort() {
+        $random = '';
+        
+        $this->query .= $this->operationSeparator .
+                $this->getDriverEscaper()->dbCommand('ORDER BY') . ' ' .
+                $this->getDriverEscaper()->random() . 
+                $this->operationSeparator;
+        
+        return $random;
+    }
 
+     /**
+     * parse sort criteria
+     * @param array $sortCriteria
+     * @return string
+     */
+    protected function addSort(array $sortCriteria) {
+        
+        if($this->criteriaList->getRandom()) {
+            $sort = $this->addRandomSort();
+        } else {
+            $orderOperator = [
+                'asc' => $this->getDriverEscaper()->dbCommand('ASC'),
+                'desc' => $this->getDriverEscaper()->dbCommand('DESC'),
+            ];
+            $sort = $this->setSortQuery($sortCriteria, $orderOperator);
+        }
+        
         return $sort;
     }
 
