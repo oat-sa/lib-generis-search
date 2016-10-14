@@ -45,4 +45,8 @@ class MySQLTest extends \oat\search\test\UnitTestHelper  {
         $this->assertSame($expected, $this->instance->dbCommand($fitureCommand));
     }
     
+    public function testRandom() {
+        $this->assertSame('RAND()', $this->instance->random());
+    }
+    
 }
