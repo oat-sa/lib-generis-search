@@ -31,11 +31,13 @@ use oat\search\base\QueryCriterionInterface;
  * @author christophe
  */
 class In extends AbstractRdfOperator {
+    
     /**
      * operator
      * @var string
      */
     protected $operator = 'IN';
+    
     /**
      * create condition  for object
      * @param array $values
@@ -48,6 +50,7 @@ class In extends AbstractRdfOperator {
         }
         return '(' . implode(' ' . $this->getDriverEscaper()->getFieldsSeparator() . ' ' ,  $parseValues) . ')';
     }
+    
     /**
      * convert Query Param to mysql query string
      * @param QueryCriterionInterface $query
@@ -56,9 +59,11 @@ class In extends AbstractRdfOperator {
      */
     public function convert(QueryCriterionInterface $query) {
         if(!is_array($query->getValue())) {
-            throw new QueryParsingException('Only array value is only supported by IN operator');
+            $value = '(' . $this->getDriverEscaper()->quote($this->getDriverEscaper()->escape($value)) . ')';
+        } else {
+            $value = $this->setValuesList($query->getValue());
         }
-        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $this->setValuesList($query->getValue()) . ' ';
+        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . ' ';
     }
     
 }

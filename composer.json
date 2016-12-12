@@ -1,5 +1,6 @@
 {
     "name" : "oat-sa/lib-generis-search",
+    "version" : "1.2.0",
     "require" : {
         "zendframework/zend-servicemanager" : "~2.5.0"
     },

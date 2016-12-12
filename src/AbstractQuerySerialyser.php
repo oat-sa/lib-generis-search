@@ -176,8 +176,6 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
         if(is_a($value, '\\oat\\search\\base\\QueryBuilderInterface')) {
             $serialyser = clone $this;
             $value = $serialyser->setCriteriaList($value)->parse();
-        } else if(is_a($value, '\\oat\\search\\base\\QueryInterface')) {
-            $value = $this->parseQuery($value);
         }
         return $value;
     }
