@@ -59,7 +59,7 @@ class In extends AbstractRdfOperator {
      */
     public function convert(QueryCriterionInterface $query) {
         if(!is_array($query->getValue())) {
-            $value = '(' . $this->getDriverEscaper()->quote($this->getDriverEscaper()->escape($value)) . ')';
+            $value = '(' . $value . ')';
         } else {
             $value = $this->setValuesList($query->getValue());
         }
