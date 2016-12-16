@@ -30,14 +30,26 @@ class ResultSet extends \ArrayIterator implements \oat\search\base\ResultSetInte
      * total number of result
      * @var integer
      */
-    protected $total = 0;
+    protected $totalCount = 0;
+    
+    /**
+     * ResultSet constructor.
+     *
+     * @param array $results
+     * @param int $totalCount
+     */
+    public function __construct(array $results, $totalCount = null)
+    {
+        parent::__construct($results);
+        $this->totalCount = $totalCount;
+    }
     
     /**
      * return total number of result
      * @return integer
      */
     public function total() {
-        return $this->total;
+        return $this->totalCount;
     }
     
 }
