@@ -50,16 +50,22 @@ class QuerySerialyser extends AbstractSqlQuerySerialyser {
       */
      protected $supportedOperators = 
              [
-                 SupportedOperatorHelper::EQUAL              => 'Equal',
-                 SupportedOperatorHelper::GREATER_THAN       => 'GreaterThan',
-                 SupportedOperatorHelper::LESSER_THAN        => 'LesserThan',
-                 SupportedOperatorHelper::GREATER_THAN_EQUAL => 'GreaterThanOrEqual',
-                 SupportedOperatorHelper::LESSER_THAN_EQUAL  => 'LesserThanOrEqual',
-                 SupportedOperatorHelper::CONTAIN            => 'LikeContain',
-                 SupportedOperatorHelper::MATCH              => 'Like',
-                 SupportedOperatorHelper::IN                 => 'In',
-                 SupportedOperatorHelper::BETWEEN            => 'Between',
-                 SupportedOperatorHelper::BEGIN_BY           => 'LikeBegin',
+                SupportedOperatorHelper::EQUAL => 'Equal',
+                SupportedOperatorHelper::DIFFERENT => 'NotEqual',
+                SupportedOperatorHelper::GREATER_THAN => 'GreaterThan',
+                SupportedOperatorHelper::LESSER_THAN => 'LesserThan',
+                SupportedOperatorHelper::GREATER_THAN_EQUAL => 'GreaterThanOrEqual',
+                SupportedOperatorHelper::LESSER_THAN_EQUAL => 'LesserThanOrEqual',
+                SupportedOperatorHelper::CONTAIN => 'LikeContain',
+                SupportedOperatorHelper::MATCH => 'Like',
+                SupportedOperatorHelper::NOT_MATCH => 'NotLike',
+                SupportedOperatorHelper::IN => 'In',
+                SupportedOperatorHelper::BETWEEN => 'Between',
+                SupportedOperatorHelper::BEGIN_BY => 'LikeBegin',
+                SupportedOperatorHelper::ENDING_BY => 'LikeEnd',
+                SupportedOperatorHelper::NOT_IN => 'NotIn',
+                SupportedOperatorHelper::IS_NULL => 'IsNULL',
+                SupportedOperatorHelper::IS_NOT_NULL => 'IsNotNull',
              ];
     
      /**

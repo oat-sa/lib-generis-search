@@ -73,6 +73,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      */
     protected $supportedOperators = [
         SupportedOperatorHelper::EQUAL => 'Equal',
+        SupportedOperatorHelper::DIFFERENT => 'NotEqual',
         SupportedOperatorHelper::GREATER_THAN => 'GreaterThan',
         SupportedOperatorHelper::LESSER_THAN => 'LesserThan',
         SupportedOperatorHelper::GREATER_THAN_EQUAL => 'GreaterThanOrEqual',
