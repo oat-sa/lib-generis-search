@@ -32,7 +32,7 @@ class SupportedOperatorHelper {
 
     const EQUAL = 'equals';
 
-    const DIFFERENT = 'notEqual';
+    const DIFFERENT = 'notEquals';
 
     const GREATER_THAN = 'gt';
 

@@ -193,7 +193,7 @@ $result = $search->getGateway()->search($queryBuilder);
 | Constant | string value | SQL operator | Comment |
 | -------- |------------- | ------------ | ------- |
 | EQUAL | 'equals' | '=' | | 
-| DIFFERENT | 'notEqual' | '!=' | | 
+| DIFFERENT | 'notEquals' | '!=' | | 
 | GREATER_THAN | 'gt' | '>' | | 
 | GREATER_THAN_EQUAL | 'gte' | '>=' | | 
 | LESSER_THAN | 'lt' | '<' | | 
