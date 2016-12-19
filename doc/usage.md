@@ -199,8 +199,8 @@ $result = $search->getGateway()->search($queryBuilder);
 | LESSER_THAN | 'lt' | '<' | | 
 | LESSER_THAN_EQUAL | 'lte' | '<=' | | 
 | BETWEEN | 'between' | BETWEEN 'value1' AND 'value2 | value must be an array with two indexes | 
-| IN | 'in' | IN ('1' ,'3' , '5' ) | value must be an array | 
-| NOT_IN | 'notIn' | NOT IN ('1' ,'3' , '5' ) | value must be an array | 
+| IN | 'in' | IN ('1' ,'3' , '5' ) | value must be an array Or a query builder  | 
+| NOT_IN | 'notIn' | NOT IN ('1' ,'3' , '5' ) | value must be an array Or a query builder | 
 | MATCH | 'match' | LIKE 'value' |  | 
 | NOT_MATCH | 'notMatch' | NOT LIKE 'value' |  | 
 | CONTAIN | 'contains' | LIKE '%value%' | | 

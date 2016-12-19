@@ -56,7 +56,9 @@ class NotIn extends AbstractRdfOperator {
      */
     public function convert(QueryCriterionInterface $query) {
         if(!is_array($query->getValue())) {
-            throw new QueryParsingException('Only array value is only supported by IN operator');
+            $value = '(' . $value . ')';
+        } else {
+            $value = $this->setValuesList($query->getValue());
         }
         return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $this->setValuesList($query->getValue()) . ' ';
     }
