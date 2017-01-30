@@ -34,5 +34,9 @@ class NotLike extends AbstractRdfOperator {
      */
     protected $operator = 'NOT LIKE';
 
+    protected function getOperator()
+    {
+        return $this->getDriverEscaper()->notLike();
+    }
     
 }
