@@ -26,7 +26,7 @@ use \oat\search\base\QueryCriterionInterface;
  *
  * @author christophe
  */
-class LikeContain extends AbstractRdfOperator {
+class LikeContain extends Like {
     /**
      * operator
      * @var string

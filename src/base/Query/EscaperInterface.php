@@ -95,4 +95,16 @@ interface EscaperInterface {
      * @return string
      */
     public function random();
+
+    /**
+     * return case insensitive like operator
+     * @return string
+     */
+    public function like();
+
+    /**
+     * return case insensitive like operator
+     * @return string
+     */
+    public function notLike();
 }

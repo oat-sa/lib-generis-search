@@ -34,5 +34,9 @@ class Like extends AbstractRdfOperator {
      */
     protected $operator = 'LIKE';
 
-    
+    protected function getOperator()
+    {
+        return $this->getDriverEscaper()->like();
+    }
+
 }
