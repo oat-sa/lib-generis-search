@@ -28,7 +28,7 @@ use \oat\search\base\QueryCriterionInterface;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class LikeEnd extends AbstractRdfOperator {
+class LikeEnd extends Like {
     /**
      * operator
      * @var string
