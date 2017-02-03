@@ -61,4 +61,12 @@ class PostgreSQL extends EscaperAbstract
     public function random() {
         return 'RANDOM()';
     }
+    
+    public function like() {
+        return 'ILIKE';
+    }
+    
+    public function notLike() {
+        return 'NOT ' . $this->like();
+    }
 }
