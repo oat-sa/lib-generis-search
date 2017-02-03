@@ -63,4 +63,11 @@ class MySQL extends EscaperAbstract
         return 'RAND()';
     }
     
+    public function like() {
+        return 'LIKE';
+    }
+    
+    public function notLike() {
+        return 'NOT ' . $this->like();
+    }
 }
