@@ -12,7 +12,7 @@ see API Documentation at http://forge.taotesting.com/projects/tao/wiki/use-compl
 ## usage example
 ```php
 /* @var $search \oat\oatbox\search\ComplexeSearchService */
-$search = $this->getServiceManager()->get(\oat\oatbox\search\ComplexeSearchService::SERVICE_ID);
+$search = $this->getServiceManager()->get(\oat\generis\model\kernel\persistence\smoothsql\search\ComplexSearchService::SERVICE_ID);
 /* @var $queryBuilder \oat\search\QueryBuilder */
 $queryBuilder = $search->query();
 /* search for all test takers */
