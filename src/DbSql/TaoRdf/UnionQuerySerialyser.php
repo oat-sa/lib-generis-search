@@ -314,7 +314,12 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
                     $this->getDriverEscaper()->dbCommand('WHERE') . ' ' .
                     $language . ' ' .
                     $this->getDriverEscaper()->reserved('predicate') . ' = ' .
-                    $this->getDriverEscaper()->quote($alias['predicate']) . ' ) ' .
+                    $this->getDriverEscaper()->quote($alias['predicate']) . ' ' .
+                    $this->getDriverEscaper()->dbCommand('GROUP') . ' '.
+                    $this->getDriverEscaper()->dbCommand('BY') . ' ' .
+                    $this->getDriverEscaper()->reserved('subject') .
+                    $this->getDriverEscaper()->getFieldsSeparator() .
+                    $this->getDriverEscaper()->reserved('object') . ' ) ' .
                     $this->getDriverEscaper()->dbCommand('AS') . ' ' .
                     $alias['name'] . ' ' . $this->getDriverEscaper()->dbCommand('ON') . ' ( ' .
                     $this->getDriverEscaper()->reserved('mainq') . '.' .
