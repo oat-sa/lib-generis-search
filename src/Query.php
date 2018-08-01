@@ -41,7 +41,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * @method $this gte($value)
  * @method $this lt($value)
  * @method $this lte($value)
- * @method between(array $scope)
+ * @method $this between(array $scope)
  * @method $this in(array $list)
  * @method $this notIn(array $list)
  * @method $this match($value)
