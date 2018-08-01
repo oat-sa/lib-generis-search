@@ -30,8 +30,27 @@ use oat\search\UsableTrait\OptionsTrait;
 use oat\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+
 /**
- * implemented query object
+ * Class Query
+ * @package oat\search
+ *
+ * @method $this equals($value)
+ * @method $this notEquals($value)
+ * @method $this gt($value)
+ * @method $this gte($value)
+ * @method $this lt($value)
+ * @method $this lte($value)
+ * @method between(array $scope)
+ * @method $this in(array $list)
+ * @method $this notIn(array $list)
+ * @method $this match($value)
+ * @method $this notMatch($value)
+ * @method $this contains($value)
+ * @method $this begin($value)
+ * @method $this end($value)
+ * @method $this null($value)
+ * @method $this notNull($value)
  */
 class Query implements QueryInterface, ServiceLocatorAwareInterface {
 
@@ -55,7 +74,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
      */
     protected $queryCriterionClassName = 'search.query.criterion';
     /**
-     * initialyse factory
+     * initialise factory
      */
     public function __construct() {
         $this->factory = new QueryCriterionFactory;
@@ -79,7 +98,7 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     /**
      * create a new QueryCriterion and add it to store.
      * @param string $property
-     * @return QueryCriterionInterface
+     * @return QueryInterface
      */
     public function add($property) {
         $this->addCriterion($property , null , null);
@@ -136,11 +155,11 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     }
     
     /**
-     * set up operator and value
+     * Set up operator and value
      * 
-     * example : 
+     * example:
      * $this->equal('foo');
-     * $this->in(1 , 2 , 3 , 4 , 5);
+     * $this->in([1, 2, 3, 4, 5]);
      * $this->between(1,10); 
      * 
      * @param string $name
