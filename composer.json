@@ -1,20 +1,19 @@
 {
-    "name" : "oat-sa/lib-generis-search",
-    "require" : {
-        "zendframework/zend-servicemanager" : "~2.5.0"
-    },
-    "require-dev" : 
-    {
-        "phpunit/phpunit": "~4.4@dev",
-        "sebastian/global-state": "~1.0@dev",
-        "mikey179/vfsStream": "1.4.0"
-    },
-    "minimum-stability" : "dev",
-	"autoload" : {
-		"psr-4" : {
-                        "oat\\search\\test\\" : "test",
-			"oat\\search\\" : "src"
-		}
-	}
-    
+  "name": "oat-sa/lib-generis-search",
+  "description": "Library provide an object search API",
+  "require": {
+    "zendframework/zend-servicemanager": "~2.5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.4@dev",
+    "sebastian/global-state": "~1.0@dev",
+    "mikey179/vfsStream": "1.4.0"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "oat\\search\\test\\": "test",
+      "oat\\search\\": "src"
+    }
+  }
 }
