@@ -22,9 +22,28 @@
 
 namespace oat\search\base;
 use \oat\search\factory\FactoryAbstract;
+
 /**
- * create query
- * represent criteria group must be respect
+ * Interface QueryInterface
+ * Represented criteria group must be respected
+ * @package oat\search\base
+ *
+ * @method $this equals($value)
+ * @method $this notEquals($value)
+ * @method $this gt($value)
+ * @method $this gte($value)
+ * @method $this lt($value)
+ * @method $this lte($value)
+ * @method $this between(array $scope)
+ * @method $this in(array $list)
+ * @method $this notIn(array $list)
+ * @method $this match($value)
+ * @method $this notMatch($value)
+ * @method $this contains($value)
+ * @method $this begin($value)
+ * @method $this end($value)
+ * @method $this null($value)
+ * @method $this notNull($value)
  */
 interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     
@@ -33,6 +52,12 @@ interface QueryInterface extends OptionsInterface, ParentFluateInterface {
      * @return $this
      */
     public function reset();
+    /**
+     * Creates a new QueryCriterion and add it to the store.
+     * @param string $property
+     * @return $this
+     */
+    public function add($property);
     /**
      * change default query param className
      * @param string $queryCriterionClassName
