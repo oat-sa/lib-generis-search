@@ -179,7 +179,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             $this->query .=  $this->getDriverEscaper()->dbCommand('AND') . ' '.
                 $this->getDriverEscaper()->reserved('modelid') . ' '.
                 $this->getDriverEscaper()->dbCommand('IN') . ' '.
-                '(' . implode(',', array_map(function($a) { return "'" .$a . "'"; }, $this->model->getReadableModels())) . ')'.
+                "('" . implode("','", $this->model->getReadableModels()) . "')".
                 $this->operationSeparator ;
         }
         $this->query .= ' )'.')';
