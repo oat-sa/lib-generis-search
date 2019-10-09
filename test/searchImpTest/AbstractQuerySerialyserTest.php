@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; under version 2
@@ -15,12 +14,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
- *  Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *  Copyright (c) 2016-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
 namespace oat\search\test\searchImpTest;
 
+use oat\search\AbstractQuerySerialyser;
+use oat\search\base\Query\EscaperInterface;
 use oat\search\test\UnitTestHelper;
+use oat\search\QueryBuilder;
 
 /**
  * test AbstractQuerySerialyserTest
@@ -34,7 +36,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
 
     public function testSetCriteriaList() {
         
-        $instance = $this->getMockForAbstractClass('oat\search\AbstractQuerySerialyser');
+        $instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
         
         $builderProphecy = $this->prophesize('oat\search\QueryBuilder');
         $builder         = $builderProphecy->reveal();
@@ -46,7 +48,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     public function testSerialyse() {
         
         $instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+                AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['parseQuery' , 'finishQuery']
                 );
@@ -80,7 +82,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     public function testParseQuery() {
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+            AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['parseOperation']
                 );
@@ -105,7 +107,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $fixtureOr  = false;
         
          $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+             AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['addSeparator']
                 );
@@ -121,7 +123,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     public function testSetConditions() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+            AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['getOperator' , 'mergeCondition']
                 );
@@ -160,7 +162,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     public function testGetOperator() {
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+            AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['getServiceLocator' , 'getDriverEscaper']
                 );
@@ -195,9 +197,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     public function testGetOperatorFailed() {
     
-        $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser'
-                );
+        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
         
         $fixtureOperator  = 'contain';
         $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
@@ -212,7 +212,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $fixtureValue     = '666';
         
         $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
+            AbstractQuerySerialyser::class,
                 [], '',  true, true, true, 
                 ['getOperator' , 'setNextSeparator' , 'prepareOperator' , 'setConditions' , 'getOperationValue']
                 );
@@ -246,49 +246,64 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     }
     
     public function testGetOperationValueQuery() {
+        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
+        $MockQuery = $this->getMock('oat\search\Query');
         
-        $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
-                [], '',  true, true, true, 
-                ['parseQuery' ]
-                );
-        $fixtureValue = 'select * from `test`';
-        
-        $QueryProphecy = $this->prophesize('oat\search\Query');
-        
-        $MockQuery = $QueryProphecy->reveal();
-        
-        $this->instance->expects($this->once())->method('parseQuery')->with($MockQuery)->willReturn($fixtureValue);
-        $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQuery]));
+        $this->assertSame($MockQuery, $this->invokeProtectedMethod($this->instance, 'getOperationValue' , [$MockQuery]));
     }
-    
-    public function testGetOperationValueBuilder() {
-        
-        $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser',
-                [], '',  true, true, true, 
-                ['setCriteriaList' , 'parse' , ]
-                );
-        $fixtureValue = 'select * from `test`';
-        
-        $BuilderProphecy = $this->prophesize('oat\search\QueryBuilder');
-        
-        $MockBuilder = $BuilderProphecy->reveal();
-        
-        $this->instance->expects($this->once())->method('setCriteriaList')->with($MockBuilder)->willReturn($this->instance);
-        $this->instance->expects($this->once())->method('parse')->willReturn($fixtureValue);
-        
-        $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockBuilder]));
-    }
-    
+
     public function testGetOperationValueString() {
-        
-        $this->instance = $this->getMockForAbstractClass(
-                'oat\search\AbstractQuerySerialyser'
-                );
+
+        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
         $fixtureValue = 'toto';
-        
+
         $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$fixtureValue]));
     }
-    
+
+    public function testGetOperationValueBuilder() {
+        $fixtureValue = 'select * from test';
+        $fixtureNameSpace = 'MySQL';
+        $fixtureClass     = 'Contain';
+        $fixtureOperator  = 'contain';
+        $options = [];
+        
+        $queries = [];
+        $MockQueryBuilder = $this->getMockBuilder(QueryBuilder::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getStoredQueries'])
+            ->getMock();
+        $MockQueryBuilder->method('getStoredQueries')->willReturn($queries);
+
+        $mockDriverEscaper = $this->getMockForAbstractClass(EscaperInterface::class);
+
+        $OperatorProphecy  = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
+        $OperatorProphecy->setDriverEscaper($mockDriverEscaper)->willReturn($OperatorProphecy);
+        $mockOperator = $OperatorProphecy->reveal();
+
+        $ServiceLocatorProphecy = $this->prophesize('\Zend\ServiceManager\ServiceManager');
+        $ServiceLocatorProphecy->get($fixtureNameSpace . '\\' . $fixtureClass)->willReturn($mockOperator);
+        $mockServiceLocator = $ServiceLocatorProphecy->reveal();
+        
+        $this->instance = $this->getMockForAbstractClass(
+            AbstractQuerySerialyser::class,
+            [], '',  true, true, true,
+            ['createNewSerialyser', 'getDriverEscaper', 'getServiceLocator', 'getOptions', 'setCriteriaList', 'getCriteriaList', 'parse']
+        );
+        $this->instance->method('createNewSerialyser')->willReturn($this->instance);
+        $this->instance->method('getDriverEscaper')->willReturn($mockDriverEscaper);
+        $this->instance->method('getServiceLocator')->willReturn($mockServiceLocator);
+        $this->instance->method('getOptions')->willReturn($options);
+        $this->instance->method('setCriteriaList')->with($MockQueryBuilder)->willReturn($this->instance);
+        $this->instance->method('getCriteriaList')->willReturn($MockQueryBuilder);
+        $this->instance->method('parse')->willReturn($fixtureValue);
+        
+        $this->assertSame(null, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQueryBuilder]));
+    }
+
+    public function testCreateNewSerialyser() {
+        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
+
+        $newSerialyser = $this->invokeProtectedMethod($this->instance, 'createNewSerialyser');
+        $this->assertInstanceOf(get_class($this->instance), $newSerialyser);
+    }
 }

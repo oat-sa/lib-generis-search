@@ -162,24 +162,32 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @return $this
      */
     public function addOperator($expression) {
+        $driverEscaper = $this->getDriverEscaper();
+        
         /**
          * SELECT DISTINCT subject FROM statements WHERE
          */
         $this->query .= '(' .
-                $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
-                $this->getDriverEscaper()->dbCommand('DISTINCT') . ' ' .
-                $this->getDriverEscaper()->reserved('subject') . ' ' .
-                $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
-                $this->getDriverEscaper()->reserved($this->options['table']) . ' ' .
-                $this->getDriverEscaper()->dbCommand('WHERE') .
+                $driverEscaper->dbCommand('SELECT') . ' ' .
+                $driverEscaper->dbCommand('DISTINCT') . ' ' .
+                $driverEscaper->reserved('subject') . ' ' .
+                $driverEscaper->dbCommand('FROM') . ' ' .
+                $driverEscaper->reserved($this->options['table']) . ' ' .
+                $driverEscaper->dbCommand('WHERE') .
                 $this->operationSeparator .
                 $this->userLanguage . ' ' . $expression;
 
         if (!empty($this->model)) {
-            $this->query .=  $this->getDriverEscaper()->dbCommand('AND') . ' '.
-                $this->getDriverEscaper()->reserved('modelid') . ' '.
-                $this->getDriverEscaper()->dbCommand('IN') . ' '.
-                '(' . implode(',', $this->model->getReadableModels()) . ')'.
+            $models = array_map(
+                function($model) use ($driverEscaper) {
+                    return $driverEscaper->quote($model);
+                },
+                $this->model->getReadableModels()
+            );
+            $this->query .=  $driverEscaper->dbCommand('AND') . ' '.
+                $driverEscaper->reserved('modelid') . ' '.
+                $driverEscaper->dbCommand('IN') . ' '.
+                '(' . implode(',', $models) . ')'.
                 $this->operationSeparator ;
         }
         $this->query .= ' )'.')';
@@ -264,7 +272,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         foreach ($aliases as $alias) {
             $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
                     $this->getDriverEscaper()->reserved('object') . ' ' .
-                    $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'];
+                    $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'] . '_field';
         }
 
         $result .= implode($this->getDriverEscaper()->getFieldsSeparator(), $sortFields)

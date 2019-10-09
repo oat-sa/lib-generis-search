@@ -1,5 +1,4 @@
 <?php
-
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,9 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- *               
- * 
+ * Copyright (c) 2016-2019 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  */
 
 namespace oat\search;
@@ -30,6 +27,7 @@ use \oat\search\base\exception\QueryParsingException;
 use \oat\search\UsableTrait\DriverSensitiveTrait;
 use oat\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+
 /**
  * Query serialyser are use to transform 
  * QueryBuilder to an exploitable query ofr database driver
@@ -102,6 +100,14 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
     }
     
     /**
+     * get QueryBuilder to parse
+     * @return QueryBuilderInterface
+     */
+    public function getCriteriaList() {
+        return $this->criteriaList;
+    }
+
+    /**
      * set QueryBuilder to parse
      * @param QueryBuilderInterface $criteriaList
      * @return $this
@@ -110,6 +116,7 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
         $this->criteriaList = $criteriaList;
         return $this;
     }
+
     /**
      * generate query exploitable by driver
      * @return string
@@ -118,7 +125,7 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
         
         $this->query = $this->queryPrefix;
         
-        foreach ($this->criteriaList->getStoredQueries() as $query) {
+        foreach ($this->getCriteriaList()->getStoredQueries() as $query) {
             $this->setNextSeparator(false);
             $this->parseQuery($query);
             
@@ -171,16 +178,32 @@ abstract class AbstractQuerySerialyser implements QuerySerialyserInterface {
      * @param mixed $value
      * @return string
      */
-    protected function getOperationValue($value) {
-        
-        if(is_a($value, '\\oat\\search\\base\\QueryBuilderInterface')) {
-            $serialyser = new self();
-            $serialyser->setDriverEscaper($this->getDriverEscaper())->setServiceLocator($this->getServiceLocator())->setOptions($this->getOptions());
-            $value = $serialyser->setCriteriaList($value)->prefixQuery()->serialyse();
+    protected function getOperationValue($value)
+    {
+        if (!$value instanceof QueryBuilderInterface) {
+            return $value;
         }
-        return $value;
+        
+        $serialyser  = $this->createNewSerialyser();
+        $serialyser
+            ->setDriverEscaper($this->getDriverEscaper())
+            ->setServiceLocator($this->getServiceLocator())
+            ->setOptions($this->getOptions())
+            ->setCriteriaList($value);
+        $serialyser->prefixQuery();
+        
+        return $serialyser->serialyse();
     }
 
+    /**
+     * Creates a new serialyser for recursive needs.
+     * @param QueryBuilderInterface $queryBuilder
+     * @return AbstractQuerySerialyser
+     */
+    protected function createNewSerialyser()
+    {
+        return new static();
+    }
 
     /**
      * generate and add to query a condition 
