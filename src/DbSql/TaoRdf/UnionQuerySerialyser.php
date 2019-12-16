@@ -226,7 +226,8 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         } else {
             $separator = $this->closeOperation() .
                     $this->operationSeparator .
-                    $this->getDriverEscaper()->dbCommand('UNION') .
+                $this->getDriverEscaper()->dbCommand('UNION') . ' ' .
+                $this->getDriverEscaper()->dbCommand('ALL') .
                     $this->operationSeparator .
                     $this->queryPrefix;
 
