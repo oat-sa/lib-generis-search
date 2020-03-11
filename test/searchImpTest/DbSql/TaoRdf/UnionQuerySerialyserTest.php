@@ -51,11 +51,6 @@ class UnionQuerySerialyserTest extends UnitTestHelper
             ->getMockForAbstractClass();
         $driverEscaper->method('dbCommand')->willReturnArgument(0);
         $driverEscaper->method('reserved')->willReturnArgument(0);
-        $driverEscaper->method('quote')->willReturnCallBack(
-            function($item) {
-                return "'" . $item . "'";
-            }
-        );
 
         $subject->setDriverEscaper($driverEscaper);
         $subject->setOptions(['table' => $table]);
@@ -97,8 +92,8 @@ class UnionQuerySerialyserTest extends UnitTestHelper
         $fullModel->method('getReadableModels')->willReturn([$modelId1, $modelId2, $modelId3]);
 
         return [
-            ['', null],
-            ['', $emptyModel],
+            ["''", null],
+            ["''", $emptyModel],
             ["'" . $modelId1 . "','" . $modelId2 . "','" . $modelId3 . "'", $fullModel],
         ];
     }
