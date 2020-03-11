@@ -162,32 +162,24 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @return $this
      */
     public function addOperator($expression) {
-        $driverEscaper = $this->getDriverEscaper();
-        
         /**
          * SELECT DISTINCT subject FROM statements WHERE
          */
         $this->query .= '(' .
-                $driverEscaper->dbCommand('SELECT') . ' ' .
-                $driverEscaper->dbCommand('DISTINCT') . ' ' .
-                $driverEscaper->reserved('subject') . ' ' .
-                $driverEscaper->dbCommand('FROM') . ' ' .
-                $driverEscaper->reserved($this->options['table']) . ' ' .
-                $driverEscaper->dbCommand('WHERE') .
+                $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                $this->getDriverEscaper()->dbCommand('DISTINCT') . ' ' .
+                $this->getDriverEscaper()->reserved('subject') . ' ' .
+                $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                $this->getDriverEscaper()->reserved($this->options['table']) . ' ' .
+                $this->getDriverEscaper()->dbCommand('WHERE') .
                 $this->operationSeparator .
                 $this->userLanguage . ' ' . $expression;
 
         if (!empty($this->model)) {
-            $models = array_map(
-                function($model) use ($driverEscaper) {
-                    return $driverEscaper->quote($model);
-                },
-                $this->model->getReadableModels()
-            );
-            $this->query .=  $driverEscaper->dbCommand('AND') . ' '.
-                $driverEscaper->reserved('modelid') . ' '.
-                $driverEscaper->dbCommand('IN') . ' '.
-                '(' . implode(',', $models) . ')'.
+            $this->query .=  $this->getDriverEscaper()->dbCommand('AND') . ' '.
+                $this->getDriverEscaper()->reserved('modelid') . ' '.
+                $this->getDriverEscaper()->dbCommand('IN') . ' '.
+                "('" . implode("','", $this->model->getReadableModels()) . "')".
                 $this->operationSeparator ;
         }
         $this->query .= ' )'.')';
