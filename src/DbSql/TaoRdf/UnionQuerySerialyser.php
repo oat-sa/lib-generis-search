@@ -264,7 +264,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         foreach ($aliases as $alias) {
             $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
                     $this->getDriverEscaper()->reserved('object') . ' ' .
-                    $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'];
+                $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'] . '_field'
         }
 
         $result .= implode($this->getDriverEscaper()->getFieldsSeparator(), $sortFields)
