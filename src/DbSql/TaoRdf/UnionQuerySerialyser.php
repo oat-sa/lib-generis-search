@@ -263,8 +263,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
 
         foreach ($aliases as $alias) {
             $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
-                    $this->getDriverEscaper()->reserved('object') . ' ' .
-                    $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'];
+                    $this->getDriverEscaper()->reserved('object') . ' ';
         }
 
         $result .= implode($this->getDriverEscaper()->getFieldsSeparator(), $sortFields)
@@ -285,8 +284,9 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         $sortFields = [];
 
         foreach ($aliases as $alias) {
-            $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . ' '
-                . $alias['dir'] . $this->operationSeparator;
+            $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
+                    $this->getDriverEscaper()->reserved('object') . ' ' .
+                    $alias['dir'] . $this->operationSeparator;
         }
 
         $result = $this->getDriverEscaper()->dbCommand('ORDER BY') . ' ' .
