@@ -8,51 +8,57 @@
 
 namespace oat\taoSearch\factoryTest;
 
+use InvalidArgumentException;
+use oat\search\test\UnitTestHelper;
+
 /**
  * Description of FactoryAbstractTest
  *
  * @author christophe
  */
-class FactoryAbstractTest extends \oat\search\test\UnitTestHelper
+class FactoryAbstractTest extends UnitTestHelper
 {
-    
+
     protected $instance;
 
 
-    public function setUp() {
-        
+    public function setUp(): void
+    {
+
         $this->instance = $this->getMockForAbstractClass('oat\search\factory\FactoryAbstract');
-        
+
     }
-    
-    public function isValidClassProvide() {
-        
+
+    public function isValidClassProvide()
+    {
+
         return [
-            ['\\oat\\search\\QueryCriterion' , true  , false],
-            ['\\oat\\search\\Query'      , null , true ]
+            ['\\oat\\search\\QueryCriterion', true, false],
+            ['\\oat\\search\\Query', null, true]
         ];
-        
+
     }
-    
+
     /**
-     * 
+     *
      * @param type $class
      * @param type $return
      * @param type $exception
      * @dataProvider isValidClassProvide
      */
-    public function testIsValidClass($class, $return, $exception) {
-        
-        if($exception) {
-            $this->setExpectedException('\InvalidArgumentException');
-        } 
-        
-        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\search\\base\\QueryCriterionInterface');
-        
+    public function testIsValidClass($class, $return, $exception)
+    {
+
+        if ($exception) {
+            $this->expectException(InvalidArgumentException::class);
+        }
+
+        $this->setInaccessibleProperty($this->instance, 'validInterface', 'oat\\search\\base\\QueryCriterionInterface');
+
         $class = new $class();
-        
-        $this->assertSame($return, $this->invokeProtectedMethod($this->instance, 'isValidClass' , [$class]));
-        
+
+        $this->assertSame($return, $this->invokeProtectedMethod($this->instance, 'isValidClass', [$class]));
+
     }
-    
+
 }

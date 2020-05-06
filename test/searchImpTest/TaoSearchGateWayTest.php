@@ -20,15 +20,19 @@
 
 namespace oat\search\test\searchImpTest;
 
+use oat\search\TaoSearchGateWay;
+use oat\search\test\UnitTestHelper;
+
 /**
  * TaoSearchGateWay Test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
+class TaoSearchGateWayTest extends UnitTestHelper {
     
-    public function setUp() {
-        $this->instance = new \oat\search\TaoSearchGateWay();
+    public function setUp(): void
+    {
+        $this->instance = new TaoSearchGateWay();
     }
     /**
      * try connection
@@ -51,8 +55,8 @@ class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
     }
     
     public function testSearch() {
-        
-        $this->instance = $this->getMock('\oat\search\TaoSearchGateWay' , ['serialyse']);
+
+        $this->instance = $this->getMockBuilder(TaoSearchGateWay::class)->getMock();
         $builderMock = $this->prophesize('oat\search\base\QueryBuilderInterface')->reveal();
         
         $fixtureQuery = 'select * from toto where id = 2';
@@ -66,7 +70,8 @@ class TaoSearchGateWayTest extends \oat\search\test\UnitTestHelper {
         $this->assertSame( $fixtureQuery, $this->instance->search($builderMock));
     }
 
-    public function teaDown() {
+    public function teaDown(): void
+    {
         $this->instance = null;
     }
     

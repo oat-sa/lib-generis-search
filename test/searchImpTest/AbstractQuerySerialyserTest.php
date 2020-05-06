@@ -200,7 +200,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
         
         $fixtureOperator  = 'contain';
-        $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
+        $this->expectException('\oat\search\base\exception\QueryParsingException');
         $this->setInaccessibleProperty($this->instance, 'supportedOperators', []);
         $this->invokeProtectedMethod($this->instance,'getOperator' , [$fixtureOperator]);
     }
@@ -247,7 +247,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     public function testGetOperationValueQuery() {
         $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
-        $MockQuery = $this->getMock('oat\search\Query');
+        $MockQuery = $this->getMockBuilder('oat\search\Query');
         
         $this->assertSame($MockQuery, $this->invokeProtectedMethod($this->instance, 'getOperationValue' , [$MockQuery]));
     }

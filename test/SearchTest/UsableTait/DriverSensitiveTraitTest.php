@@ -20,29 +20,32 @@
 
 namespace oat\search\test\searchTest\UsableTrait;
 
+use oat\search\base\Query\EscaperInterface;
+use oat\search\test\UnitTestHelper;
+use oat\search\UsableTrait\DriverSensitiveTrait;
+
 /**
  * Description of DriverSensitiveTraitTest
  *
  * @author christophe
  */
-class DriverSensitiveTraitTest extends \oat\search\test\UnitTestHelper
+class DriverSensitiveTraitTest extends UnitTestHelper
 {
-    /**
-     *
-     * @var oat\search\base\UsableTrait\DriverSensitiveTrait 
-     */
+
+    /** @var DriverSensitiveTrait */
     protected $instance;
-    
-    public function setup() {
-        
-        $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\DriverSensitiveTrait');
-        
+
+    public function setup(): void
+    {
+
+        $this->instance = $this->getMockForTrait(DriverSensitiveTrait::class);
     }
-    
-    public function testsSetGetDriverEscaper() {
-        
-        $mock = $this->getMock('oat\search\base\Query\EscaperInterface');
-        
+
+    public function testsSetGetDriverEscaper()
+    {
+
+        $mock = $this->getMockBuilder(EscaperInterface::class)->getMock();
+
         $this->assertSame($this->instance, $this->instance->setDriverEscaper($mock));
         $this->assertSame($mock, $this->instance->getDriverEscaper());
     }

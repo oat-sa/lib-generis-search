@@ -34,7 +34,8 @@ class NotInTest extends UnitTestHelper
         
         $expected = '("0" , "5" , "10")';
         
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\NotIn' , ['getDriverEscaper'] );
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\NotIn')
+            ->getMock(['getDriverEscaper'] );
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
@@ -81,9 +82,9 @@ class NotInTest extends UnitTestHelper
         $predicateQuery = '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND';
         $fixtureOperator  = 'NOT IN';
         $object = '`object`';
-        
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\NotIn' ,
-            ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
+
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\NotIn')
+            ->getMock(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList']);
 
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $QueryCriterionProphecy->getValue()->willReturn($value);

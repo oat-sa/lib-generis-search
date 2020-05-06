@@ -20,12 +20,15 @@
 
 namespace oat\search\test\searchImpTest;
 
+use oat\search\QueryCriterion;
+use oat\search\test\UnitTestHelper;
+
 /**
  * Description of QueryCriterionTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryCriterionTest extends \oat\search\test\UnitTestHelper {
+class QueryCriterionTest extends UnitTestHelper {
     
     /**
      *
@@ -33,8 +36,9 @@ class QueryCriterionTest extends \oat\search\test\UnitTestHelper {
      */
     protected $instance;
     
-    public function setUp() {
-        $this->instance = new \oat\search\QueryCriterion;
+    public function setUp(): void
+    {
+        $this->instance = new QueryCriterion;
     }
     
     public function testSetGetName() {
@@ -96,7 +100,8 @@ class QueryCriterionTest extends \oat\search\test\UnitTestHelper {
         $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setDefaultOperator' , [$operator]));
     }
 
-    public function tearDown() {
+    public function tearDown() : void
+    {
         $this->instance = null;
     }
     

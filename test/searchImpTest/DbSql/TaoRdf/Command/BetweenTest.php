@@ -34,8 +34,8 @@ class BetweenTest extends UnitTestHelper {
         $fixtureValues = [0 , 10];
         
         $expected = '"0" AND "10"';
-        
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , ['getDriverEscaper'] );
+
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')->getMock(['getDriverEscaper']);
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
@@ -85,9 +85,9 @@ class BetweenTest extends UnitTestHelper {
     public function testConvert($predicate , $predicateQuery , $value , $valueList , $expected , $exception) {
         
         $fixtureOperator  = 'BETWEEN';
-        
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\Between' , 
-                ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
+
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')->getMock(
+            ['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList']);
         
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
@@ -95,7 +95,7 @@ class BetweenTest extends UnitTestHelper {
         $QueryCriterionProphecy->getValue()->willReturn($value);
         
         if($exception) {
-          $this->setExpectedException('\oat\search\base\exception\QueryParsingException');  
+          $this->expectException('\oat\search\base\exception\QueryParsingException');
         } else {
             
             $QueryCriterionProphecy->getName()->willReturn($predicate);
