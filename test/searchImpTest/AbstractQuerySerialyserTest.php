@@ -259,44 +259,4 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
 
         $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$fixtureValue]));
     }
-
-    public function testGetOperationValueBuilder() {
-        $fixtureValue = 'select * from test';
-        $fixtureNameSpace = 'MySQL';
-        $fixtureClass     = 'Contain';
-        $fixtureOperator  = 'contain';
-        $options = [];
-        
-        $queries = [];
-        $MockQueryBuilder = $this->getMockBuilder(QueryBuilder::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getStoredQueries'])
-            ->getMock();
-        $MockQueryBuilder->method('getStoredQueries')->willReturn($queries);
-
-        $mockDriverEscaper = $this->getMockForAbstractClass(EscaperInterface::class);
-
-        $OperatorProphecy  = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
-        $OperatorProphecy->setDriverEscaper($mockDriverEscaper)->willReturn($OperatorProphecy);
-        $mockOperator = $OperatorProphecy->reveal();
-
-        $ServiceLocatorProphecy = $this->prophesize('\Zend\ServiceManager\ServiceManager');
-        $ServiceLocatorProphecy->get($fixtureNameSpace . '\\' . $fixtureClass)->willReturn($mockOperator);
-        $mockServiceLocator = $ServiceLocatorProphecy->reveal();
-        
-        $this->instance = $this->getMockForAbstractClass(
-            AbstractQuerySerialyser::class,
-            [], '',  true, true, true,
-            ['createNewSerialyser', 'getDriverEscaper', 'getServiceLocator', 'getOptions', 'setCriteriaList', 'getCriteriaList', 'parse']
-        );
-        $this->instance->method('createNewSerialyser')->willReturn($this->instance);
-        $this->instance->method('getDriverEscaper')->willReturn($mockDriverEscaper);
-        $this->instance->method('getServiceLocator')->willReturn($mockServiceLocator);
-        $this->instance->method('getOptions')->willReturn($options);
-        $this->instance->method('setCriteriaList')->with($MockQueryBuilder)->willReturn($this->instance);
-        $this->instance->method('getCriteriaList')->willReturn($MockQueryBuilder);
-        $this->instance->method('parse')->willReturn($fixtureValue);
-        
-        $this->assertSame(null, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQueryBuilder]));
-    }
 }
