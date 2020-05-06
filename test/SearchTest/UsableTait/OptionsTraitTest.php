@@ -34,9 +34,7 @@ class OptionsTraitTest extends UnitTestHelper
 
     public function setup(): void
     {
-
         $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\OptionsTrait');
-
     }
 
     /**
