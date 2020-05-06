@@ -85,8 +85,8 @@ class InTest extends UnitTestHelper
         $object = '`object`';
 
         $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\In')
-            ->getMock(
-                ['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList']);
+            ->setMethods(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList'])
+            ->getMock();
         
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $QueryCriterionProphecy->getValue()->willReturn($value);

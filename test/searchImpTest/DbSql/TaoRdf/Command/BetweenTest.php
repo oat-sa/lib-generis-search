@@ -88,8 +88,9 @@ class BetweenTest extends UnitTestHelper {
         
         $fixtureOperator  = 'BETWEEN';
 
-        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')->getMock(
-            ['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList']);
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')
+            ->setMethods(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList'])
+            ->getMock();
         
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
