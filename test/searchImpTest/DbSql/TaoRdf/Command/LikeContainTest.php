@@ -36,10 +36,10 @@ class LikeContainTest extends UnitTestHelper {
         
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
 
-        $this->instance = $this->getMockBuilder(
-            'oat\search\DbSql\TaoRdf\Command\LikeContain')->getMock(
+        $this->instance = $this->createMock(
+            'oat\search\DbSql\TaoRdf\Command\LikeContain')->setMethods(
             ['getDriverEscaper', 'setPropertyName', 'getOperator']
-        );
+        )->getMock();
         
         $expected = '' . $fixtureProperty . ' `object` LIKE "%test%"';
         
