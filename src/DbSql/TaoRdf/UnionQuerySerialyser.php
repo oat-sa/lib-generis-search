@@ -179,7 +179,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             $this->query .=  $this->getDriverEscaper()->dbCommand('AND') . ' '.
                 $this->getDriverEscaper()->reserved('modelid') . ' '.
                 $this->getDriverEscaper()->dbCommand('IN') . ' '.
-                "('" . implode("','", $this->model->getReadableModels()) . "')".
+                '(' . implode(',', $this->model->getReadableModels()) . ')'.
                 $this->operationSeparator ;
         }
         $this->query .= ' )'.')';
@@ -263,8 +263,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
 
         foreach ($aliases as $alias) {
             $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
-                    $this->getDriverEscaper()->reserved('object') . ' ' .
-                    $this->getDriverEscaper()->dbCommand('AS') . ' ' . $alias['name'] . '_field';
+                    $this->getDriverEscaper()->reserved('object') . ' ';
         }
 
         $result .= implode($this->getDriverEscaper()->getFieldsSeparator(), $sortFields)
