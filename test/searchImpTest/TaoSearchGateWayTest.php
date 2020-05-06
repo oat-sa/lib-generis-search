@@ -56,7 +56,7 @@ class TaoSearchGateWayTest extends UnitTestHelper {
     
     public function testSearch() {
 
-        $this->instance = $this->getMockBuilder(TaoSearchGateWay::class)->getMock();
+        $this->instance = $this->getMockBuilder(TaoSearchGateWay::class)->setMethods(['serialyse'])->getMock();
         $builderMock = $this->prophesize('oat\search\base\QueryBuilderInterface')->reveal();
         
         $fixtureQuery = 'select * from toto where id = 2';

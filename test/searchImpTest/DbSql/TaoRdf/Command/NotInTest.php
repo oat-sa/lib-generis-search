@@ -35,7 +35,8 @@ class NotInTest extends UnitTestHelper
         $expected = '("0" , "5" , "10")';
         
         $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\NotIn')
-            ->getMock(['getDriverEscaper'] );
+            ->setMethods(['getDriverEscaper'])
+            ->getMock();
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
@@ -84,7 +85,8 @@ class NotInTest extends UnitTestHelper
         $object = '`object`';
 
         $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\NotIn')
-            ->getMock(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList']);
+            ->setMethods(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList'])
+            ->getMock();
 
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $QueryCriterionProphecy->getValue()->willReturn($value);

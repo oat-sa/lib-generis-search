@@ -35,7 +35,9 @@ class BetweenTest extends UnitTestHelper {
         
         $expected = '"0" AND "10"';
 
-        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')->getMock(['getDriverEscaper']);
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')
+            ->setMethods(['getDriverEscaper'])
+            ->getMock();
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);

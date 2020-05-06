@@ -125,7 +125,7 @@ class QueryTest extends UnitTestHelper
     {
         $fixtureName = 'text';
 
-        $this->instance = $this->getMockBuilder('oat\search\Query')->getMock(['addCriterion']);
+        $this->instance = $this->getMockBuilder('oat\search\Query')->setMethods(['addCriterion'])->getMock();
         $this->instance
             ->expects($this->once())
             ->method('addCriterion')

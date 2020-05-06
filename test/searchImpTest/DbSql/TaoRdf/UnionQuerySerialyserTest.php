@@ -77,7 +77,7 @@ class UnionQuerySerialyserTest extends UnitTestHelper
         /** @var SmoothModel|MockClass $emptyModel */
         $emptyModel = $this->getMockBuilder(SmoothModel::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getReadableModels'])
+            ->setMethods(['getReadableModels'])
             ->getMock();
         $emptyModel->method('getReadableModels')->willReturn([]);
 
@@ -94,8 +94,8 @@ class UnionQuerySerialyserTest extends UnitTestHelper
 
         return [
             ["''", null],
-            ["''", $emptyModel],
-            ["'" . $modelId1 . "','" . $modelId2 . "','" . $modelId3 . "'", $fullModel],
+            ["", $emptyModel],
+            [$modelId1 . "," . $modelId2 . "," . $modelId3, $fullModel],
         ];
     }
 }

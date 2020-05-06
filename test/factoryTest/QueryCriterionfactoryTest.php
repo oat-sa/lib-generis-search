@@ -31,7 +31,9 @@ class QueryCriterionfactoryTest extends UnitTestHelper {
     
     public function setup() : void
     {
-        $this->instance = $this->getMockBuilder(QueryCriterionFactory::class)->getMock(['isValidClass', 'getServiceLocator']);
+        $this->instance = $this->getMockBuilder(QueryCriterionFactory::class)
+            ->setMethods(['isValidClass', 'getServiceLocator'])
+            ->getMock();
     }
     
     public function testInvokeFactory() {
@@ -46,8 +48,10 @@ class QueryCriterionfactoryTest extends UnitTestHelper {
         $testClassName  = '\\oat\\search\\QueryCriterion';
         
         $serviceManager =  $this->getMockBuilder(ServiceManager::class)->getMock();
-        
-        $mockTest       = $this->getMockBuilder('\\stdClass')->getMock(['setName' , 'setOperator' , 'setValue' , 'setAndSeparator' , 'setServiceLocator']);
+
+        $mockTest       = $this->getMockBuilder('\\stdClass')
+            ->setMethods(['setName', 'setOperator', 'setValue', 'setAndSeparator', 'setServiceLocator'])
+            ->getMock();
         
         $mockTest->expects($this->once())
                 ->method('setName')

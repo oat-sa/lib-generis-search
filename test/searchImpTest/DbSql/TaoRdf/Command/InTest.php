@@ -35,7 +35,8 @@ class InTest extends UnitTestHelper
         $expected = '("0" , "5" , "10")';
 
         $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\In')
-            ->getMock(['getDriverEscaper']);
+            ->setMethods(['getDriverEscaper'])
+            ->getMock();
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);

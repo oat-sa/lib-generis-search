@@ -26,7 +26,9 @@ class QueryBuilderFactoryTest extends UnitTestHelper
     
     public function setup(): void
     {
-        $this->instance = $this->getMockBuilder(QueryBuilderFactory::class)->getMock();
+        $this->instance = $this->getMockBuilder(QueryBuilderFactory::class)
+            ->setMethods(['isValidClass', 'getServiceLocator'])
+            ->getMock();
     }
     
     public function testInvokeFactory() {

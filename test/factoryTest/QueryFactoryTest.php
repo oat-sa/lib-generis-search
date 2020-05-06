@@ -25,7 +25,8 @@ class QueryFactoryTest extends UnitTestHelper
     {
 
         $this->instance = $this->getMockBuilder(QueryFactory::class)
-            ->getMock(['isValidClass', 'getServiceLocator']);
+            ->setMethods(['isValidClass', 'getServiceLocator'])
+        ->getMock();
 
     }
 
@@ -39,10 +40,12 @@ class QueryFactoryTest extends UnitTestHelper
             false
         ];
 
-        $serviceManager = $this->getMockBuilder('\\Zend\\ServiceManager\\ServiceManager');
+        $serviceManager = $this->getMockBuilder('\\Zend\\ServiceManager\\ServiceManager')->getMock();
 
         $testClassName = '\\oat\\search\\base\\QueryInterface';
-        $mockTest = $this->getMockBuilder('\\stdClass')->getMock(['setOptions', 'setServiceLocator']);
+        $mockTest = $this->getMockBuilder('\\stdClass')
+            ->setMethods(['setOptions', 'setServiceLocator'])
+            ->getMock();
 
         $mockTest->expects($this->once())
             ->method('setServiceLocator')

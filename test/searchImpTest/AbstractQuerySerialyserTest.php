@@ -19,10 +19,10 @@
 
 namespace oat\search\test\searchImpTest;
 
-use oat\search\AbstractQuerySerialyser;
 use oat\search\base\Query\EscaperInterface;
 use oat\search\test\UnitTestHelper;
 use oat\search\QueryBuilder;
+use oat\search\AbstractQuerySerialyser;
 
 /**
  * test AbstractQuerySerialyserTest
@@ -77,7 +77,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $returnQuery = $instance->serialyse();
         
         $this->assertSame($returnQuery, $this->getInaccessibleProperty($instance, 'query'));
-        $this->assertContains($fixturePrefix, $returnQuery);
+        $this->assertStringContainsString($fixturePrefix, $returnQuery);
     }
     
     public function testParseQuery() {
@@ -247,7 +247,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     public function testGetOperationValueQuery() {
         $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
-        $MockQuery = $this->getMockBuilder('oat\search\Query');
+        $MockQuery = $this->getMockBuilder('oat\search\Query')->getMock();
         
         $this->assertSame($MockQuery, $this->invokeProtectedMethod($this->instance, 'getOperationValue' , [$MockQuery]));
     }
@@ -298,12 +298,5 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $this->instance->method('parse')->willReturn($fixtureValue);
         
         $this->assertSame(null, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQueryBuilder]));
-    }
-
-    public function testCreateNewSerialyser() {
-        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
-
-        $newSerialyser = $this->invokeProtectedMethod($this->instance, 'createNewSerialyser');
-        $this->assertInstanceOf(get_class($this->instance), $newSerialyser);
     }
 }
