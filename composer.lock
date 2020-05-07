@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e5c7239b437d00059f61c09ea204b93",
+    "content-hash": "77402da6cd407b54193c47056349a5fd",
     "packages": [
         {
             "name": "zendframework/zend-servicemanager",
