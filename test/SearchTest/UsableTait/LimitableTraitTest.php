@@ -8,28 +8,33 @@
 
 namespace oat\search\test\searchTest\UsableTrait;
 
+use oat\search\test\UnitTestHelper;
+
 /**
  * Description of LimitableTraitTest
  *
  * @author christophe
  */
-class LimitableTraitTest extends \oat\search\test\UnitTestHelper 
+class LimitableTraitTest extends UnitTestHelper
 {
-    
+
     protected $instance;
-    
-    public function setup() {
-        
+
+    public function setup(): void
+    {
+
         $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\LimitableTrait');
-        
+
     }
+
     /**
      * test sort and getSort
      */
-    public function testLimit() {
-        $fixtureLimit  = 10;
+    public function testLimit()
+    {
+        $fixtureLimit = 10;
         $fixtureOffset = 5;
-        
+
         $this->assertSame($this->instance, $this->instance->setOffset($fixtureOffset));
         $this->assertSame($this->instance, $this->instance->setLimit($fixtureLimit));
         $this->assertSame($fixtureLimit, $this->instance->getLimit());

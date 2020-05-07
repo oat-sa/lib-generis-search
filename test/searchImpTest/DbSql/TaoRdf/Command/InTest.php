@@ -33,8 +33,10 @@ class InTest extends UnitTestHelper
         $fixtureValues = [0 , 5 , 10];
         
         $expected = '("0" , "5" , "10")';
-        
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\In' , ['getDriverEscaper'] );
+
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\In')
+            ->setMethods(['getDriverEscaper'])
+            ->getMock();
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
         $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
@@ -81,9 +83,10 @@ class InTest extends UnitTestHelper
         $predicateQuery = '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND';
         $fixtureOperator  = 'IN';
         $object = '`object`';
-        
-        $this->instance = $this->getMock('\oat\search\DbSql\TaoRdf\Command\In' , 
-                ['getDriverEscaper' , 'setPropertyName' , 'getOperator' , 'setValuesList']);
+
+        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\In')
+            ->setMethods(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList'])
+            ->getMock();
         
         $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
         $QueryCriterionProphecy->getValue()->willReturn($value);

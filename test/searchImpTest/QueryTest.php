@@ -30,175 +30,187 @@ use oat\search\test\UnitTestHelper;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryTest extends UnitTestHelper {
-    
+class QueryTest extends UnitTestHelper
+{
+
     /**
      *
      * @var Query
      */
     protected $instance;
-    
-    public function setUp() {
+
+    public function setUp(): void
+    {
         $this->instance = new Query();
     }
-    
-    public function testSetQueryCriterionClassName() {
+
+    public function testSetQueryCriterionClassName()
+    {
         $fixtureClassName = 'QueryCriterion';
         $this->assertSame($this->instance, $this->instance->setQueryCriterionClassName($fixtureClassName));
-        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance , 'queryCriterionClassName'));
-        
+        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance, 'queryCriterionClassName'));
+
     }
 
-    public function testSetQueryCriterionFactory() {
-        
+    public function testSetQueryCriterionFactory()
+    {
+
         $Factory = new QueryFactory;
-        
-        $this->assertSame($this->instance , $this->instance->setQueryCriterionFactory($Factory));
-        $this->assertSame($Factory , $this->getInaccessibleProperty($this->instance , 'factory'));
-        
+
+        $this->assertSame($this->instance, $this->instance->setQueryCriterionFactory($Factory));
+        $this->assertSame($Factory, $this->getInaccessibleProperty($this->instance, 'factory'));
+
     }
-    
-    public function testGetStoredQueryCriterions() {
-        
+
+    public function testGetStoredQueryCriterions()
+    {
+
         $fixtureStoredQueries = [
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueryCriteria', $fixtureStoredQueries);
         $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueryCriteria());
-        
+
     }
-    
-    public function testReset() {
+
+    public function testReset()
+    {
         $fixtureStoredQueries = [
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
-        $this->assertSame($this->instance , $this->instance->reset());
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance, $this->instance->reset());
         $storedQueries = $this->getInaccessibleProperty($this->instance, 'storedQueryCriteria');
         $this->assertEmpty($storedQueries);
     }
-    
-    public function testAddCriterion() {
-        $fixtureName      = 'text';
-        $fixtureOperator  = 'equals';
-        $fixtureValue     = 'test';
-        
+
+    public function testAddCriterion()
+    {
+        $fixtureName = 'text';
+        $fixtureOperator = 'equals';
+        $fixtureValue = 'test';
+
         $fixtureQueryClass = 'stdClass';
-        
+
         $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager = $ServiceManager->reveal();
-        
+
         $mockQuery = $this->prophesize('\oat\search\QueryCriterion');
         $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
-        
+
         $mockFactoryProphecy = $this->prophesize('\oat\search\factory\FactoryInterface');
         $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
-        $mockFactoryProphecy->get($fixtureQueryClass , [$fixtureName, $fixtureOperator, $fixtureValue])->willReturn($mockQuery)->shouldBeCalledTimes(1);
+        $mockFactoryProphecy->get($fixtureQueryClass, [$fixtureName, $fixtureOperator, $fixtureValue])->willReturn($mockQuery)->shouldBeCalledTimes(1);
         $mockFactory = $mockFactoryProphecy->reveal();
-        
-        $this->setInaccessibleProperty($this->instance , 'queryCriterionClassName', $fixtureQueryClass);
-        $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
-        $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
-        
-        $this->assertSame($this->instance , $this->instance->addCriterion($fixtureName, $fixtureOperator, $fixtureValue));
-        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryCriteria')));
-        
+
+        $this->setInaccessibleProperty($this->instance, 'queryCriterionClassName', $fixtureQueryClass);
+        $this->setInaccessibleProperty($this->instance, 'factory', $mockFactory);
+        $this->setInaccessibleProperty($this->instance, 'serviceLocator', $mockServiceManager);
+
+        $this->assertSame($this->instance, $this->instance->addCriterion($fixtureName, $fixtureOperator, $fixtureValue));
+        $this->assertTrue(in_array($mockQuery, $this->getInaccessibleProperty($this->instance, 'storedQueryCriteria')));
+
     }
-    
-    public function testAdd() {
-        $fixtureName      = 'text';
-        
-        $this->instance = $this->getMock('oat\search\Query' , ['addCriterion']);
+
+    public function testAdd()
+    {
+        $fixtureName = 'text';
+
+        $this->instance = $this->getMockBuilder('oat\search\Query')->setMethods(['addCriterion'])->getMock();
         $this->instance
-                ->expects($this->once())
-                ->method('addCriterion')
-                ->with($fixtureName , null ,  null)
-                ->willReturn($this->instance);
+            ->expects($this->once())
+            ->method('addCriterion')
+            ->with($fixtureName, null, null)
+            ->willReturn($this->instance);
         $this->assertSame($this->instance, $this->instance->add($fixtureName));
-        
+
     }
-    
-    public function testCall() {
-        
-        $fixtureOperator  = 'equals';
-        $fixtureValue     = 'test';
-        
+
+    public function testCall()
+    {
+
+        $fixtureOperator = 'equals';
+        $fixtureValue = 'test';
+
         $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
-        
+
         $criterionProphet->setOperator($fixtureOperator)->willReturn($criterionProphet);
         $criterionProphet->setValue($fixtureValue)->willReturn($criterionProphet);
-        
-        $criterionMock    = $criterionProphet->reveal();
-        
+
+        $criterionMock = $criterionProphet->reveal();
+
         $fixtureStoredQueries = [
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
-            $criterionMock ,
+            $criterionMock,
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
-        $this->assertSame($this->instance , $this->instance->equals($fixtureValue));
-        
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance, $this->instance->equals($fixtureValue));
+
     }
-    
-    public function testAddAnd() {
-        
-        $fixtureOperator  = 'equals';
-        $fixtureValue     = 'test';
-        
+
+    public function testAddAnd()
+    {
+
+        $fixtureOperator = 'equals';
+        $fixtureValue = 'test';
+
         $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
-        
-        $criterionProphet->addAnd($fixtureValue , $fixtureOperator )->willReturn($criterionProphet);
-        
-        $criterionMock    = $criterionProphet->reveal();
-        
+
+        $criterionProphet->addAnd($fixtureValue, $fixtureOperator)->willReturn($criterionProphet);
+
+        $criterionMock = $criterionProphet->reveal();
+
         $fixtureStoredQueries = [
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
-            $criterionMock ,
+            $criterionMock,
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
-        $this->assertSame($this->instance , $this->instance->addAnd($fixtureValue , $fixtureOperator));
-        
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance, $this->instance->addAnd($fixtureValue, $fixtureOperator));
+
     }
-    
-    public function testAddOr() {
-        
-        $fixtureOperator  = 'equals';
-        $fixtureValue     = 'test';
-        
+
+    public function testAddOr()
+    {
+
+        $fixtureOperator = 'equals';
+        $fixtureValue = 'test';
+
         $criterionProphet = $this->prophesize('\oat\search\QueryCriterion');
-        
-        $criterionProphet->addOr($fixtureValue , $fixtureOperator )->willReturn($criterionProphet);
-        
-        $criterionMock    = $criterionProphet->reveal();
-        
+
+        $criterionProphet->addOr($fixtureValue, $fixtureOperator)->willReturn($criterionProphet);
+
+        $criterionMock = $criterionProphet->reveal();
+
         $fixtureStoredQueries = [
             new QueryCriterion(),
             new QueryCriterion(),
             new QueryCriterion(),
-            $criterionMock ,
+            $criterionMock,
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueryCriteria', $fixtureStoredQueries);
-        $this->assertSame($this->instance , $this->instance->addOr($fixtureValue , $fixtureOperator));
-        
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueryCriteria', $fixtureStoredQueries);
+        $this->assertSame($this->instance, $this->instance->addOr($fixtureValue, $fixtureOperator));
+
     }
-    
-    public function tearDown() {
+
+    public function tearDown(): void
+    {
         $this->instance = null;
     }
-    
+
 }

@@ -20,19 +20,22 @@
 
 namespace oat\search\test\SearchTest\Query;
 
+use oat\search\test\UnitTestHelper;
+
 /**
  * Description of EscaperAbstractTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class EscaperAbstractTest extends \oat\search\test\UnitTestHelper 
+class EscaperAbstractTest extends UnitTestHelper
 {
     /**
      * @var \oat\search\base\Query\EscaperAbstract 
      */
     protected $instance;
 
-    public function setUp() {
+    public function setUp(): void
+    {
         $this->instance = $this->getMockForAbstractClass('oat\search\base\Query\EscaperAbstract');
     }
     

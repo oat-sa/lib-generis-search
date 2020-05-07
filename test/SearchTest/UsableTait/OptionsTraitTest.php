@@ -20,27 +20,31 @@
 
 namespace oat\search\test\searchTest\UsableTrait;
 
+use oat\search\test\UnitTestHelper;
+
 /**
  * Description of OptionsTraitTest
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class OptionsTraitTest  extends \oat\search\test\UnitTestHelper {
-    
+class OptionsTraitTest extends UnitTestHelper
+{
+
     protected $instance;
-    
-    public function setup() {
-        
+
+    public function setup(): void
+    {
         $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\OptionsTrait');
-        
     }
+
     /**
      * test sort and getSort
      */
-    public function testgetSetOptions() {
+    public function testgetSetOptions()
+    {
         $fixtureOptions = [
-            'option1'   => true,
-            'option2'   => false,
+            'option1' => true,
+            'option2' => false,
         ];
         $this->assertSame($this->instance, $this->instance->setOptions($fixtureOptions));
         $this->assertSame($fixtureOptions, $this->instance->getOptions());

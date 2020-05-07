@@ -22,6 +22,7 @@ namespace oat\search\test\searchImpTest\DbSql\TaoRdf;
 use oat\search\base\Query\EscaperInterface;
 use oat\search\DbSql\TaoRdf\UnionQuerySerialyser;
 use oat\search\test\UnitTestHelper;
+use PHPUnit\Framework\MockObject\MockClass;
 
 /**
  * Tests for UnionsQuerySerialyser class
@@ -44,7 +45,7 @@ class UnionQuerySerialyserTest extends UnitTestHelper
 
         $subject = new UnionQuerySerialyser();
 
-        /** @var EscaperInterface|\PHPUnit_Framework_MockObject_MockObject $driverEscaper */
+        /** @var EscaperInterface|MockClass $driverEscaper */
         $driverEscaper = $this->getMockBuilder(EscaperInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['dbCommand', 'reserved'])
@@ -73,7 +74,7 @@ class UnionQuerySerialyserTest extends UnitTestHelper
 
     public function modelsToTest()
     {
-        /** @var SmoothModel|\PHPUnit_Framework_MockObject_MockObject $emptyModel */
+        /** @var SmoothModel|MockClass $emptyModel */
         $emptyModel = $this->getMockBuilder(SmoothModel::class)
             ->disableOriginalConstructor()
             ->setMethods(['getReadableModels'])
@@ -84,7 +85,7 @@ class UnionQuerySerialyserTest extends UnitTestHelper
         $modelId2 = 'model id #2';
         $modelId3 = 'model id #3';
 
-        /** @var SmoothModel|\PHPUnit_Framework_MockObject_MockObject $fullModel */
+        /** @var SmoothModel|MockClass $fullModel */
         $fullModel = $this->getMockBuilder(SmoothModel::class)
             ->disableOriginalConstructor()
             ->setMethods(['getReadableModels'])
@@ -93,8 +94,8 @@ class UnionQuerySerialyserTest extends UnitTestHelper
 
         return [
             ["''", null],
-            ["''", $emptyModel],
-            ["'" . $modelId1 . "','" . $modelId2 . "','" . $modelId3 . "'", $fullModel],
+            ["", $emptyModel],
+            [$modelId1 . "," . $modelId2 . "," . $modelId3, $fullModel],
         ];
     }
 }

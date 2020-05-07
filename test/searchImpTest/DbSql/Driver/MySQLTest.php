@@ -2,6 +2,7 @@
 
 use oat\search\base\Query\EscaperAbstract;
 use oat\search\DbSql\Driver\MySQL;
+use oat\search\test\UnitTestHelper;
 
 /*
  * This program is free software; you can redistribute it and/or
@@ -26,14 +27,15 @@ use oat\search\DbSql\Driver\MySQL;
  *
  * @author christophe
  */
-class MySQLTest extends \oat\search\test\UnitTestHelper  {
+class MySQLTest extends UnitTestHelper  {
     
     /**
      * @var EscaperAbstract
      */
     protected $instance;
     
-    public function setUp() {
+    public function setUp() : void
+    {
         $this->instance = new MySQL;
     }
 
