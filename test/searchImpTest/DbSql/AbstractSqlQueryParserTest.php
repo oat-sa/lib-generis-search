@@ -139,7 +139,7 @@ class AbstractSqlQuerySerialyserTest extends UnitTestHelper {
                 );
         
         if($exception) {
-            $this->setExpectedException('oat\search\base\exception\QueryParsingException' , 'table option is mandatory');
+            $this->expectException('oat\search\base\exception\QueryParsingException' , 'table option is mandatory');
         }
         $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'validateOptions' , [$options]));
     }
@@ -244,7 +244,7 @@ class AbstractSqlQuerySerialyserTest extends UnitTestHelper {
     public function testAddSort(array $sortCriteria , $expected, $exception) {
         
         if($exception) {
-            $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
+            $this->expectException('\oat\search\base\exception\QueryParsingException');
         }
         
         $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');

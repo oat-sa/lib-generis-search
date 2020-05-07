@@ -8,36 +8,43 @@
 
 namespace oat\search\test\searchTest\UsableTrait;
 
-class SortableTraitTest extends \oat\search\test\UnitTestHelper 
+use oat\search\test\UnitTestHelper;
+
+class SortableTraitTest extends UnitTestHelper
 {
-    
+
     protected $instance;
-    
-    public function setup() {
-        
+
+    public function setup(): void
+    {
+
         $this->instance = $this->getMockForTrait('\\oat\\search\\UsableTrait\\SortableTrait');
-        
+
     }
+
     /**
      * test sort and getSort
      */
-    public function testSort() {
+    public function testSort()
+    {
         $fixtureSortCriteria = [
-            'id'   => 'asc',
+            'id' => 'asc',
             'date' => 'desc'
         ];
         $this->assertSame($this->instance, $this->instance->sort($fixtureSortCriteria));
         $this->assertSame($fixtureSortCriteria, $this->instance->getSort());
     }
+
     /*
      * test setRandom and getRandom
      */
-    public function testSetGetRandom() {
+    public function testSetGetRandom()
+    {
 
         $this->assertFalse($this->instance->getRandom());
         $this->assertSame($this->instance, $this->instance->setRandom());
         $this->assertTrue($this->instance->getRandom());
     }
-    
+
 }
 

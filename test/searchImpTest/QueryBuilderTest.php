@@ -30,71 +30,77 @@ use oat\search\test\UnitTestHelper;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryBuilderTest extends UnitTestHelper {
-    
+class QueryBuilderTest extends UnitTestHelper
+{
+
     /**
      *
      * @var QueryBuilder
      */
     protected $instance;
-    
-    public function setUp() {
+
+    public function setUp(): void
+    {
         $this->instance = new QueryBuilder;
     }
-    
-    public function testSetQueryClassName() {
-        
+
+    public function testSetQueryClassName()
+    {
+
         $fixtureClassName = 'stdClass';
-        
+
         $this->assertSame($this->instance, $this->instance->setQueryClassName($fixtureClassName));
-        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance , 'queryClassName'));
-        
+        $this->assertSame($fixtureClassName, $this->getInaccessibleProperty($this->instance, 'queryClassName'));
+
     }
-    
-    public function testSetQueryFactory() {
-        
+
+    public function testSetQueryFactory()
+    {
+
         $Factory = new QueryFactory;
-        
-        $this->assertSame($this->instance , $this->instance->setQueryFactory($Factory));
-        $this->assertSame($Factory , $this->getInaccessibleProperty($this->instance , 'factory'));
-        
+
+        $this->assertSame($this->instance, $this->instance->setQueryFactory($Factory));
+        $this->assertSame($Factory, $this->getInaccessibleProperty($this->instance, 'factory'));
+
     }
-    
-    public function testGetStoredQueries() {
-        
+
+    public function testGetStoredQueries()
+    {
+
         $fixtureStoredQueries = [
             new Query(),
             new Query(),
             new Query(),
             new Query(),
         ];
-        
-        $this->setInaccessibleProperty($this->instance , 'storedQueries', $fixtureStoredQueries);
+
+        $this->setInaccessibleProperty($this->instance, 'storedQueries', $fixtureStoredQueries);
         $this->assertSame($fixtureStoredQueries, $this->instance->getStoredQueries());
     }
-    
-    public function testNewQuery() {
-        
+
+    public function testNewQuery()
+    {
+
         $fixtureQueryClass = 'stdClass';
 
         $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager = $ServiceManager->reveal();
- 
+
         $mockQuery = $this->prophesize('\oat\search\Query');
         $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
-        
+
         $mockFactoryProphecy = $this->prophesize('\oat\search\factory\FactoryInterface');
         $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
         $mockFactoryProphecy->get($fixtureQueryClass)->willReturn($mockQuery)->shouldBeCalledTimes(1);
-        
+
         $mockFactory = $mockFactoryProphecy->reveal();
-        
-        $this->setInaccessibleProperty($this->instance , 'queryClassName', $fixtureQueryClass);
-        $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
-        $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
-        
-        $this->assertSame($mockQuery , $this->instance->newQuery());
-        
+
+        $this->setInaccessibleProperty($this->instance, 'queryClassName', $fixtureQueryClass);
+        $this->setInaccessibleProperty($this->instance, 'factory', $mockFactory);
+        $this->setInaccessibleProperty($this->instance, 'serviceLocator', $mockServiceManager);
+
+        $this->assertSame($mockQuery, $this->instance->newQuery());
+
     }
 }

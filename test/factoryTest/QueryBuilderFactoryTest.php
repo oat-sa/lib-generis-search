@@ -8,18 +8,27 @@
 
 namespace oat\taoSearch\factoryTest;
 
+use oat\search\factory\QueryBuilderFactory;
+use oat\search\QueryBuilder;
+use oat\search\test\UnitTestHelper;
+use PHPUnit\Framework\MockObject\MockObject;
+use Zend\ServiceManager\ServiceManager;
+
 /**
  * Description of QueryBuilderFactoryTest
  *
  * @author christophe
  */
-class QueryBuilderFactoryTest extends \oat\search\test\UnitTestHelper 
+class QueryBuilderFactoryTest extends UnitTestHelper
 {
-    
+    /** @var MockObject|QueryBuilderFactory */
     protected $instance;
     
-    public function setup() {
-        $this->instance = $this->getMock('\\oat\\search\\factory\\QueryBuilderFactory', ['isValidClass' , 'getServiceLocator']);
+    public function setup(): void
+    {
+        $this->instance = $this->getMockBuilder(QueryBuilderFactory::class)
+            ->setMethods(['isValidClass', 'getServiceLocator'])
+            ->getMock();
     }
     
     public function testInvokeFactory() {
@@ -31,10 +40,10 @@ class QueryBuilderFactoryTest extends \oat\search\test\UnitTestHelper
             false
         ];
         
-        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
+        $serviceManager =  $this->getMockBuilder(ServiceManager::class)->getMock();
         
         $testClassName  = '\\oat\\search\\QueryBuilderInterface';
-        $mockTest       = $this->getMock('\\oat\\search\\QueryBuilder' , ['setOptions' , 'setServiceLocator']);
+        $mockTest       = $this->getMockBuilder(QueryBuilder::class)->getMock();
         
         $mockTest->expects($this->once())
                 ->method('setOptions')

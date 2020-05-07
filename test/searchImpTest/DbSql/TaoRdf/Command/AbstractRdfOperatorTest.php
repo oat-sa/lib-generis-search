@@ -83,11 +83,11 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $fixtureOperator  = '=';
         
         $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
-        
-        $this->instance = $this->getMock(
-                'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator',
-                ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
-        );
+
+        $this->instance = $this->getMockBuilder(
+            'oat\search\DbSql\TaoRdf\Command\AbstractRdfOperator')->setMethods(
+            ['getDriverEscaper', 'setPropertyName', 'getOperator']
+        )->getMock();
         
         $expected = '' . $fixtureProperty . ' `object` = "test"';
         

@@ -19,10 +19,10 @@
 
 namespace oat\search\test\searchImpTest;
 
-use oat\search\AbstractQuerySerialyser;
 use oat\search\base\Query\EscaperInterface;
 use oat\search\test\UnitTestHelper;
 use oat\search\QueryBuilder;
+use oat\search\AbstractQuerySerialyser;
 
 /**
  * test AbstractQuerySerialyserTest
@@ -77,7 +77,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $returnQuery = $instance->serialyse();
         
         $this->assertSame($returnQuery, $this->getInaccessibleProperty($instance, 'query'));
-        $this->assertContains($fixturePrefix, $returnQuery);
+        $this->assertStringContainsString($fixturePrefix, $returnQuery);
     }
     
     public function testParseQuery() {
@@ -200,7 +200,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
         
         $fixtureOperator  = 'contain';
-        $this->setExpectedException('\oat\search\base\exception\QueryParsingException');
+        $this->expectException('\oat\search\base\exception\QueryParsingException');
         $this->setInaccessibleProperty($this->instance, 'supportedOperators', []);
         $this->invokeProtectedMethod($this->instance,'getOperator' , [$fixtureOperator]);
     }
@@ -247,7 +247,7 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
     
     public function testGetOperationValueQuery() {
         $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
-        $MockQuery = $this->getMock('oat\search\Query');
+        $MockQuery = $this->getMockBuilder('oat\search\Query')->getMock();
         
         $this->assertSame($MockQuery, $this->invokeProtectedMethod($this->instance, 'getOperationValue' , [$MockQuery]));
     }
@@ -258,52 +258,5 @@ class AbstractQuerySerialyserTest extends UnitTestHelper {
         $fixtureValue = 'toto';
 
         $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$fixtureValue]));
-    }
-
-    public function testGetOperationValueBuilder() {
-        $fixtureValue = 'select * from test';
-        $fixtureNameSpace = 'MySQL';
-        $fixtureClass     = 'Contain';
-        $fixtureOperator  = 'contain';
-        $options = [];
-        
-        $queries = [];
-        $MockQueryBuilder = $this->getMockBuilder(QueryBuilder::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getStoredQueries'])
-            ->getMock();
-        $MockQueryBuilder->method('getStoredQueries')->willReturn($queries);
-
-        $mockDriverEscaper = $this->getMockForAbstractClass(EscaperInterface::class);
-
-        $OperatorProphecy  = $this->prophesize('oat\search\base\command\OperatorConverterInterface');
-        $OperatorProphecy->setDriverEscaper($mockDriverEscaper)->willReturn($OperatorProphecy);
-        $mockOperator = $OperatorProphecy->reveal();
-
-        $ServiceLocatorProphecy = $this->prophesize('\Zend\ServiceManager\ServiceManager');
-        $ServiceLocatorProphecy->get($fixtureNameSpace . '\\' . $fixtureClass)->willReturn($mockOperator);
-        $mockServiceLocator = $ServiceLocatorProphecy->reveal();
-        
-        $this->instance = $this->getMockForAbstractClass(
-            AbstractQuerySerialyser::class,
-            [], '',  true, true, true,
-            ['createNewSerialyser', 'getDriverEscaper', 'getServiceLocator', 'getOptions', 'setCriteriaList', 'getCriteriaList', 'parse']
-        );
-        $this->instance->method('createNewSerialyser')->willReturn($this->instance);
-        $this->instance->method('getDriverEscaper')->willReturn($mockDriverEscaper);
-        $this->instance->method('getServiceLocator')->willReturn($mockServiceLocator);
-        $this->instance->method('getOptions')->willReturn($options);
-        $this->instance->method('setCriteriaList')->with($MockQueryBuilder)->willReturn($this->instance);
-        $this->instance->method('getCriteriaList')->willReturn($MockQueryBuilder);
-        $this->instance->method('parse')->willReturn($fixtureValue);
-        
-        $this->assertSame(null, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQueryBuilder]));
-    }
-
-    public function testCreateNewSerialyser() {
-        $this->instance = $this->getMockForAbstractClass(AbstractQuerySerialyser::class);
-
-        $newSerialyser = $this->invokeProtectedMethod($this->instance, 'createNewSerialyser');
-        $this->assertInstanceOf(get_class($this->instance), $newSerialyser);
     }
 }

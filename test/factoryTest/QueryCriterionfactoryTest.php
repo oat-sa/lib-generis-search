@@ -20,13 +20,20 @@
 
 namespace oat\taoSearch\factoryTest;
 
+use oat\search\factory\QueryCriterionFactory;
+use oat\search\test\UnitTestHelper;
+use Zend\ServiceManager\ServiceManager;
+
 /**
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryCriterionfactoryTest extends \oat\search\test\UnitTestHelper {
+class QueryCriterionfactoryTest extends UnitTestHelper {
     
-    public function setup() {
-        $this->instance = $this->getMock('\\oat\\search\\factory\\QueryCriterionFactory', ['isValidClass' , 'getServiceLocator']);
+    public function setup() : void
+    {
+        $this->instance = $this->getMockBuilder(QueryCriterionFactory::class)
+            ->setMethods(['isValidClass', 'getServiceLocator'])
+            ->getMock();
     }
     
     public function testInvokeFactory() {
@@ -40,9 +47,11 @@ class QueryCriterionfactoryTest extends \oat\search\test\UnitTestHelper {
         
         $testClassName  = '\\oat\\search\\QueryCriterion';
         
-        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
-        
-        $mockTest       = $this->getMock('\\stdClass' , ['setName' , 'setOperator' , 'setValue' , 'setAndSeparator' , 'setServiceLocator']);
+        $serviceManager =  $this->getMockBuilder(ServiceManager::class)->getMock();
+
+        $mockTest       = $this->getMockBuilder('\\stdClass')
+            ->setMethods(['setName', 'setOperator', 'setValue', 'setAndSeparator', 'setServiceLocator'])
+            ->getMock();
         
         $mockTest->expects($this->once())
                 ->method('setName')

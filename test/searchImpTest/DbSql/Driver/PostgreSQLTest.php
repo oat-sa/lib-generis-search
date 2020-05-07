@@ -2,6 +2,8 @@
 
 use oat\search\base\Query\EscaperAbstract;
 use oat\search\DbSql\Driver\PostgreSQL;
+use oat\search\test\UnitTestHelper;
+
 /*
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -25,26 +27,30 @@ use oat\search\DbSql\Driver\PostgreSQL;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class PostgreSQLTest extends \oat\search\test\UnitTestHelper  {
-    
+class PostgreSQLTest extends UnitTestHelper
+{
+
     /**
      * @var EscaperAbstract
      */
     protected $instance;
-    
-    public function setUp() {
+
+    public function setUp(): void
+    {
         $this->instance = new PostgreSQL;
     }
-    
-    public function testDbCommand() {
-        
+
+    public function testDbCommand()
+    {
+
         $fitureCommand = 'From';
-        $expected      = 'FROM';
-        
+        $expected = 'FROM';
+
         $this->assertSame($expected, $this->instance->dbCommand($fitureCommand));
     }
-    
-    public function testRandom() {
+
+    public function testRandom()
+    {
         $this->assertSame('RANDOM()', $this->instance->random());
     }
 }

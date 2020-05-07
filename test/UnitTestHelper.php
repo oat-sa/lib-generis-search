@@ -20,12 +20,14 @@
 
 namespace oat\search\test;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Description of UnitTestHelper
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class UnitTestHelper extends \PHPUnit_Framework_TestCase 
+class UnitTestHelper extends TestCase
 {
 
     protected $instance;
