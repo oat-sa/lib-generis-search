@@ -19,6 +19,9 @@
  * 
  */
 namespace oat\search\base\Query;
+use oat\search\base\OptionsInterface;
+use oat\search\UsableTrait\OptionsTrait;
+
 /**
  * Escapers are used to format query params
  * they quote string and escape table name (for example)
@@ -28,8 +31,10 @@ namespace oat\search\base\Query;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-abstract class EscaperAbstract implements EscaperInterface
+abstract class EscaperAbstract implements EscaperInterface,OptionsInterface
 {
+
+    use OptionsTrait;
    /**
     * use to quote string value
     * @var string
