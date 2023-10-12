@@ -39,7 +39,7 @@ class LikeContain extends Like {
      */
     public function convert(QueryCriterionInterface $query) {
         $value = $this->getDriverEscaper()->quote($this->getDriverEscaper()->escape('%' . $query->getValue() . '%'));
-        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . '';
+        return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ' . $value . '';
     }
     
 }

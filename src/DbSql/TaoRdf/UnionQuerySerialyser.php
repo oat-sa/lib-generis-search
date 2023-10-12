@@ -21,8 +21,8 @@
 namespace oat\search\DbSql\TaoRdf;
 
 use oat\search\base\exception\QueryParsingException;
-use oat\search\helper\SupportedOperatorHelper;
 use oat\search\DbSql\AbstractSqlQuerySerialyser;
+use oat\search\helper\SupportedOperatorHelper;
 
 /**
  * Tao RDF Onthology serialyser
@@ -90,6 +90,10 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         SupportedOperatorHelper::IS_NOT_NULL => 'IsNotNull',
     ];
 
+    private string $propertyUri;
+
+    private bool $isDistinct;
+
     /**
      * create query begining
      * @return $this
@@ -118,8 +122,17 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @param boolean $count
      * @return \oat\search\DbSql\TaoRdf\UnionQuerySerialyser
      */
-    public function count($count = true) {
+    public function count($count = true): self
+    {
         $this->count = $count;
+        return $this;
+    }
+
+    public function property(string $propertyUri, bool $isDistinct = false): self
+    {
+        $this->propertyUri = $propertyUri;
+        $this->isDistinct = $isDistinct;
+
         return $this;
     }
 
@@ -249,30 +262,12 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
      * @return string
      */
     protected function sortedQueryPrefix(array $aliases) {
-
-        $sortFields = [];
-
-        $result = $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
-                $this->getDriverEscaper()->reserved('subject') . ' ' .
-                $this->getDriverEscaper()->dbCommand('FROM') .
-                $this->operationSeparator . '(' .
-                $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+        return $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
                 $this->getDriverEscaper()->reserved('mainq') . '.' .
-                $this->getDriverEscaper()->reserved('subject') .
-                $this->getDriverEscaper()->getFieldsSeparator();
-
-        foreach ($aliases as $alias) {
-            $sortFields[] = $this->getDriverEscaper()->reserved($alias['name']) . '.' .
-                    $this->getDriverEscaper()->reserved('object') . ' ';
-        }
-
-        $result .= implode($this->getDriverEscaper()->getFieldsSeparator(), $sortFields)
-                . ' ' .
+                $this->getDriverEscaper()->getAllFields() . ' ' .
                 $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
                 ' ( ' . $this->query . ' ) AS mainq ' .
                 $this->operationSeparator;
-
-        return $result;
     }
 
     /**
@@ -348,8 +343,6 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
             $sort .= $this->sortedQueryPrefix($aliases);
             $sort .= $this->joinOrderQuery($aliases);
             $sort .= $this->orderByPart($aliases);
-            $sort .= ') ' . $this->getDriverEscaper()->dbCommand('AS') .
-                    ' rootq' . $this->operationSeparator;
 
             $this->query = $sort;
             return $sort;
@@ -416,6 +409,7 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
                     '(' . $this->query . ') ' .
                     $this->getDriverEscaper()->dbCommand('AS') . ' rootq ';
         } else {
+            $this->addProperty();
             $this->addSort($this->criteriaList->getSort());
             $this->query .= $this->operationSeparator . $this->addLimit($this->criteriaList->getLimit(), $this->criteriaList->getOffset());
         }
@@ -424,4 +418,63 @@ class UnionQuerySerialyser extends AbstractSqlQuerySerialyser {
         return $this;
     }
 
+    private function addProperty()
+    {
+        if (!empty($this->propertyUri)) {
+            $table = $this->getDriverEscaper()->reserved($this->options['table']);
+            $language = empty($this->userLanguage) ? $this->defaultLanguage : $this->userLanguage;
+            if ($this->isDistinct) {
+                $this->query = $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('DISTINCT') . ' ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . '.' .
+                    $this->getDriverEscaper()->getAllFields() . ' ' .
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    ' ( ' . $this->query . ' ) AS filterq ' .
+                    $this->getDriverEscaper()->dbCommand('INNER') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('JOIN') . ' ( ' .
+                    $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                    $this->getDriverEscaper()->reserved('object') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    $table . ' ' .
+                    $this->getDriverEscaper()->dbCommand('WHERE') . ' ' .
+                    $language . ' ' .
+                    $this->getDriverEscaper()->reserved('predicate') . ' = ' .
+                    $this->getDriverEscaper()->quote($this->propertyUri) . ' ) ' .
+                    $this->getDriverEscaper()->dbCommand('AS') . ' ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('ON') . ' ( ' .
+                    $this->getDriverEscaper()->reserved('filterq') . '.' .
+                    $this->getDriverEscaper()->reserved('subject') . ' = ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . '.' .
+                    $this->getDriverEscaper()->reserved('subject') . ' ) ';
+            } else {
+                $this->query = $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . '.' .
+                    $this->getDriverEscaper()->getAllFields() . ' ' .
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    ' ( ' . $this->query . ' ) AS filterq ' .
+                    $this->getDriverEscaper()->dbCommand('INNER') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('JOIN') . ' ( ' .
+                    $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                    $this->getDriverEscaper()->reserved('id') . ' ' .
+                    $this->getDriverEscaper()->getFieldsSeparator() .
+                    $this->getDriverEscaper()->reserved('subject') . ' ' .
+                    $this->getDriverEscaper()->getFieldsSeparator() .
+                    $this->getDriverEscaper()->reserved('object') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    $table . ' ' .
+                    $this->getDriverEscaper()->dbCommand('WHERE') . ' ' .
+                    $language . ' ' .
+                    $this->getDriverEscaper()->reserved('predicate') . ' = ' .
+                    $this->getDriverEscaper()->quote($this->propertyUri) . ' ) ' .
+                    $this->getDriverEscaper()->dbCommand('AS') . ' ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('ON') . ' ( ' .
+                    $this->getDriverEscaper()->reserved('filterq') . '.' .
+                    $this->getDriverEscaper()->reserved('subject') . ' = ' .
+                    $this->getDriverEscaper()->reserved('propertyq') . '.' .
+                    $this->getDriverEscaper()->reserved('subject') . ' ) ';
+            }
+        }
+    }
 }

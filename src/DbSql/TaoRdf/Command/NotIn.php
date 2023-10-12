@@ -61,6 +61,6 @@ class NotIn extends AbstractRdfOperator
         if (!is_array($value)) {
             $value = [$value];
         }
-        return $this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $this->setValuesList($value) . ' ';
+        return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ' . $this->setValuesList($value) . ' ';
     }
 }
