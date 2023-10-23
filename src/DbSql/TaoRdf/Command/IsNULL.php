@@ -44,7 +44,7 @@ class IsNULL extends AbstractRdfOperator {
      * @throws QueryParsingException
      */
     public function convert(QueryCriterionInterface $query) {
-        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ';
+        return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ';
     }
     
 }

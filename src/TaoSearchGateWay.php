@@ -48,6 +48,19 @@ class TaoSearchGateWay extends AbstractSearchGateWay
         $this->serialyse($Builder);
         return $this->parsedQuery;
     }
+
+    /**
+     * not implemented just use to print query
+     * @todo use generis persistence
+     */
+    public function searchTriples(QueryBuilderInterface $Builder, string $propertyUri, bool $isDistinct = false)
+    {
+        $this->parsedQuery = $this->getSerialyser()
+            ->setCriteriaList($Builder)
+            ->property($propertyUri, $isDistinct)
+            ->serialyse();
+        return $this->parsedQuery;
+    }
     
     /**
      * print parsed query

@@ -20,8 +20,8 @@
  */
 namespace oat\search\DbSql\TaoRdf\Command;
 
-use \oat\search\Command\AbstractOperatorConverter;
-use \oat\search\base\QueryCriterionInterface;
+use oat\search\base\QueryCriterionInterface;
+use oat\search\Command\AbstractOperatorConverter;
 
 /**
  * Description of AbstractRdfOperator
@@ -44,11 +44,14 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
      * @return string
      */
     protected function setPropertyName($name) {
-        if(!empty($name)) {
+        if ($name === QueryCriterionInterface::VIRTUAL_URI_FIELD) {
+            return ' ( ' . $this->getDriverEscaper()->reserved('subject');
+        } elseif (!empty($name)) {
             $name = $this->getDriverEscaper()->escape($name);
             $name = $this->getDriverEscaper()->quote($name);
-            return $this->getDriverEscaper()->reserved('predicate') . ' = ' . $name . ' ' 
-                    . $this->getDriverEscaper()->dbCommand('AND') . ' ( ';
+            return $this->getDriverEscaper()->reserved('predicate') . ' = ' . $name . ' '
+                    . $this->getDriverEscaper()->dbCommand('AND') . ' ( '
+                    . $this->getDriverEscaper()->reserved('object');
         }
         return '';
     }
@@ -60,7 +63,7 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
     public function convert(QueryCriterionInterface $query) {
         $value = $this->getDriverEscaper()->escape($query->getValue());
         $value = $this->getDriverEscaper()->quote($value);
-        return '' . $this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value;
+        return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ' . $value;
     }
     
 }

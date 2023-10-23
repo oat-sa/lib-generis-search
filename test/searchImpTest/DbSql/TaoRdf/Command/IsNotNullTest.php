@@ -20,47 +20,32 @@
 
 namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
+use oat\search\DbSql\TaoRdf\Command\IsNotNull;
+use oat\search\QueryCriterion;
 use oat\search\test\UnitTestHelper;
+
 /**
- * test for LikeBegin
+ * test for Is Not NULL
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class IsNotNullTest extends UnitTestHelper {
+class IsNotNullTest extends UnitTestHelper
+{
+    public function setUp(): void
+    {
+        $this->instance = new IsNotNull();
+        $this->instance->setDriverEscaper(new EscaperStub());
+    }
     
-    public function testConvert() {
+    public function testConvert(): void
+    {
         
         $fixturePredicate = 'http://www.w3.org/2000/01/rdf-schema#label';
-        $fixtureOperator  = 'IS NOT NULL';
-        $fixtureValue     = null;
-        $fixtureProperty = '(`predicate` = "' . $fixturePredicate . '") AND';
+        $expected = sprintf('`predicate` = "%s" AND ( `object` IS NOT NULL ', $fixturePredicate);
         
-        $this->instance = $this->getMockForAbstractClass(
-                'oat\search\DbSql\TaoRdf\Command\IsNotNull',
-                [], '',  true, true, true, 
-                ['getDriverEscaper' , 'setPropertyName' , 'getOperator']
-        );
-        
-        $expected = '' . $fixtureProperty . ' `object` IS NOT NULL ';
-        
-        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
-        
-        $QueryCriterionProphecy->getValue()->willReturn($fixtureValue);
-        $QueryCriterionProphecy->getName()->willReturn($fixturePredicate);
-        
-        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
-        
-        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
-        
-        $DriverProphecy->reserved('object')->willReturn('`object`')->shouldBeCalledTimes(1);
-        
-        $DriverMock     = $DriverProphecy->reveal();
-        
-        $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-        $this->instance->expects($this->once())->method('setPropertyName')->with($fixturePredicate)->willReturn($fixtureProperty);
-        $this->instance->expects($this->any())->method('getOperator')->willReturn($fixtureOperator);
-        
-        $this->setInaccessibleProperty($this->instance, 'operator', $fixtureOperator);
-        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
+        $queryCriterion = new QueryCriterion();
+        $queryCriterion->setName($fixturePredicate);
+
+        $this->assertSame($expected, $this->instance->convert($queryCriterion));
     }
 }

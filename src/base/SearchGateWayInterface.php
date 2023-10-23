@@ -70,7 +70,16 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * @return ResultSetInterface
      */
     public function search(QueryBuilderInterface $Builder);
-    
+
+    /**
+     * send a searchQuery and return a resultSetOnSuccess
+     * throws a exception on failure
+     *
+     * @throws SearchGateWayExeption
+     * @return ResultSetInterface
+     */
+    public function searchTriples(QueryBuilderInterface $Builder, string $propertyUri, bool $isDistinct = false);
+
     /**
      * print parsed query
      * @return $this

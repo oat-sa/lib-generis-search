@@ -21,8 +21,10 @@
 
 namespace oat\search\DbSql\TaoRdf;
 
-use \oat\search\DbSql\AbstractSqlQuerySerialyser;
-use \oat\search\helper\SupportedOperatorHelper;
+use oat\search\base\exception\QueryParsingException;
+use oat\search\DbSql\AbstractSqlQuerySerialyser;
+use oat\search\helper\SupportedOperatorHelper;
+
 /**
  * Tao RDF Onthology serialyser
  * 
@@ -67,8 +69,10 @@ class QuerySerialyser extends AbstractSqlQuerySerialyser {
                 SupportedOperatorHelper::IS_NULL => 'IsNULL',
                 SupportedOperatorHelper::IS_NOT_NULL => 'IsNotNull',
              ];
-    
-     /**
+
+    private bool $count;
+
+    /**
       * create query begining
       * @return $this
       */
@@ -192,5 +196,14 @@ class QuerySerialyser extends AbstractSqlQuerySerialyser {
         
         return $this;
     }
-    
+
+    public function count($count = true): self
+    {
+        throw new QueryParsingException('Count is not supported now. Please use other serializers.');
+    }
+
+    public function property(string $propertyUri, bool $isDistinct = false): self
+    {
+        throw new QueryParsingException('Property fetching is not supported now. Please use other serializers.');
+    }
 }
