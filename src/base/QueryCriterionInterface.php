@@ -28,6 +28,8 @@ namespace oat\search\base;
 
 interface QueryCriterionInterface extends ParentFluateInterface {
 
+    public const VIRTUAL_URI_FIELD = 'uri';
+
     /**
      * set object property on which you need to search
      * @param string $name

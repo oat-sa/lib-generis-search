@@ -65,4 +65,22 @@ interface QuerySerialyserInterface extends DriverSensitiveInterface, OptionsInte
      */
     public function serialyse();
 
+    /**
+     * Transforms query, so it will fetch only given field data.
+     *
+     * @param string $propertyUri
+     * @param bool $isDistinct
+     *
+     * @return self
+     */
+    public function property(string $propertyUri, bool $isDistinct = false): self;
+
+    /**
+     * Indicates that query should return number of objects instead of their values.
+     *
+     * @param bool $count
+     *
+     * @return self
+     */
+    public function count(bool $count = true): self;
 }

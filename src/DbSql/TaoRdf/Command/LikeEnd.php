@@ -44,7 +44,7 @@ class LikeEnd extends Like {
         $value = '%' . $query->getValue();
         $value = $this->getDriverEscaper()->escape($value);
         $value = $this->getDriverEscaper()->quote($value);
-        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . '';
+        return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ' . $value . '';
     }
     
 }
