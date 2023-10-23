@@ -20,6 +20,9 @@
 
 namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
+use oat\search\base\QueryCriterionInterface;
+use oat\search\DbSql\TaoRdf\Command\Between;
+use oat\search\QueryCriterion;
 use oat\search\test\UnitTestHelper;
 
 /**
@@ -27,95 +30,48 @@ use oat\search\test\UnitTestHelper;
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class BetweenTest extends UnitTestHelper {
-    
-    public function testSetValuesList() {
-        
-        $fixtureValues = [0 , 10];
-        
-        $expected = '"0" AND "10"';
-
-        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')
-            ->setMethods(['getDriverEscaper'])
-            ->getMock();
-        
-        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
-        $DriverProphecy->escape(0)->willReturn(0)->shouldBeCalledTimes(1);
-        $DriverProphecy->escape(10)->willReturn(10)->shouldBeCalledTimes(1);
-        $DriverProphecy->quote(0)->willReturn('"0"')->shouldBeCalledTimes(1);
-        $DriverProphecy->quote(10)->willReturn('"10"')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('AND')->willReturn('AND')->shouldBeCalledTimes(1);
-        
-        $DriverMock     = $DriverProphecy->reveal();
-        
-        $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-        
-        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setValuesList' , [$fixtureValues]));
+class BetweenTest extends UnitTestHelper
+{
+    public function setUp(): void
+    {
+        $this->instance = new Between();
+        $this->instance->setDriverEscaper(new EscaperStub());
     }
-    
-    public function convertProvider() {
-        return 
-        [
-            [
-                'http://www.w3.org/2000/01/rdf-schema#label' , 
-                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND',
-                [0 , 5] ,
-                '"0" AND "5"',
-                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND `object` BETWEEN "0" AND "5" ', 
-                false,
-            ],
-            [
-               'http://www.w3.org/2000/01/rdf-schema#label' , 
-                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND',
-                'test',
-                '',
-                null, 
-                true, 
-            ],
+
+    public function convertProvider(): \Generator
+    {
+        yield [
+            'http://www.w3.org/2000/01/rdf-schema#label' ,
+            [0 , 5] ,
+            '`predicate` = "http://www.w3.org/2000/01/rdf-schema#label" AND ( `object` BETWEEN "0" AND "5" ',
+        ];
+
+        yield [
+            QueryCriterionInterface::VIRTUAL_URI_FIELD,
+            [0 , 5] ,
+            ' ( `subject` BETWEEN "0" AND "5" ',
         ];
     }
     
     /**
      * @dataProvider convertProvider
+     *
      * @param string $predicate
-     * @param string $predicateQuery
      * @param mixed $value
-     * @param string $valueList
      * @param string $expected
-     * @param boolean $exception
      */
-    public function testConvert($predicate , $predicateQuery , $value , $valueList , $expected , $exception) {
+    public function testConvert(string $predicate , $value, string $expected): void
+    {
+        $queryCriterion = new QueryCriterion();
+        $queryCriterion->setName($predicate);
+        $queryCriterion->setValue($value);
         
-        $fixtureOperator  = 'BETWEEN';
+        $this->assertSame($expected, $this->instance->convert($queryCriterion));
+    }
 
-        $this->instance = $this->getMockBuilder('\oat\search\DbSql\TaoRdf\Command\Between')
-            ->setMethods(['getDriverEscaper', 'setPropertyName', 'getOperator', 'setValuesList'])
-            ->getMock();
-        
-        $QueryCriterionProphecy = $this->prophesize('\oat\search\base\QueryCriterionInterface');
-        $DriverProphecy = $this->prophesize('oat\search\base\Query\EscaperInterface');
-        
-        $QueryCriterionProphecy->getValue()->willReturn($value);
-        
-        if($exception) {
-          $this->expectException('\oat\search\base\exception\QueryParsingException');
-        } else {
-            
-            $QueryCriterionProphecy->getName()->willReturn($predicate);
-
-            $DriverProphecy->reserved('object')->willReturn('`object`')->shouldBeCalledTimes(1);
-
-            $DriverMock     = $DriverProphecy->reveal();
-            
-            $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-            $this->instance->expects($this->once())->method('setPropertyName')->with($predicate)->willReturn($predicateQuery);
-            $this->instance->expects($this->any())->method('getOperator')->willReturn($fixtureOperator);
-            $this->instance->expects($this->once())->method('setValuesList')->with($value)->willReturn($valueList);
-            
-        }
-        
-        $QueryCriterionMock = $QueryCriterionProphecy->reveal();
-
-        $this->assertSame($expected, $this->instance->convert($QueryCriterionMock));
+    public function testConvertException(): void
+    {
+        $this->expectException('\oat\search\base\exception\QueryParsingException');
+        $this->instance->convert(new QueryCriterion());
     }
 }

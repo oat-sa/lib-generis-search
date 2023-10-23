@@ -57,5 +57,4 @@ class Between extends AbstractRdfOperator {
         }
         return $this->setPropertyName($query->getName()) . ' ' . $this->getOperator() . ' ' . $this->setValuesList($query->getValue()) . ' ';
     }
-    
 }
