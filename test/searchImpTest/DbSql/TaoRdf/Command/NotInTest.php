@@ -52,6 +52,12 @@ class NotInTest extends UnitTestHelper
         ];
 
         yield [
+            '',
+            'test',
+            '`object` NOT IN ("test") '
+        ];
+
+        yield [
             QueryCriterionInterface::VIRTUAL_URI_FIELD,
             'test' ,
             ' ( `subject` NOT IN ("test") ',
