@@ -52,6 +52,12 @@ class InTest extends UnitTestHelper
         ];
 
         yield [
+            '',
+            'test',
+            '`object` IN ("test") '
+        ];
+
+        yield [
             QueryCriterionInterface::VIRTUAL_URI_FIELD,
             'test' ,
             ' ( `subject` IN ("test") ',

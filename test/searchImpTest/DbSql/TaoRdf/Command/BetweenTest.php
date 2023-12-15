@@ -47,6 +47,12 @@ class BetweenTest extends UnitTestHelper
         ];
 
         yield [
+            '' ,
+            [0 , 5] ,
+            '`object` BETWEEN "0" AND "5" ',
+        ];
+
+        yield [
             QueryCriterionInterface::VIRTUAL_URI_FIELD,
             [0 , 5] ,
             ' ( `subject` BETWEEN "0" AND "5" ',

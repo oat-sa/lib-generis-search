@@ -20,6 +20,7 @@
 
 namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
+use oat\search\base\QueryCriterionInterface;
 use oat\search\DbSql\TaoRdf\Command\LikeEnd;
 use oat\search\QueryCriterion;
 use oat\search\test\UnitTestHelper;
@@ -37,16 +38,39 @@ class LikeEndTest extends UnitTestHelper
         $this->instance->setDriverEscaper(new EscaperStub());
     }
 
-    public function testConvert(): void
+    public function convertProvider(): \Generator
     {
-        $fixturePredicate = 'http://www.w3.org/2000/01/rdf-schema#label';
-        $fixtureValue     = 'test';
+        yield [
+            'http://www.w3.org/2000/01/rdf-schema#label',
+            'test',
+            '`predicate` = "http://www.w3.org/2000/01/rdf-schema#label" AND ( `object` LIKE "%test"'
+        ];
 
-        $expected = sprintf('`predicate` = "%s" AND ( `object` LIKE "%%test"', $fixturePredicate);
+        yield [
+            '',
+            'test',
+            '`object` LIKE "%test"'
+        ];
 
+        yield [
+            QueryCriterionInterface::VIRTUAL_URI_FIELD,
+            'test' ,
+            ' ( `subject` LIKE "%test"',
+        ];
+    }
+
+    /**
+     * @dataProvider convertProvider
+     *
+     * @param string $predicate
+     * @param mixed $value
+     * @param string $expected
+     */
+    public function testConvert(string $predicate, $value, string $expected): void
+    {
         $queryCriterion = new QueryCriterion();
-        $queryCriterion->setName($fixturePredicate);
-        $queryCriterion->setValue($fixtureValue);
+        $queryCriterion->setName($predicate);
+        $queryCriterion->setValue($value);
 
         $this->assertSame($expected, $this->instance->convert($queryCriterion));
     }
