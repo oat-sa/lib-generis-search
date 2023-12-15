@@ -52,8 +52,9 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
             return $this->getDriverEscaper()->reserved('predicate') . ' = ' . $name . ' '
                     . $this->getDriverEscaper()->dbCommand('AND') . ' ( '
                     . $this->getDriverEscaper()->reserved('object');
+        } else {
+            return $this->getDriverEscaper()->reserved('object');
         }
-        return '';
     }
     /**
      * convert Query Param to mysql query string
