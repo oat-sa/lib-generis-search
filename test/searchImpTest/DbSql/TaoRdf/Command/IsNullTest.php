@@ -20,6 +20,7 @@
 
 namespace oat\search\test\searchImpTest\DbSql\TaoRdf\Command;
 
+use oat\search\base\QueryCriterionInterface;
 use oat\search\DbSql\TaoRdf\Command\IsNULL;
 use oat\search\QueryCriterion;
 use oat\search\test\UnitTestHelper;
@@ -37,13 +38,34 @@ class IsNullTest extends UnitTestHelper {
         $this->instance->setDriverEscaper(new EscaperStub());
     }
 
-    public function testConvert(): void
+    public function convertProvider(): \Generator
     {
-        $fixturePredicate = 'http://www.w3.org/2000/01/rdf-schema#label';
-        $expected = sprintf('`predicate` = "%s" AND ( `object` IS NULL ', $fixturePredicate);
+        yield [
+            'http://www.w3.org/2000/01/rdf-schema#label',
+            '`predicate` = "http://www.w3.org/2000/01/rdf-schema#label" AND ( `object` IS NULL '
+        ];
 
+        yield [
+            '',
+            '`object` IS NULL '
+        ];
+
+        yield [
+            QueryCriterionInterface::VIRTUAL_URI_FIELD,
+            ' ( `subject` IS NULL ',
+        ];
+    }
+
+    /**
+     * @dataProvider convertProvider
+     *
+     * @param string $predicate
+     * @param string $expected
+     */
+    public function testConvert(string $predicate, string $expected): void
+    {
         $queryCriterion = new QueryCriterion();
-        $queryCriterion->setName($fixturePredicate);
+        $queryCriterion->setName($predicate);
 
         $this->assertSame($expected, $this->instance->convert($queryCriterion));
     }
